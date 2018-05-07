@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"></activity>
-        <activity android:name=".activities.ChakrasActivity">
+        <activity android:name=".activities.MainActivity"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -18,14 +19,9 @@
         </activity>
         <activity
             android:name=".activities.PlayingChakraActivity"
-            android:theme="@style/TransparentStatusBar"
-            android:parentActivityName="com.example.william.reconnect.activities.ChakrasActivity" >
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.william.reconnect.activities.ChakrasActivity" />
+            android:theme="@style/TransparentStatusBar">
 
-            ></activity>
+        </activity>
     </application>
 
 </manifest>

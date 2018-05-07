@@ -8,4 +8,7 @@
     <string name="chakra_5_tips"><![CDATA[self – respect, power, endurance, motivation, effectiveness, fearlessness, true self, confidence & esteem]]></string>
     <string name="chakra_6_tips"><![CDATA[emotional balance, sexual (sexuality) balance, allowance of pleasure in life, trusting & in touch with self]]></string>
     <string name="chakra_7_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
