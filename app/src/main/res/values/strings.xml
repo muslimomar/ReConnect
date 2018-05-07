@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ReConnect</string>
+    <string name="info_1">The highest chakra represents our ability to be fully connected spiritually</string>
+    <string name="chakra_1_tips"><![CDATA[spirituality & peace, transcendence of self/selflessness, expansion of consciousness, miracles & manifestation]]></string>
+    <string name="chakra_2_tips">inner wisdom and powerful intuition, clarity of inner vision, psychic ability, own insights, open to unknowns</string>
+    <string name="chakra_3_tips"><![CDATA[good communication, ability to express self fully, truthful & authentic self, inner & outer self matches]]></string>
+    <string name="chakra_4_tips"><![CDATA[Love for self & others, acceptance of self & others, compassion & forgiveness, genuine relationships]]></string>
+    <string name="chakra_5_tips"><![CDATA[self – respect, power, endurance, motivation, effectiveness, fearlessness, true self, confidence & esteem]]></string>
+    <string name="chakra_6_tips"><![CDATA[emotional balance, sexual (sexuality) balance, allowance of pleasure in life, trusting & in touch with self]]></string>
+    <string name="chakra_7_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
+</resources>
