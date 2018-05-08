@@ -3,13 +3,13 @@ package com.example.william.reconnect.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction().replace(R.id.fragment, new Home()).commit();
+        }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         setupDrawerContent(navigationView);
+
     }
 
 
@@ -57,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = Instructions.class;
                 break;
             case R.id.logout:
-                Toast.makeText(this, "log out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
+                // Intent to Login
                 break;
         }
 
@@ -68,9 +72,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment, myFragment).commit();
-        item.setChecked(true);
-        setTitle(item.getTitle());
+        if (myFragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.fragment, myFragment).commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
+        }
         mDrawerLayout.closeDrawers();
 
     }
