@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
     <!-- Base application theme. -->
     <style name="TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
