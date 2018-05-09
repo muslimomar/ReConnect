@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction().replace(R.id.fragment, new Balance()).commit();
         }
 
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         setupDrawerContent(navigationView);
 
+        // start drawer when first starts
+        mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
 
