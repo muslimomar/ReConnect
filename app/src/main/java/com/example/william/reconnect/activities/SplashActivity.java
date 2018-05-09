@@ -3,10 +3,9 @@ package com.example.william.reconnect.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
-import android.os.Handler;
-import android.support.annotation.MainThread;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.example.william.reconnect.LoginActivity;
@@ -15,14 +14,8 @@ import com.example.william.reconnect.R;
 public class SplashActivity extends AppCompatActivity {
 
 
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Window window = getWindow();
-        window.setFormat(PixelFormat.RGBA_8888);
-    }
 
     SharedPreferences pref;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +26,16 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
 
 
+        //Will handle the splash delay and check if the user is logged in or not
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (pref.getBoolean("IS_LOGIN", false)) {
+                if (pref.getBoolean("IS_LOGIN", true)) {
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
                 } else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    finish();
                 }
             }
         }, 3000);

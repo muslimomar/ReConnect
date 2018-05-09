@@ -2,6 +2,8 @@ package com.example.william.reconnect.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,15 +16,19 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.william.reconnect.LoginActivity;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.fragments.Balance;
 import com.example.william.reconnect.fragments.Home;
 import com.example.william.reconnect.fragments.Instructions;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         setupDrawerContent(navigationView);
 
+        pref = MainActivity.this.getSharedPreferences("MyPref", 0); // 0 - for private mode
+        editor = pref.edit();
+
     }
 
 
@@ -60,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = Instructions.class;
                 break;
             case R.id.logout:
-                Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
+                editor.putBoolean("IS_LOGIN", false);
+                editor.commit();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+
+                //Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
                 // Intent to Login
                 break;
         }
