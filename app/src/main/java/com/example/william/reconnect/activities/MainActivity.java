@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction().replace(R.id.fragment, new Balance()).commit();
         }
 
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);

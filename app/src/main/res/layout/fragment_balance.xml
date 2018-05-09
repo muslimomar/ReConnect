@@ -1,29 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:fillViewport="true"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
         tools:context="com.example.william.reconnect.fragments.Balance">
 
         <android.support.v7.widget.CardView
             android:id="@+id/compliment_card_view"
             android:layout_width="match_parent"
             android:layout_height="130dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#ff9800"
             app:cardCornerRadius="6dp"
-            android:visibility="gone"
-
-            >
+            app:cardElevation="12dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -35,7 +34,9 @@
                     android:orientation="vertical"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+
+                    >
 
                     <TextView
                         android:id="@+id/cheer_tv"
@@ -75,18 +76,18 @@
             android:id="@+id/times_spent_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="6dp"
-            >
+            app:cardCornerRadius="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingRight="@dimen/activity_vertical_margin"
-
-                >
+                android:paddingRight="@dimen/activity_vertical_margin">
 
                 <RelativeLayout
                     android:id="@+id/chakra_spent_layout"
@@ -108,15 +109,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv"
-                        android:text="Chakra Time Spent"
-                        android:textColor="#000000" />
+                        android:text="Chakra"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/chakra_spent_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:text="360 min 44 sec"
+                        android:layout_alignParentTop="true"
+                        android:text="1 hour 360 min 44 sec"
                         android:textColor="#727272" />
 
                 </RelativeLayout>
@@ -126,7 +130,7 @@
                     android:id="@+id/mantra_spent_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -142,15 +146,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_3"
-                        android:text="Mantra Time Spent"
-                        android:textColor="#000000" />
+                        android:text="Mantra"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/mantra_spent_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="360 min 44 sec"
+                        android:text="1 hour 360 min 44 sec"
                         android:textColor="#727272" />
 
                 </RelativeLayout>
@@ -159,7 +164,7 @@
                     android:id="@+id/music_spent_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -175,15 +180,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_4"
-                        android:text="Music Time Spent"
-                        android:textColor="#000000" />
+                        android:text="Music"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/music_spent_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="360 min 44 sec"
+                        android:text="1 hour 360 min 44 sec"
                         android:textColor="#727272" />
 
                 </RelativeLayout>
@@ -194,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -210,15 +216,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_2"
-                        android:text="Silence Time Spent"
-                        android:textColor="#000000" />
+                        android:text="Silence"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/silence_spent_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="360 min 44 sec"
+                        android:text="1 hour 360 min 44 sec"
                         android:textColor="#727272" />
 
                 </RelativeLayout>
@@ -228,17 +235,9 @@
         </android.support.v7.widget.CardView>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            >
-
-        </android.support.v7.widget.RecyclerView>
+        <include layout="@layout/balance_chakras_card_view" />
 
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
