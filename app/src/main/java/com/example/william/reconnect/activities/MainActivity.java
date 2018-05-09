@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().replace(R.id.fragment, new Home()).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment, new Balance()).commit();
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentManager fragmentManager = getFragmentManager();
+        // when logout is selected it will be null
         if (myFragment != null) {
             fragmentManager.beginTransaction().replace(R.id.fragment, myFragment).commit();
             item.setChecked(true);
