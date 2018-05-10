@@ -9,23 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
-        </activity>
+        <activity android:name=".activities.MainActivity"></activity>
         <activity
             android:name=".activities.PlayingChakraActivity"
             android:theme="@style/TransparentStatusBar" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".activities.SplashActivity"
+        <activity
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".activities.MeditationsActivity"></activity>
     </application>
 
 </manifest>
