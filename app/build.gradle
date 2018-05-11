@@ -43,9 +43,13 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     // Gson
     compile 'com.google.code.gson:gson:2.8.3'
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'com.github.DavidProdinger:weekdays-selector:1.0.4'
 
+    compile 'io.apptik.widget:multiselectspinner:1.0.12'
 
 }
+
 
 
 
