@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().replace(R.id.fragment, new Home()).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment, new Balance()).commit();
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         setupDrawerContent(navigationView);
 
+        // start drawer when first starts
+        mDrawerLayout.openDrawer(Gravity.LEFT);
         pref = MainActivity.this.getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
 
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentManager fragmentManager = getFragmentManager();
+        // when logout is selected it will be null
         if (myFragment != null) {
             fragmentManager.beginTransaction().replace(R.id.fragment, myFragment).commit();
             item.setChecked(true);

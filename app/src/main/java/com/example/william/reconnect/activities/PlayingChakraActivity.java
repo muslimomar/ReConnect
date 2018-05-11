@@ -130,7 +130,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         Chakra chakra = chakraList.get(position);
 
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.info_dialog);
+        dialog.setContentView(R.layout.chakra_info_dialog);
         dialog.setCancelable(true);
 
         TextView chakraTitle = dialog.findViewById(R.id.chakra_title);
