@@ -5,16 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="com.example.william.reconnect.activities.ChakraReminder">
+    tools:context="com.example.william.reconnect.activities.ReminderActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/pick_a_time_layout"
@@ -51,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="16:00"
-                    android:textColor="@android:color/tab_indicator_text" />
+                    android:textColor="@color/secondary_text_color" />
 
             </LinearLayout>
 
@@ -114,9 +112,7 @@
             android:id="@+id/music_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -149,19 +145,26 @@
                         android:id="@+id/music_no_music_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No Music" />
+                        android:text="No Music"
+                        android:textColor="@color/secondary_text_color"
+
+                        />
 
                     <RadioButton
                         android:id="@+id/music_random_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Random" />
+                        android:text="Random"
+                        android:textColor="@color/secondary_text_color"
+
+                        />
 
                     <RadioButton
                         android:id="@+id/music_specific_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Specific" />
+                        android:text="Specific"
+                        android:textColor="@color/secondary_text_color" />
 
                 </RadioGroup>
 
@@ -177,13 +180,19 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/chakra_layout_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.1"
+            android:background="@color/black" />
 
         <LinearLayout
             android:id="@+id/chakra_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -216,13 +225,15 @@
                         android:id="@+id/chakra_random_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Random" />
+                        android:text="Random"
+                        android:textColor="@color/secondary_text_color" />
 
                     <RadioButton
                         android:id="@+id/chakra_specific_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Specific" />
+                        android:text="Specific"
+                        android:textColor="@color/secondary_text_color" />
 
                 </RadioGroup>
 
@@ -239,8 +250,8 @@
 
         </LinearLayout>
 
-
         <View
+            android:id="@+id/mantra_layout_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:alpha="0.1"
@@ -287,7 +298,8 @@
                         android:id="@+id/mantra_custom_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Custom" />
+                        android:text="Custom"
+                        android:textColor="@color/secondary_text_color" />
 
                     <EditText
                         android:id="@+id/custom_mantra_et"
@@ -295,32 +307,41 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
                         android:hint="I own who I am"
+                        android:textColor="@color/secondary_text_color"
+                        android:textColorHighlight="@color/secondary_text_color"
+                        android:textColorHint="@color/secondary_text_color"
                         android:textSize="14sp" />
 
                     <RadioButton
                         android:id="@+id/chakra_existing_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Existing Mantra" />
+                        android:text="Existing Mantra"
+                        android:textColor="@color/secondary_text_color" />
 
                 </RadioGroup>
 
-                <Spinner
-                    android:id="@+id/mantra_list_spinner"
+                <LinearLayout
+                    android:id="@+id/mantra_spinner_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
-                    android:layout_marginTop="8dp">
+                    android:orientation="horizontal">
 
-                </Spinner>
+                    <Spinner
+                        android:id="@+id/mantra_first_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
 
-                <io.apptik.widget.multiselectspinner.ExpandableMultiSelectSpinner
-                    android:id="@+id/multi_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:id="@+id/mantra_second_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
 
+                </LinearLayout>
 
-                </io.apptik.widget.multiselectspinner.ExpandableMultiSelectSpinner>
 
             </LinearLayout>
 

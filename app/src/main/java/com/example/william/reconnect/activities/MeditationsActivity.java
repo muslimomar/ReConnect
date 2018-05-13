@@ -14,7 +14,6 @@ import android.widget.ListView;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.adapter.ReminderAdapter;
 import com.example.william.reconnect.model.Reminder;
-import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -30,12 +29,6 @@ public class MeditationsActivity extends AppCompatActivity {
     ReminderAdapter mAdapter;
     @BindView(R.id.list_view)
     ListView listView;
-    @BindView(R.id.chakra_fab)
-    FloatingActionButton chakraFab;
-    @BindView(R.id.mantra_fab)
-    FloatingActionButton mantraFab;
-    @BindView(R.id.music_fab)
-    FloatingActionButton musicFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +76,20 @@ public class MeditationsActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.chakra_fab) public void chakraFab(View view){
-        startActivity(new Intent(this, ChakraReminder.class));
+    @OnClick(R.id.chakra_fab)
+    public void chakraFab(View view) {
+//        Intent intent = new Intent(this, )
     }
+
+    @OnClick(R.id.mantra_fab)
+    public void mantraFab(View view) {
+        startActivity(new Intent(this, ReminderActivity.class));
+    }
+
+    @OnClick(R.id.music_fab)
+    public void musicFab(View view) {
+        startActivity(new Intent(this, ReminderActivity.class));
+    }
+
 
 }
