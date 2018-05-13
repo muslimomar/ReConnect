@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.adapter.ReminderAdapter;
@@ -78,17 +79,23 @@ public class MeditationsActivity extends AppCompatActivity {
 
     @OnClick(R.id.chakra_fab)
     public void chakraFab(View view) {
-//        Intent intent = new Intent(this, )
+        Intent intent = new Intent(this, ReminderActivity.class);
+        intent.putExtra("meditationType", "chakra");
+        startActivity(intent);
     }
 
     @OnClick(R.id.mantra_fab)
     public void mantraFab(View view) {
-        startActivity(new Intent(this, ReminderActivity.class));
+        Intent intent = new Intent(this, ReminderActivity.class);
+        intent.putExtra("meditationType", "mantra");
+        startActivity(intent);
     }
 
     @OnClick(R.id.music_fab)
     public void musicFab(View view) {
-        startActivity(new Intent(this, ReminderActivity.class));
+        Intent intent = new Intent(this, ReminderActivity.class);
+        intent.putExtra("meditationType", "music");
+        startActivity(intent);
     }
 
 

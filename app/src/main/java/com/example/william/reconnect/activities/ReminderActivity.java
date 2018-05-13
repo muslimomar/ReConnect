@@ -1,9 +1,15 @@
 package com.example.william.reconnect.activities;
 
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,18 +18,29 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
+
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
 
 public class ReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
-
     public static String TAG = ReminderActivity.class.getSimpleName();
-
+    public static String meditationType = "";
+    String pickedTime = "";
+    String selectedMusicType = "";
+    String selectedMantraType = "";
+    String selectedChakraType = "";
     @BindView(R.id.music_playback_radio_group)
     RadioGroup musicPlaybackRadioGroup;
     @BindView(R.id.music_list_spinner)
@@ -38,10 +55,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     RadioGroup mantraPlaybackRadioGroup;
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
-
     String[] songs = new String[]{"Eminem - Not Afraid", "Ahmet Kaya", "Halit Bilgic", "Ferhat Tunc"};
-    String[] mantras = new String[]{"Eminem - Not Afraid", "Ahmet Kaya", "Halit Bilgic", "Ferhat Tunc"};
-    String[] chakras = new String[]{"Eminem - Not Afraid", "Ahmet Kaya", "Halit Bilgic", "Ferhat Tunc"};
     @BindView(R.id.pick_a_time_layout)
     LinearLayout pickATimeLayout;
     @BindView(R.id.days_layout)
@@ -62,14 +76,22 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     LinearLayout chakraLayout;
     @BindView(R.id.mantra_custom_rb)
     RadioButton mantraCustomRb;
-    @BindView(R.id.chakra_existing_rb)
-    RadioButton chakraExistingRb;
+    @BindView(R.id.mantra_existing_rb)
+    RadioButton mantraExistingRb;
     @BindView(R.id.mantra_second_spinner)
     Spinner mantraSecondSpinner;
     @BindView(R.id.mantra_spinner_layout)
     LinearLayout mantraSpinnerLayout;
     @BindView(R.id.mantra_layout)
     LinearLayout mantraLayout;
+    @BindView(R.id.chakra_layout_view)
+    View chakraLayoutView;
+    @BindView(R.id.mantra_layout_view)
+    View mantraLayoutView;
+    @BindView(R.id.time_tv)
+    TextView timeTv;
+    @BindView(R.id.day_picker)
+    WeekdaysPicker dayPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +102,149 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        prepareSpinners();
+        Intent intent = getIntent();
+        if (intent != null) {
+            meditationType = intent.getStringExtra("meditationType");
+        }
 
+        prepareSpinners();
         mantraFirstSpinner.setOnItemSelectedListener(this);
+
+        adjustRadiosSpinners();
+        adjustReminderLayout();
+
+
+    }
+
+    private void adjustRadiosSpinners() {
+        // it's disabled by default
+        musicListSpinner.setEnabled(false);
+        customMantraEt.setEnabled(false);
+        mantraFirstSpinner.setEnabled(false);
+        mantraSecondSpinner.setEnabled(false);
+        chakraListSpinner.setEnabled(false);
+
+        musicPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == musicRandomRb.getId()) {
+                    musicListSpinner.setEnabled(false);
+                    selectedMusicType = "random";
+                } else if (i == musicSpecificRb.getId()) {
+                    musicListSpinner.setEnabled(true);
+                    selectedMusicType = musicListSpinner.getSelectedItem().toString();
+                    musicListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectedMusicType = musicListSpinner.getItemAtPosition(i).toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                } else if (i == musicNoMusicRb.getId()) {
+                    musicListSpinner.setEnabled(false);
+                    selectedMusicType = "no_music";
+                }
+
+            }
+        });
+
+        mantraPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == mantraCustomRb.getId()) {
+                    customMantraEt.setEnabled(true);
+                    mantraFirstSpinner.setEnabled(false);
+                    mantraSecondSpinner.setEnabled(false);
+
+                    customMantraEt.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            selectedMantraType = customMantraEt.getText().toString().trim();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
+
+                } else if (i == mantraExistingRb.getId()) {
+                    customMantraEt.setEnabled(false);
+                    mantraFirstSpinner.setEnabled(true);
+                    mantraSecondSpinner.setEnabled(true);
+                    mantraSecondSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectedMantraType = mantraSecondSpinner.getItemAtPosition(i).toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+        chakraPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == chakraSpecificRb.getId()) {
+                    chakraListSpinner.setEnabled(true);
+                    chakraListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectedChakraType = chakraListSpinner.getItemAtPosition(i).toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+
+                } else if (i == chakraRandomRb.getId()) {
+                    chakraListSpinner.setEnabled(false);
+                    selectedChakraType = "random";
+                }
+            }
+        });
+
+    }
+
+    private void adjustReminderLayout() {
+        switch (meditationType) {
+            case "chakra":
+                mantraLayout.setVisibility(View.GONE);
+                chakraLayout.setVisibility(View.VISIBLE);
+                mantraLayoutView.setVisibility(View.GONE);
+                musicNoMusicRb.setVisibility(View.VISIBLE);
+                break;
+            case "mantra":
+                mantraLayout.setVisibility(View.VISIBLE);
+                chakraLayout.setVisibility(View.GONE);
+                musicNoMusicRb.setVisibility(View.VISIBLE);
+                chakraLayoutView.setVisibility(View.GONE);
+
+                break;
+            case "music":
+                mantraLayout.setVisibility(View.GONE);
+                chakraLayout.setVisibility(View.GONE);
+                musicNoMusicRb.setVisibility(View.GONE);
+                chakraLayoutView.setVisibility(View.GONE);
+                mantraLayoutView.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private void prepareSpinners() {
@@ -93,6 +255,15 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.chakras_array));
         mantraFirstSpinner.setAdapter(adapter2);
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.chakras_array));
+        chakraListSpinner.setAdapter(adapter3);
+
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.crown_mantras_array));
+        mantraSecondSpinner.setAdapter(adapter4);
+
     }
 
     @Override
@@ -101,11 +272,68 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.check_btn) {
+            addReminder();
+            return true;
+        }
+        if(item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private void addReminder() {
+
+        if (pickedTime.isEmpty()) {
+            Toast.makeText(this, "Please pick a time!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        List<String> selectedDays = dayPicker.getSelectedDaysText();
+
+        if (musicPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (meditationType) {
+            case "chakra":
+                addChakraReminder();
+                break;
+            case "mantra":
+                addMantraReminder();
+                break;
+        }
+
+    }
+
+    private void addChakraReminder() {
+        if (chakraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+    }
+
+    private void addMantraReminder() {
+
+        if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == mantraCustomRb.getId()
+                && customMantraEt.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Please write your custom Mantra!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                long arg3) {
-
 
         String sp1 = String.valueOf(mantraFirstSpinner.getSelectedItem());
 
@@ -152,6 +380,25 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         dataAdapter.notifyDataSetChanged();
         mantraSecondSpinner.setAdapter(dataAdapter);
 
+    }
+
+    @OnClick(R.id.pick_a_time_layout)
+    public void pickTimeBtn(View view) {
+        Calendar mCurrentTime = Calendar.getInstance();
+        int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mCurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(ReminderActivity.this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        String formattedTime = String.format("%02d:%02d", i, i1);
+                        timeTv.setText(formattedTime);
+                        pickedTime = formattedTime;
+                    }
+                }, hour, minute, true); // 24 hour time
+        mTimePicker.setTitle("Select a time");
+        mTimePicker.show();
     }
 
 }
