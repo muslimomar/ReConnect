@@ -40,11 +40,9 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         TextView reminderName = listItemView.findViewById(R.id.type_tv);
         TextView reminderHour = listItemView.findViewById(R.id.hour_tv);
         TextView reminderDays = listItemView.findViewById(R.id.week_days_tv);
-        TextView reminderMusic = listItemView.findViewById(R.id.music_tv);
 
         reminderHour.setText(reminder.getHours());
         reminderDays.setText(reminder.getWeekDays());
-        reminderMusic.setText(reminder.getMusic());
 
         switch (reminder.getReminderType()) {
             case Reminder.TYPE_CHAKRA:
@@ -63,4 +61,6 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
 
         return listItemView;
     }
+
+
 }

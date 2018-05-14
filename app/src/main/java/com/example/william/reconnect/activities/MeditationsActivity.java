@@ -7,14 +7,15 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.adapter.ReminderAdapter;
 import com.example.william.reconnect.model.Reminder;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ import butterknife.OnClick;
 
 public class MeditationsActivity extends AppCompatActivity {
 
+    public static String TAG = MeditationsActivity.class.getSimpleName();
+    public static int REMINDER_REQUEST_CODE = 20;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     ArrayList<Reminder> reminders = new ArrayList<>();
@@ -39,20 +42,11 @@ public class MeditationsActivity extends AppCompatActivity {
 
         configureActionbar();
 
-        prepareRemindersArrayList();
-
         mAdapter = new ReminderAdapter(this, reminders);
         listView.setAdapter(mAdapter);
 
     }
 
-    private void prepareRemindersArrayList() {
-        reminders.add(new Reminder(Reminder.TYPE_CHAKRA, "12:00", "Sat, Sun", "The Final Scene"));
-        reminders.add(new Reminder(Reminder.TYPE_MANTRA, "02:00", "Sat, Mon", "The Mantra"));
-        reminders.add(new Reminder(Reminder.TYPE_MUSIC, "02:00", "Sat, Mon", "The Mantra"));
-        reminders.add(new Reminder(Reminder.TYPE_MANTRA, "02:00", "Sat, Mon", "The Mantra"));
-
-    }
 
     private void configureActionbar() {
         ActionBar actionBar = getSupportActionBar();
@@ -81,22 +75,34 @@ public class MeditationsActivity extends AppCompatActivity {
     public void chakraFab(View view) {
         Intent intent = new Intent(this, ReminderActivity.class);
         intent.putExtra("meditationType", "chakra");
-        startActivity(intent);
+        startActivityForResult(intent, REMINDER_REQUEST_CODE);
     }
 
     @OnClick(R.id.mantra_fab)
     public void mantraFab(View view) {
         Intent intent = new Intent(this, ReminderActivity.class);
         intent.putExtra("meditationType", "mantra");
-        startActivity(intent);
+        startActivityForResult(intent, REMINDER_REQUEST_CODE);
     }
 
     @OnClick(R.id.music_fab)
     public void musicFab(View view) {
         Intent intent = new Intent(this, ReminderActivity.class);
         intent.putExtra("meditationType", "music");
-        startActivity(intent);
+        startActivityForResult(intent, REMINDER_REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REMINDER_REQUEST_CODE && resultCode == RESULT_OK) {
+            String reminderJson = data.getExtras().getString("reminder_json");
+            Reminder reminder = new Gson().fromJson(reminderJson, Reminder.class);
 
+            reminders.add(reminder);
+            mAdapter.notifyDataSetChanged();
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

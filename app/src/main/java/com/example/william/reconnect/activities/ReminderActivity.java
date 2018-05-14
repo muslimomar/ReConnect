@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.model.Reminder;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +43,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     String selectedMusicType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
+    List<String> selectedDays;
     @BindView(R.id.music_playback_radio_group)
     RadioGroup musicPlaybackRadioGroup;
     @BindView(R.id.music_list_spinner)
@@ -105,6 +108,18 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         Intent intent = getIntent();
         if (intent != null) {
             meditationType = intent.getStringExtra("meditationType");
+
+            switch (meditationType) {
+                case "chakra":
+                    setTitle("Add Chakra");
+                    break;
+                case "mantra":
+                    setTitle("Add Mantra");
+                    break;
+                case "music":
+                    setTitle("Add Music");
+                    break;
+            }
         }
 
         prepareSpinners();
@@ -278,7 +293,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             addReminder();
             return true;
         }
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
         }
         return super.onOptionsItemSelected(item);
@@ -292,12 +307,13 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             return;
         }
 
-        List<String> selectedDays = dayPicker.getSelectedDaysText();
+        selectedDays = dayPicker.getSelectedDaysText();
 
         if (musicPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         switch (meditationType) {
             case "chakra":
@@ -306,7 +322,16 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             case "mantra":
                 addMantraReminder();
                 break;
+            case "music":
+                Intent intent = new Intent(this, MeditationsActivity.class);
+                Reminder musicReminder = Reminder.createMusicReminder(Reminder.TYPE_MUSIC, pickedTime, selectedDays.toString(), selectedMusicType);
+                String musicReminderJson = (new Gson().toJson(musicReminder));
+                intent.putExtra("reminder_json", musicReminderJson);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
         }
+
 
     }
 
@@ -315,6 +340,14 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        Reminder chakraReminder = Reminder.createChakraReminder(Reminder.TYPE_CHAKRA, pickedTime, selectedDays.toString(), selectedMusicType, selectedChakraType);
+
+        Intent intent = new Intent(this, MeditationsActivity.class);
+        String chakraReminderJson = (new Gson().toJson(chakraReminder));
+        intent.putExtra("reminder_json", chakraReminderJson);
+        setResult(RESULT_OK, intent);
+        finish();
 
     }
 
@@ -328,6 +361,15 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             Toast.makeText(this, "Please write your custom Mantra!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        Reminder mantraReminder = Reminder.createMantraReminder(Reminder.TYPE_MANTRA, pickedTime, selectedDays.toString(), selectedMusicType, selectedMantraType);
+
+        Intent intent = new Intent(this, MeditationsActivity.class);
+        String mantraReminderJson = (new Gson().toJson(mantraReminder));
+        intent.putExtra("reminder_json", mantraReminderJson);
+        setResult(RESULT_OK, intent);
+        finish();
+
 
     }
 

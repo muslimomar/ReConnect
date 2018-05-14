@@ -6,6 +6,8 @@
         android:id="@+id/check_btn"
         android:icon="@drawable/ic_done_white_24dp"
         android:title="Action Done"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        
+        />
 
 </menu>

@@ -12,7 +12,9 @@ public class Reminder {
     private int reminderType;
     private String hours;
     private String weekDays;
-    private String music;
+    private String musicPlaybackType;
+    private String mantraPlaybackType;
+    private String chakraPlaybackTYpe;
 
     public int getReminderType() {
         return reminderType;
@@ -38,18 +40,51 @@ public class Reminder {
         this.weekDays = weekDays;
     }
 
-    public String getMusic() {
-        return music;
+    public String getMusicPlaybackType() {
+        return musicPlaybackType;
     }
 
-    public void setMusic(String music) {
-        this.music = music;
+    public void setMusicPlaybackType(String musicPlaybackType) {
+        this.musicPlaybackType = musicPlaybackType;
     }
 
-    public Reminder(int reminderType, String hours, String weekDays, String music) {
+    public String getMantraPlaybackType() {
+        return mantraPlaybackType;
+    }
+
+    public void setMantraPlaybackType(String mantraPlaybackType) {
+        this.mantraPlaybackType = mantraPlaybackType;
+    }
+
+    public String getChakraPlaybackTYpe() {
+        return chakraPlaybackTYpe;
+    }
+
+    public void setChakraPlaybackTYpe(String chakraPlaybackTYpe) {
+        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
+    }
+
+    public Reminder(int reminderType, String hours, String weekDays, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe) {
         this.reminderType = reminderType;
         this.hours = hours;
         this.weekDays = weekDays;
-        this.music = music;
+        this.musicPlaybackType = musicPlaybackType;
+        this.mantraPlaybackType = mantraPlaybackType;
+        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
     }
+
+    public static Reminder createMusicReminder(int reminderType, String hours, String weekDays, String musicPlaybackType) {
+        return new Reminder(reminderType, hours, weekDays, musicPlaybackType, "", "");
+    }
+
+    public static Reminder createMantraReminder(int reminderType, String hours, String weekDays, String musicPlaybackType, String mantraPlaybackType) {
+        return new Reminder(reminderType, hours, weekDays, musicPlaybackType, mantraPlaybackType,"");
+    }
+
+    public static Reminder createChakraReminder(int reminderType, String hours, String weekDays, String musicPlaybackType, String chakraPlaybackTYpe) {
+        return new Reminder(reminderType, hours, weekDays, musicPlaybackType, chakraPlaybackTYpe,"");
+    }
+
+
+
 }
