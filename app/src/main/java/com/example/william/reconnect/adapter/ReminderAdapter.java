@@ -41,8 +41,16 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         TextView reminderHour = listItemView.findViewById(R.id.hour_tv);
         TextView reminderDays = listItemView.findViewById(R.id.week_days_tv);
 
+        String weekDays = "";
+        for (int i = 0; i < reminder.getWeekDaysList().size(); i++) {
+            weekDays += reminder.getWeekDaysList().get(i).substring(0, 3);
+            if (i + 1 != reminder.getWeekDaysList().size()) {
+                weekDays += ", ";
+            }
+        }
+
         reminderHour.setText(reminder.getHours());
-        reminderDays.setText(reminder.getWeekDays());
+        reminderDays.setText(weekDays);
 
         switch (reminder.getReminderType()) {
             case Reminder.TYPE_CHAKRA:

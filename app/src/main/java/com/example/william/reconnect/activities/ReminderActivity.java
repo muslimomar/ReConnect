@@ -324,7 +324,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
                 break;
             case "music":
                 Intent intent = new Intent(this, MeditationsActivity.class);
-                Reminder musicReminder = Reminder.createMusicReminder(Reminder.TYPE_MUSIC, pickedTime, selectedDays.toString(), selectedMusicType);
+                Reminder musicReminder = Reminder.createMusicReminder(Reminder.TYPE_MUSIC, pickedTime, selectedDays, selectedMusicType);
                 String musicReminderJson = (new Gson().toJson(musicReminder));
                 intent.putExtra("reminder_json", musicReminderJson);
                 setResult(RESULT_OK, intent);
@@ -341,7 +341,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             return;
         }
 
-        Reminder chakraReminder = Reminder.createChakraReminder(Reminder.TYPE_CHAKRA, pickedTime, selectedDays.toString(), selectedMusicType, selectedChakraType);
+        Reminder chakraReminder = Reminder.createChakraReminder(Reminder.TYPE_CHAKRA, pickedTime, selectedDays, selectedMusicType, selectedChakraType);
 
         Intent intent = new Intent(this, MeditationsActivity.class);
         String chakraReminderJson = (new Gson().toJson(chakraReminder));
@@ -362,14 +362,13 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             return;
         }
 
-        Reminder mantraReminder = Reminder.createMantraReminder(Reminder.TYPE_MANTRA, pickedTime, selectedDays.toString(), selectedMusicType, selectedMantraType);
+        Reminder mantraReminder = Reminder.createMantraReminder(Reminder.TYPE_MANTRA, pickedTime, selectedDays, selectedMusicType, selectedMantraType);
 
         Intent intent = new Intent(this, MeditationsActivity.class);
         String mantraReminderJson = (new Gson().toJson(mantraReminder));
         intent.putExtra("reminder_json", mantraReminderJson);
         setResult(RESULT_OK, intent);
         finish();
-
 
     }
 

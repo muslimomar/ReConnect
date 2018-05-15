@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.adapter.ReminderAdapter;
@@ -18,6 +21,7 @@ import com.example.william.reconnect.model.Reminder;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +49,57 @@ public class MeditationsActivity extends AppCompatActivity {
         mAdapter = new ReminderAdapter(this, reminders);
         listView.setAdapter(mAdapter);
 
+        dummyData();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            View deletedView = null;
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                // edit the selected day
+deletedView = view;
+
+
+             // play button
+                ImageView playBtn = view.findViewById(R.id.play_btn);
+                playBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(MeditationsActivity.this, "Play (:", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+             // delete button
+                ImageView deleteBtn = view.findViewById(R.id.delete_btn);
+                deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mAdapter.remove(mAdapter.getItem(i));
+                    }
+                });
+
+            }
+        });
+
+
+
+    }
+
+    private void dummyData() {
+
+        List<String> list = new ArrayList<>();
+        list.add("Saturday");
+        list.add("Monday");
+        list.add("Friday");
+
+        Reminder reminder = new Reminder(Reminder.TYPE_MUSIC, "12:00",list, "random","","");
+        Reminder reminder2 = new Reminder(Reminder.TYPE_MUSIC, "12:00",list, "random","","");
+        Reminder reminder3 = new Reminder(Reminder.TYPE_MUSIC, "12:00",list, "random","","");
+        reminders.add(reminder);
+        reminders.add(reminder2);
+        reminders.add(reminder3);
+        mAdapter.notifyDataSetChanged();
     }
 
 

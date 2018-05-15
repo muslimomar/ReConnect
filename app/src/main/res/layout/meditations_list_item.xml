@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/activity_horizontal_margin">
 
@@ -15,11 +15,15 @@
 
     <LinearLayout
         android:id="@+id/details_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
 
         <TextView
             android:id="@+id/type_tv"
@@ -40,34 +44,53 @@
             android:id="@+id/week_days_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:textColor="@android:color/tab_indicator_text"
-            tools:text="Mon, Sun, Tue"
-            android:layout_marginTop="8dp"
-            />
+            tools:text="Mon, Sun, Tue Mon, Sun, Tue, Thu" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/icons_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:descendantFocusability="blocksDescendants"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingRight="11dp"
+        android:layout_weight="1"
+        >
 
         <ImageView
+            android:id="@+id/play_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            tools:src="@drawable/ic_play" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5dp"
+            android:src="@drawable/ic_play_circle_black_24dp"
+            android:tint="#4CAF50"
+            android:layout_weight="1"
+            />
 
         <ImageView
+            android:id="@+id/delete_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
-            tools:src="@drawable/ic_delete" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5dp"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:tint="#FF0000"
+android:layout_weight="1"
+            />
 
     </LinearLayout>
 

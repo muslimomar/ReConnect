@@ -1,5 +1,7 @@
 package com.example.william.reconnect.model;
 
+import java.util.List;
+
 /**
  * Created by william on 5/11/2018.
  */
@@ -11,7 +13,8 @@ public class Reminder {
 
     private int reminderType;
     private String hours;
-    private String weekDays;
+    private List<String> weekDaysList;
+
     private String musicPlaybackType;
     private String mantraPlaybackType;
     private String chakraPlaybackTYpe;
@@ -32,12 +35,12 @@ public class Reminder {
         this.hours = hours;
     }
 
-    public String getWeekDays() {
-        return weekDays;
+    public List<String> getWeekDaysList() {
+        return weekDaysList;
     }
 
-    public void setWeekDays(String weekDays) {
-        this.weekDays = weekDays;
+    public void setWeekDaysList(List<String> weekDaysList) {
+        this.weekDaysList = weekDaysList;
     }
 
     public String getMusicPlaybackType() {
@@ -64,24 +67,24 @@ public class Reminder {
         this.chakraPlaybackTYpe = chakraPlaybackTYpe;
     }
 
-    public Reminder(int reminderType, String hours, String weekDays, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe) {
+    public Reminder(int reminderType, String hours, List<String> weekDays, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe) {
         this.reminderType = reminderType;
         this.hours = hours;
-        this.weekDays = weekDays;
+        this.weekDaysList = weekDays;
         this.musicPlaybackType = musicPlaybackType;
         this.mantraPlaybackType = mantraPlaybackType;
         this.chakraPlaybackTYpe = chakraPlaybackTYpe;
     }
 
-    public static Reminder createMusicReminder(int reminderType, String hours, String weekDays, String musicPlaybackType) {
+    public static Reminder createMusicReminder(int reminderType, String hours, List<String> weekDays, String musicPlaybackType) {
         return new Reminder(reminderType, hours, weekDays, musicPlaybackType, "", "");
     }
 
-    public static Reminder createMantraReminder(int reminderType, String hours, String weekDays, String musicPlaybackType, String mantraPlaybackType) {
+    public static Reminder createMantraReminder(int reminderType, String hours, List<String> weekDays, String musicPlaybackType, String mantraPlaybackType) {
         return new Reminder(reminderType, hours, weekDays, musicPlaybackType, mantraPlaybackType,"");
     }
 
-    public static Reminder createChakraReminder(int reminderType, String hours, String weekDays, String musicPlaybackType, String chakraPlaybackTYpe) {
+    public static Reminder createChakraReminder(int reminderType, String hours, List<String> weekDays, String musicPlaybackType, String chakraPlaybackTYpe) {
         return new Reminder(reminderType, hours, weekDays, musicPlaybackType, chakraPlaybackTYpe,"");
     }
 
