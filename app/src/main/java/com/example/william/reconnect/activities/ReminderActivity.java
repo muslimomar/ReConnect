@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
-import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,17 +32,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
 
 public class ReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
     public static String TAG = ReminderActivity.class.getSimpleName();
-    public static String meditationType = "";
+    public static int meditationType = 0;
     String pickedTime = "";
     String selectedMusicType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
-    List<String> selectedDays;
+    RealmList<String> selectedDays = new RealmList<>();
     @BindView(R.id.music_playback_radio_group)
     RadioGroup musicPlaybackRadioGroup;
     @BindView(R.id.music_list_spinner)
@@ -96,6 +97,13 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     @BindView(R.id.day_picker)
     WeekdaysPicker dayPicker;
 
+    Realm realm;
+
+    public static final int TYPE_CHAKRA = 0;
+    public static final int TYPE_MANTRA = 1;
+    public static final int TYPE_MUSIC = 2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,16 +115,16 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
 
         Intent intent = getIntent();
         if (intent != null) {
-            meditationType = intent.getStringExtra("meditationType");
+            meditationType = intent.getIntExtra("meditationType", 0);
 
             switch (meditationType) {
-                case "chakra":
+                case Reminder.TYPE_CHAKRA:
                     setTitle("Add Chakra");
                     break;
-                case "mantra":
+                case Reminder.TYPE_MANTRA:
                     setTitle("Add Mantra");
                     break;
-                case "music":
+                case Reminder.TYPE_MUSIC:
                     setTitle("Add Music");
                     break;
             }
@@ -128,7 +136,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         adjustRadiosSpinners();
         adjustReminderLayout();
 
-
+        realm = Realm.getDefaultInstance();
     }
 
     private void adjustRadiosSpinners() {
@@ -239,20 +247,20 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
 
     private void adjustReminderLayout() {
         switch (meditationType) {
-            case "chakra":
+            case Reminder.TYPE_CHAKRA:
                 mantraLayout.setVisibility(View.GONE);
                 chakraLayout.setVisibility(View.VISIBLE);
                 mantraLayoutView.setVisibility(View.GONE);
                 musicNoMusicRb.setVisibility(View.VISIBLE);
                 break;
-            case "mantra":
+            case Reminder.TYPE_MANTRA:
                 mantraLayout.setVisibility(View.VISIBLE);
                 chakraLayout.setVisibility(View.GONE);
                 musicNoMusicRb.setVisibility(View.VISIBLE);
                 chakraLayoutView.setVisibility(View.GONE);
 
                 break;
-            case "music":
+            case Reminder.TYPE_MUSIC:
                 mantraLayout.setVisibility(View.GONE);
                 chakraLayout.setVisibility(View.GONE);
                 musicNoMusicRb.setVisibility(View.GONE);
@@ -301,13 +309,18 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     }
 
     private void addReminder() {
-
+        // essentials for (Music, Chakra and Mantra)
         if (pickedTime.isEmpty()) {
             Toast.makeText(this, "Please pick a time!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        selectedDays = dayPicker.getSelectedDaysText();
+        List<String> days = dayPicker.getSelectedDaysText();
+        for (String day :
+                days) {
+            selectedDays.add(day);
+        }
+
 
         if (musicPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
@@ -315,62 +328,48 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         }
 
 
-        switch (meditationType) {
-            case "chakra":
-                addChakraReminder();
-                break;
-            case "mantra":
-                addMantraReminder();
-                break;
-            case "music":
-                Intent intent = new Intent(this, MeditationsActivity.class);
-                Reminder musicReminder = Reminder.createMusicReminder(Reminder.TYPE_MUSIC, pickedTime, selectedDays, selectedMusicType);
-                String musicReminderJson = (new Gson().toJson(musicReminder));
-                intent.putExtra("reminder_json", musicReminderJson);
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
+        if (meditationType == Reminder.TYPE_MUSIC) {
+            // music add
+
+        } else if (meditationType == Reminder.TYPE_MANTRA) {
+            // mantra add
+            if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+                Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == mantraCustomRb.getId()
+                    && customMantraEt.getText().toString().trim().isEmpty()) {
+                Toast.makeText(this, "Please write your custom Mantra!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        } else if (meditationType == Reminder.TYPE_CHAKRA) {
+            // chakra add
+            if (chakraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+                Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
-
+        saveDataToRealm();
     }
 
-    private void addChakraReminder() {
-        if (chakraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+    private void saveDataToRealm() {
+        Reminder reminder = new Reminder(
+                meditationType,
+                selectedMusicType,
+                selectedMantraType,
+                selectedChakraType,
+                pickedTime,
+                selectedDays
+        );
 
-        Reminder chakraReminder = Reminder.createChakraReminder(Reminder.TYPE_CHAKRA, pickedTime, selectedDays, selectedMusicType, selectedChakraType);
-
-        Intent intent = new Intent(this, MeditationsActivity.class);
-        String chakraReminderJson = (new Gson().toJson(chakraReminder));
-        intent.putExtra("reminder_json", chakraReminderJson);
-        setResult(RESULT_OK, intent);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(reminder);
+        realm.commitTransaction();
         finish();
-
     }
 
-    private void addMantraReminder() {
-
-        if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == mantraCustomRb.getId()
-                && customMantraEt.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Please write your custom Mantra!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Reminder mantraReminder = Reminder.createMantraReminder(Reminder.TYPE_MANTRA, pickedTime, selectedDays, selectedMusicType, selectedMantraType);
-
-        Intent intent = new Intent(this, MeditationsActivity.class);
-        String mantraReminderJson = (new Gson().toJson(mantraReminder));
-        intent.putExtra("reminder_json", mantraReminderJson);
-        setResult(RESULT_OK, intent);
-        finish();
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
@@ -401,8 +400,6 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
                 prepareMantrasList(R.array.root_mantras_array);
                 break;
         }
-
-
     }
 
 
