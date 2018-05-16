@@ -7,6 +7,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,9 @@ import io.realm.RealmList;
 import static android.widget.AdapterView.OnItemSelectedListener;
 
 public class ReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
+    public static final int TYPE_CHAKRA = 0;
+    public static final int TYPE_MANTRA = 1;
+    public static final int TYPE_MUSIC = 2;
     public static String TAG = ReminderActivity.class.getSimpleName();
     public static int meditationType = 0;
     String pickedTime = "";
@@ -96,13 +100,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     TextView timeTv;
     @BindView(R.id.day_picker)
     WeekdaysPicker dayPicker;
-
     Realm realm;
-
-    public static final int TYPE_CHAKRA = 0;
-    public static final int TYPE_MANTRA = 1;
-    public static final int TYPE_MUSIC = 2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,7 +307,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     }
 
     private void addReminder() {
-        // essentials for (Music, Chakra and Mantra)
+
         if (pickedTime.isEmpty()) {
             Toast.makeText(this, "Please pick a time!", Toast.LENGTH_SHORT).show();
             return;
@@ -327,12 +325,8 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             return;
         }
 
-
-        if (meditationType == Reminder.TYPE_MUSIC) {
-            // music add
-
-        } else if (meditationType == Reminder.TYPE_MANTRA) {
-            // mantra add
+        // Add Mantra Day
+        if (meditationType == Reminder.TYPE_MANTRA) {
             if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
                 Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
                 return;
@@ -341,7 +335,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
                 Toast.makeText(this, "Please write your custom Mantra!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
+            // Add Chakra Day
         } else if (meditationType == Reminder.TYPE_CHAKRA) {
             // chakra add
             if (chakraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
@@ -350,8 +344,10 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
             }
         }
 
+        // Here it will add all data to the Database!
         saveDataToRealm();
     }
+
 
     private void saveDataToRealm() {
         Reminder reminder = new Reminder(

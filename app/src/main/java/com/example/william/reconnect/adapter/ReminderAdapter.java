@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 import static com.example.william.reconnect.activities.ReminderActivity.TAG;
@@ -70,18 +71,22 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
                         Log.d(TAG, "execute: " + isDeleted);
                     }
                 });
-                Animation animation = AnimationUtils.loadAnimation(getContext(),android.R.anim.fade_out);
+                Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
                 animation.setDuration(500);
                 finalListItemView.startAnimation(animation);
                 animation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-
+                        // disable the button to prevent the user from clicking on it, when the
+                        // fading out is in progress (Because the item would've been already deleted in Realm, clicking it again will cause it to crash).
+                        // plus to prevent repeating the animation (:
+                        deleteBtn.setEnabled(false);
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         remove(getItem(position));
+                        deleteBtn.setEnabled(true);
                     }
 
                     @Override
@@ -93,13 +98,7 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
             }
         });
 
-        String weekDays = "";
-        for (int i = 0; i < reminder.getWeekDays().size(); i++) {
-            weekDays += reminder.getWeekDays().get(i).substring(0, 3);
-            if (i + 1 != reminder.getWeekDays().size()) {
-                weekDays += ", ";
-            }
-        }
+        String weekDays = ArrayToOrderedString(reminder.getWeekDays());
 
         reminderHour.setText(reminder.getHours());
         reminderDays.setText(weekDays);
@@ -120,6 +119,18 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         }
 
         return listItemView;
+    }
+
+    private String ArrayToOrderedString(RealmList<String> weekDays) {
+        String weekDaysString = "";
+
+        for (int i = 0; i < weekDays.size(); i++) {
+            weekDaysString += weekDays.get(i).substring(0, 3);
+            if (i + 1 != weekDays.size()) {
+                weekDaysString += ", ";
+            }
+        }
+        return weekDaysString;
     }
 
     public void updateReminders(RealmResults results) {

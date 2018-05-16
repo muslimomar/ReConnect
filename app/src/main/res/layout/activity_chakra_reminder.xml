@@ -10,9 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
 
         >
 
@@ -20,20 +20,18 @@
             android:id="@+id/pick_a_time_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="8dp"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            >
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_chakra_small"
                 android:paddingLeft="8dp"
-                />
+                android:src="@drawable/ic_chakra_small" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -185,8 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="@dimen/space_between_elments"
-                    android:spinnerMode="dropdown"
-                    />
+                    android:spinnerMode="dropdown" />
 
             </LinearLayout>
 
@@ -281,8 +278,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
                 android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
                 android:src="@drawable/ic_mantra_small" />
 
             <LinearLayout
@@ -321,6 +318,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
                         android:hint="I own who I am"
+                        android:maxLength="140"
                         android:textColor="@color/secondary_text_color"
                         android:textColorHighlight="@color/secondary_text_color"
                         android:textColorHint="@color/secondary_text_color"
@@ -346,15 +344,13 @@
                         android:id="@+id/mantra_first_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:layout_gravity="center_vertical" />
 
                     <Spinner
                         android:id="@+id/mantra_second_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:layout_gravity="center_vertical" />
 
                 </LinearLayout>
 
