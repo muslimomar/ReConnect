@@ -40,8 +40,6 @@
                 android:value=".activities.MainActivity" />
 
         </activity>
-<<<<<<< HEAD
-=======
         <activity
             android:name=".activities.SilenceDay"
             android:theme="@style/SplashTheme"
@@ -54,7 +52,6 @@
             android:theme="@style/SplashTheme">
 
         </activity>
->>>>>>> 24f7d014063e027d46ec72a4c6b3e5defdf482a5
     </application>
 
 </manifest>
