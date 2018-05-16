@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity" />
+
+        <activity android:name=".activities.MainActivity"></activity>
+
         <activity
             android:name=".activities.PlayingChakraActivity"
             android:theme="@style/TransparentStatusBar" />
@@ -38,6 +40,21 @@
                 android:value=".activities.MainActivity" />
 
         </activity>
+<<<<<<< HEAD
+=======
+        <activity
+            android:name=".activities.SilenceDay"
+            android:theme="@style/SplashTheme"
+
+            >
+
+        </activity>
+        <activity
+            android:name=".activities.SilenceChoseSign"
+            android:theme="@style/SplashTheme">
+
+        </activity>
+>>>>>>> 24f7d014063e027d46ec72a4c6b3e5defdf482a5
     </application>
 
 </manifest>
