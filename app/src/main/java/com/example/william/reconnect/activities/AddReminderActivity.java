@@ -7,7 +7,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,11 +37,11 @@ import io.realm.RealmList;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
 
-public class ReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
+public class AddReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
     public static final int TYPE_CHAKRA = 0;
     public static final int TYPE_MANTRA = 1;
     public static final int TYPE_MUSIC = 2;
-    public static String TAG = ReminderActivity.class.getSimpleName();
+    public static String TAG = AddReminderActivity.class.getSimpleName();
     public static int meditationType = 0;
     String pickedTime = "";
     String selectedMusicType = "";
@@ -105,7 +104,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chakra_reminder);
+        setContentView(R.layout.activity_add_reminder);
         ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -135,6 +134,19 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         adjustReminderLayout();
 
         realm = Realm.getDefaultInstance();
+   
+        defaultDummyData();
+        addReminder();
+    }
+
+    private void defaultDummyData() {
+        pickedTime = "16:00";
+        selectedDays.add("Monday");
+        selectedDays.add("Tuesday");
+        selectedDays.add("Friday");
+        musicNoMusicRb.setChecked(true);
+        chakraRandomRb.setChecked(true);
+        mantraExistingRb.setChecked(true);
     }
 
     private void adjustRadiosSpinners() {
@@ -422,7 +434,7 @@ public class ReminderActivity extends AppCompatActivity implements OnItemSelecte
         int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mCurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(ReminderActivity.this,
+        mTimePicker = new TimePickerDialog(AddReminderActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {

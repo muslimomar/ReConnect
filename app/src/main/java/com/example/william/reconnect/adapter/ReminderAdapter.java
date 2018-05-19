@@ -23,7 +23,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-import static com.example.william.reconnect.activities.ReminderActivity.TAG;
+import static com.example.william.reconnect.activities.AddReminderActivity.TAG;
 
 
 public class ReminderAdapter extends ArrayAdapter<Reminder> {
@@ -57,20 +57,21 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer index = (Integer) deleteBtn.getTag();
+                final Integer index = (Integer) deleteBtn.getTag();
                 Reminder deletedReminder = getItem(index);
                 if (deletedReminder == null) {
                     return;
                 }
 
-                final String id = deletedReminder.getId();
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        boolean isDeleted = realm.where(Reminder.class).equalTo("id", id).findAll().deleteAllFromRealm();
-                        Log.d(TAG, "execute: " + isDeleted);
-                    }
-                });
+                String id = deletedReminder.getId();
+                realm.beginTransaction();
+                boolean isDeleted = realm.where(Reminder.class)
+                        .equalTo("id", id)
+                        .findAll()
+                        .deleteAllFromRealm();
+                realm.commitTransaction();
+                Log.d(TAG, "execute: " + isDeleted);
+
                 Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
                 animation.setDuration(500);
                 finalListItemView.startAnimation(animation);
@@ -85,7 +86,10 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        remove(getItem(position));
+                        Reminder reminder = getItem(index);
+
+
+                        remove(reminder);
                         deleteBtn.setEnabled(true);
                     }
 

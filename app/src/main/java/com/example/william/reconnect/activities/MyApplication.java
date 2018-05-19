@@ -16,7 +16,10 @@ public class MyApplication extends Application {
         super.onCreate();
 
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("meditation.realm")
+                .build();
         Realm.setDefaultConfiguration(config);
+
     }
 }

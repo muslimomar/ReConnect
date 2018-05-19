@@ -33,7 +33,7 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.ReminderActivity"
+            android:name=".activities.AddReminderActivity"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

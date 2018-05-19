@@ -72,14 +72,14 @@ public class MeditationsActivity extends AppCompatActivity {
 
     @OnClick(R.id.chakra_fab)
     public void chakraFab(View view) {
-        Intent intent = new Intent(this, ReminderActivity.class);
+        Intent intent = new Intent(this, AddReminderActivity.class);
         intent.putExtra("meditationType", Reminder.TYPE_CHAKRA);
         startActivity(intent);
     }
 
     @OnClick(R.id.mantra_fab)
     public void mantraFab(View view) {
-        Intent intent = new Intent(this, ReminderActivity.class);
+        Intent intent = new Intent(this, AddReminderActivity.class);
         intent.putExtra("meditationType", Reminder.TYPE_MANTRA);
         startActivity(intent);
 
@@ -87,7 +87,7 @@ public class MeditationsActivity extends AppCompatActivity {
 
     @OnClick(R.id.music_fab)
     public void musicFab(View view) {
-        Intent intent = new Intent(this, ReminderActivity.class);
+        Intent intent = new Intent(this, AddReminderActivity.class);
         intent.putExtra("meditationType", Reminder.TYPE_MUSIC);
         startActivity(intent);
     }

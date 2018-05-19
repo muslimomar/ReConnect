@@ -28,6 +28,16 @@ public class Reminder extends RealmObject {
     public Reminder() {
     }
 
+    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe, String hours, RealmList<String> weekDays) {
+        this.id = UUID.randomUUID().toString();
+        this.reminderType = reminderType;
+        this.musicPlaybackType = musicPlaybackType;
+        this.mantraPlaybackType = mantraPlaybackType;
+        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
+        this.hours = hours;
+        this.weekDays = weekDays;
+    }
+
     public String getId() {
         return id;
     }
@@ -81,16 +91,6 @@ public class Reminder extends RealmObject {
     }
 
     public void setWeekDays(RealmList<String> weekDays) {
-        this.weekDays = weekDays;
-    }
-
-    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe, String hours, RealmList<String> weekDays) {
-        this.id = UUID.randomUUID().toString();
-        this.reminderType = reminderType;
-        this.musicPlaybackType = musicPlaybackType;
-        this.mantraPlaybackType = mantraPlaybackType;
-        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
-        this.hours = hours;
         this.weekDays = weekDays;
     }
 
