@@ -5,19 +5,21 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/logo"
 
         />
 
     <EditText
         android:id="@+id/editTextEmail"
-        android:layout_width="319.7dp"
-        android:layout_height="48.7dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_below="@id/logo"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
         android:inputType="textEmailAddress"
@@ -29,11 +31,13 @@
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="319.7dp"
-        android:layout_height="48.7dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_below="@id/editTextEmail"
         android:layout_centerInParent="true"
         android:layout_marginTop="4.7dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/transparent_bg"
         android:drawableLeft="@drawable/password_icon"
         android:drawablePadding="6dp"
@@ -43,11 +47,13 @@
 
     <Button
         android:id="@+id/login_btn"
-        android:layout_width="181dp"
-        android:layout_height="38.3dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
         android:layout_below="@id/editTextPassword"
         android:layout_centerInParent="true"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/btn_rect"
         android:letterSpacing="0.01"
         android:lineSpacingExtra="-8sp"
@@ -58,8 +64,10 @@
 
     <Button
         android:id="@+id/signup_btn"
-        android:layout_width="181dp"
+        android:layout_width="match_parent"
         android:layout_height="38.3dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="100dp"
         android:layout_below="@id/login_btn"
         android:layout_centerInParent="true"
         android:layout_marginTop="11dp"
@@ -77,11 +85,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView"
         android:layout_alignBottom="@+id/textView"
-        android:layout_alignLeft="@+id/logo"
-        android:layout_alignStart="@+id/logo"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_alignLeft="@+id/editTextPassword"
+        android:layout_alignStart="@+id/editTextPassword"
         android:text="Forgot your password?"
+        android:layout_marginLeft="80dp"
         android:textColor="#403737" />
 
     <TextView
@@ -90,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/signup_btn"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="31.7dp"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@id/forgot"
         android:onClick="onForgot"
         android:text="Click Here"
@@ -98,7 +105,7 @@
 
 
     <ProgressBar
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progressbar"
         android:layout_centerVertical="true"

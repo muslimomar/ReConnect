@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ReConnect</string>
     <string name="info_1">The highest chakra represents our ability to be fully connected spiritually</string>
     <string name="chakra_1_tips"><![CDATA[spirituality & peace, transcendence of self/selflessness, expansion of consciousness, miracles & manifestation]]></string>
@@ -10,5 +10,27 @@
     <string name="chakra_7_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="seeguide">See guidelines</string>
+    <string name="moreinfo">More Info?</string>
+    <string name="silence_day_info"><![CDATA[Choose a convenient day to practice Silence/Non-Talking You CAN still do the usual things (perhaps not job) but will just be doing things without the added talking.]]></string>
+    <string name="silence_day">Silence Day</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="choos">Choose Sign</string>
+    <string name="insilence">In Silence</string>
+    <string name="iopted">I’ve opted for a Silent - Non-Talking day</string>
+    <string name="ipractis">I’m practising being “In Silence” today</string>
+    <string name="irefraining">I’m refraining from talking today</string>
+    <string name="ikeep">I’m keeping communication to the minimum today please respect this by not inviting conversation</string>
+    <string name="talking"><![CDATA[Talking & Communicating burns energy, so I am taking a break from this]]></string>
+    <string name="mindful">I am practising Mindful Silence today</string>
+    <string name="having">I am having a “Silent Retreat” day today</string>
+    <string name="create">Create My Own</string>
+    <string name="whychoos" tools:ignore="StringEscaping"><![CDATA[Why Choosing a Sign?
+    \n This is a scripted message to show people when they forget \n (or dont know) that you are practicing silence. \n This saves you from having to speak.]]></string>
+    <string name="create_custom_sign">Create Custom Sign</string>
+    <string name="silence_day_text">SILENCE DAY</string>
+    <string name="counter">Counter</string>
+
 
 </resources>

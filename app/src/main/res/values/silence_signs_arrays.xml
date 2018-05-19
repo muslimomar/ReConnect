@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="seized_item">
+        <item>In Silence</item>
+        <item>I’ve opted for a Silent - Non-Talking day</item>
+        <item>I’m practising being “In Silence” today</item>
+        <item>I’m refraining from talking today</item>
+        <item>I’m keeping communication to the minimum today please respect this by not inviting conversation</item>
+        <item><![CDATA[Talking & Communicating burns energy, so I am taking a break from this]]></item>
+        <item>I am practising Mindful Silence today</item>
+        <item>I am having a “Silent Retreat” day today</item>
+    </string-array>
+</resources>

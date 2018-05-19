@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.william.reconnect.activities.SilenceDay">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/silence_day_gradient" />
+
+    <TextView
+        android:id="@+id/silence_day_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:letterSpacing="0.01"
+        android:lineSpacingExtra="-39.3sp"
+        android:text="Silence Day"
+        android:textColor="#ff1816"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/what_silence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/silence_day_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:letterSpacing="0.01"
+        android:lineSpacingExtra="5sp"
+        android:text="@string/silence_day_info"
+        android:textColor="#de000000"
+        android:textSize="17sp"
+        android:textStyle="normal" />
+
+    <com.dpro.widgets.WeekdaysPicker
+        android:id="@+id/day_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/what_silence"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp">
+
+
+    </com.dpro.widgets.WeekdaysPicker>
+
+
+    <Button
+        android:id="@+id/silence_pick_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/day_picker"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp"
+        android:text="Pick a Time"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:theme="@style/PrimaryButton" />
+
+    <TextView
+        android:id="@+id/more_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/silence_day_txt"
+        android:layout_alignStart="@+id/silence_day_txt"
+        android:layout_below="@+id/silence_pick_time"
+        android:layout_marginTop="27dp"
+        android:letterSpacing="0.01"
+        android:lineSpacingExtra="-6sp"
+        android:text="More Info?"
+        android:textColor="#040404"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/see_guidelines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/more_info"
+        android:layout_alignBottom="@+id/more_info"
+        android:layout_below="@id/more_info"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="2dp"
+        android:layout_toEndOf="@+id/more_info"
+        android:layout_toRightOf="@+id/more_info"
+        android:clickable="true"
+        android:lineSpacingExtra="-6sp"
+        android:text="See guidelines"
+        android:textColor="#547ff9"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/pick_day_btn"
+        android:layout_width="185dp"
+        android:layout_height="43dp"
+        android:layout_below="@+id/more_info"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_rect"
+        android:text="DONE"
+        android:textColor="#fff" />
+
+</RelativeLayout>
