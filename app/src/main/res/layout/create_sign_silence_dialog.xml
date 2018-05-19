@@ -47,7 +47,7 @@
             android:layout_below="@id/text_dialog"
             android:layout_margin="15dp"
             android:background="@drawable/signup_btn_rect"
-            android:hint="@string/create_custom_sign"
+            android:hint="Create Custom Sign"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
 

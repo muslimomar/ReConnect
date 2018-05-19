@@ -13,11 +13,6 @@
 
     </style>
 
-    <style name="PrimaryButton" parent="Theme.AppCompat">
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
-    </style>
-
 
     <style name="MeditationList" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -58,5 +53,12 @@
         <item name="android:windowTranslucentNavigation">true</item>
 
     </style>
+    <style name="BlackActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="colorPrimary">#2e2e2e</item>
+        <item name="colorPrimaryDark">#252525</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 
 </resources>

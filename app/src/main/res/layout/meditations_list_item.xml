@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/reminder_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        tools:src="@drawable/ic_mantra_large" />
+
+    <LinearLayout
+        android:id="@+id/details_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+
+        <TextView
+            android:id="@+id/type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:text="Mantra Day" />
+
+        <TextView
+            android:id="@+id/hour_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/tab_indicator_text"
+            tools:text="16:00" />
+
+        <TextView
+            android:id="@+id/week_days_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/tab_indicator_text"
+            tools:text="Mon, Sun, Tue Mon, Sun, Tue, Thu" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/icons_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:descendantFocusability="blocksDescendants"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingRight="11dp"
+        android:layout_weight="1"
+        >
+
+        <ImageView
+            android:id="@+id/play_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5dp"
+            android:src="@drawable/ic_play_circle_black_24dp"
+            android:tint="#4CAF50"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5dp"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:tint="#FF0000"
+android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

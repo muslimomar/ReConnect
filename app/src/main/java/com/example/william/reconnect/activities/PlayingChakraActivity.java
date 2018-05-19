@@ -74,7 +74,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
 
     private void initializeImages() {
-
         playingIconIv.setImageResource(chakraList.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
 

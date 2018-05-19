@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="@string/silence_day_text"
+        android:text="Silence Day"
         android:textColor="#099db8"
         android:textSize="41.7sp" />
 
@@ -38,7 +38,7 @@
         android:layout_marginTop="320dp"
         android:textColor="#099db8"
         android:textSize="20sp"
-        android:text="@string/counter" />
+        android:text="Counter" />
 
     <TextView
         android:id="@+id/countUp"

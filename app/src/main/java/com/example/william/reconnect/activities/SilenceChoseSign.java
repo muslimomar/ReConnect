@@ -108,19 +108,19 @@ public class SilenceChoseSign extends AppCompatActivity {
                 startActivity(intent4);
                 break;
             case R.id.silence_btn_6:
-                sendSign = shoppingItems[4];
+                sendSign = shoppingItems[5];
                 Intent intent5 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
                 intent5.putExtra("sign", sendSign);
                 startActivity(intent5);
                 break;
             case R.id.silence_btn_7:
-                sendSign = shoppingItems[4];
+                sendSign = shoppingItems[6];
                 Intent intent6 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
                 intent6.putExtra("sign", sendSign);
                 startActivity(intent6);
                 break;
             case R.id.silence_btn_8:
-                sendSign = shoppingItems[4];
+                sendSign = shoppingItems[7];
                 Intent intent7 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
                 intent7.putExtra("sign", sendSign);
                 startActivity(intent7);

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.fragments.Home;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -60,7 +61,7 @@ public class SilencePlaying extends AppCompatActivity {
         ButterKnife.bind(this);
         backgroundGradient(silencePlayingScreen);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -174,7 +175,16 @@ public class SilencePlaying extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.silence_time_spent_dialog);
 
+        Button okBtn = dialog.findViewById(R.id.okBtn);
         TextView silenceTimeSpentTxt = dialog.findViewById(R.id.silence_time_spent_txt);
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SilencePlaying.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
         Log.d("fuck", elapsedSeconds + "Hello");
 
         /*

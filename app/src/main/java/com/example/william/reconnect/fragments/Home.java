@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.activities.MeditationsActivity;
 import com.example.william.reconnect.activities.SilenceDay;
 
 import butterknife.BindView;
@@ -20,15 +21,17 @@ import butterknife.Unbinder;
 
 
 public class Home extends Fragment {
+    @BindView(R.id.welcome_tv)
+    TextView welcomeTv;
     @BindView(R.id.begin_btn)
     Button beginBtn;
     @BindView(R.id.want_to_silence_tv)
     TextView wantToSilenceTv;
     @BindView(R.id.silence_day)
     TextView silenceDay;
-    @BindView(R.id.bottom_container)
-    LinearLayout bottomContainer;
     Unbinder unbinder;
+    @BindView(R.id.logo)
+    ImageView logo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +39,7 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -45,8 +49,21 @@ public class Home extends Fragment {
         unbinder.unbind();
     }
 
+    @OnClick(R.id.begin_btn)
+    public void beginBtn(View view) {
+
+        startActivity(new Intent(getActivity(), MeditationsActivity.class));
+    }
+
+    @OnClick(R.id.want_to_silence_tv)
+    public void silenceTv(View view) {
+
+        // activity to silence
+    }
+
     @OnClick(R.id.silence_day)
     public void onViewClicked() {
         Intent intent = new Intent(getActivity(), SilenceDay.class);
-        startActivity(intent);     }
+        startActivity(intent);
+    }
 }

@@ -1,30 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.william.reconnect.activities.MeditationsActivity">
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:title="Messages"
-        android:titleTextColor="@color/white" />
+        android:background="#2e2e2e"
 
-    <RelativeLayout
-        android:id="@+id/bottom_toolbar_layout"
+        />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_below="@+id/toolbar"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/meditations_list_item"
+
+            />
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            app:menu_colorNormal="#da4336"
+            app:menu_colorPressed="#da4336"
+            app:menu_colorRipple="@color/white"
+            >
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/chakra_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#da4336"
+                app:fab_colorPressed="#da4336"
+                app:fab_colorRipple="@color/white"
+                app:fab_size="mini"
+                android:src="@drawable/ic_chakra_large_24dp"
+                app:fab_label="Chakra"
+
+                />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/mantra_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#da4336"
+                app:fab_colorPressed="#da4336"
+                app:fab_colorRipple="@color/white"
+                app:fab_size="mini"
+                android:src="@drawable/ic_mantra_large_24dp"
+                app:fab_label="Mantra"
+                />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/music_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#da4336"
+                app:fab_colorPressed="#da4336"
+                app:fab_colorRipple="@color/white"
+                app:fab_size="mini"
+                android:src="@drawable/ic_music_large_24dp"
+                app:fab_label="Music Only"
+                />
 
 
-    </RelativeLayout>
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </FrameLayout>
+
 
 </LinearLayout>

@@ -62,7 +62,7 @@
         android:text="Pick a Time"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:theme="@style/PrimaryButton" />
+        />
 
     <TextView
         android:id="@+id/more_info"
