@@ -1,0 +1,67 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical">
+
+
+
+        <ImageView
+            android:id="@+id/a"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#DA5F6A"
+            android:gravity="center"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/info2" />
+
+        <TextView
+            android:id="@+id/you_spent_txt_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/a"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="You spent"
+            android:textColor="#ff000000"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/silence_time_spent_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_dialog"
+            android:layout_centerInParent="true"
+            android:text="1 hour and 34 minutes"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/okBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_rect"
+            android:text="OK"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+</ScrollView>
