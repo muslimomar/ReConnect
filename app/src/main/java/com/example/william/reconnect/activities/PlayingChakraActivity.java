@@ -9,6 +9,7 @@ import android.graphics.drawable.PaintDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,21 +24,20 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Chakra;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PlayingChakraActivity extends AppCompatActivity {
-    int position;
-    String jsonChakras;
-    List<Chakra> chakraList;
 
+    public static final String TAG = PlayingChakraActivity.class.getSimpleName();
+    int position = 0;
+    String chakraType = "";
+    String musicType = "";
+    ArrayList<Chakra> chakras = new ArrayList<>();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.playing_icon)
@@ -57,31 +57,68 @@ public class PlayingChakraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chakra_playing);
         ButterKnife.bind(this);
 
+        prepareChakraList();
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            position = bundle.getInt("position");
-            jsonChakras = bundle.getString("chakra_array_list");
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<Chakra>>() {
-            }.getType();
-            chakraList = gson.fromJson(jsonChakras, type);
+            chakraType = bundle.getString("chakra_type");
+            musicType = bundle.getString("music_type");
         }
 
         initializeImages();
-        setImageOpacity();
         rotateChakra();
+
+        Handler handler = new Handler();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        };
+        handler.postDelayed(r, 5000);
+    }
+
+    private void prepareChakraList() {
+
+        chakras.add(new Chakra(R.drawable.crown_img, "Crown", R.color.crown,
+                R.drawable.crown, getResources().getString(R.string.crown_tips), getResources().getString(R.string.crown_position)));
+
+        chakras.add(new Chakra(R.drawable.third_eye_img, "Third Eye", R.color.third_eye,
+                R.drawable.third_eye, getResources().getString(R.string.third_eye_tips), getResources().getString(R.string.third_eye_position)));
+
+        chakras.add(new Chakra(R.drawable.throat_img, "Throat", R.color.throat,
+                R.drawable.throat, getResources().getString(R.string.throat_tips), getResources().getString(R.string.throat_position)));
+
+        chakras.add(new Chakra(R.drawable.heart_img, "Heart", R.color.heart,
+                R.drawable.heart, getResources().getString(R.string.heart_tips), getResources().getString(R.string.heart_position)));
+
+        chakras.add(new Chakra(R.drawable.solar_img, "Solar Plexus", R.color.solar_plexus,
+                R.drawable.solar_plexus, getResources().getString(R.string.solar_plexus_tips), getResources().getString(R.string.solar_plexus_position)));
+
+        chakras.add(new Chakra(R.drawable.sacral_img, "Sacral", R.color.sacral,
+                R.drawable.sacral, getResources().getString(R.string.sacral_tips), getResources().getString(R.string.sacral_position)));
+
+        chakras.add(new Chakra(R.drawable.root_img, "Root", R.color.root
+                , R.drawable.root, getResources().getString(R.string.root_tips), getResources().getString(R.string.root_position)));
+
     }
 
 
     private void initializeImages() {
-        playingIconIv.setImageResource(chakraList.get(position).getChakraIcon());
+
+        for (int i = 0; i < chakras.size(); i++) {
+            if (chakraType.equalsIgnoreCase(chakras.get(i).getChakraName())) {
+                position = i;
+            }
+        }
+
+        playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
 
-    }
-
-    private void setImageOpacity() {
+        // set Opacity
         Drawable background3 = musicIv.getBackground();
         background3.setAlpha(40);
+
     }
 
     private void rotateChakra() {
@@ -106,11 +143,10 @@ public class PlayingChakraActivity extends AppCompatActivity {
             public Shader resize(int width, int height) {
 
                 RadialGradient radialGradient = new RadialGradient(view.getWidth() / 2, view.getHeight() / 2, 350f,
-                        getResources().getColor(android.R.color.white), chakraList.get(position).getChakraColor(),
+                        getResources().getColor(android.R.color.white), getResources().getColor(chakras.get(position).getChakraColor()),
                         Shader.TileMode.CLAMP);
 
                 return radialGradient;
-
             }
         };
         PaintDrawable p = new PaintDrawable();
@@ -126,7 +162,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     @OnClick(R.id.info_iv)
     public void infoIvBtn(View view) {
-        Chakra chakra = chakraList.get(position);
+        Chakra chakra = chakras.get(position);
 
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.chakra_info_dialog);
@@ -134,13 +170,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
         TextView chakraTitle = dialog.findViewById(R.id.chakra_title);
         Button okBtn = dialog.findViewById(R.id.ok_btn);
-        TextView chakraInfoPosition = dialog.findViewById(R.id.chakra_info_position);
         TextView chakraInfoTv = dialog.findViewById(R.id.chakra_info_tv);
         ImageView chakraInfoPlaceIv = dialog.findViewById(R.id.chakra_place_iv);
         LinearLayout dialogCenterLayout = dialog.findViewById(R.id.dialog_center_layout);
 
-        dialogCenterLayout.setBackgroundColor(chakra.getChakraInfoColor());
-        chakraInfoPosition.setText(chakra.getChakraPosition());
+        dialogCenterLayout.setBackgroundColor(chakra.getChakraColor());
         chakraInfoTv.setText(chakra.getChakraInfo());
         chakraInfoPlaceIv.setImageResource(chakra.getChakraPlaceImg());
 

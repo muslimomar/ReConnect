@@ -1,13 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ReConnect</string>
-    <string name="info_1">The highest chakra represents our ability to be fully connected spiritually</string>
-    <string name="chakra_1_tips"><![CDATA[spirituality & peace, transcendence of self/selflessness, expansion of consciousness, miracles & manifestation]]></string>
-    <string name="chakra_2_tips">inner wisdom and powerful intuition, clarity of inner vision, psychic ability, own insights, open to unknowns</string>
-    <string name="chakra_3_tips"><![CDATA[good communication, ability to express self fully, truthful & authentic self, inner & outer self matches]]></string>
-    <string name="chakra_4_tips"><![CDATA[Love for self & others, acceptance of self & others, compassion & forgiveness, genuine relationships]]></string>
-    <string name="chakra_5_tips"><![CDATA[self – respect, power, endurance, motivation, effectiveness, fearlessness, true self, confidence & esteem]]></string>
-    <string name="chakra_6_tips"><![CDATA[emotional balance, sexual (sexuality) balance, allowance of pleasure in life, trusting & in touch with self]]></string>
-    <string name="chakra_7_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
+    <string name="crown_position">The highest chakra represents our ability to be fully connected spiritually</string>
+    <string name="third_eye_position">forehead: above/between eyebrows</string>
+    <string name="throat_position">Base of neck/lower chin</string>
+    <string name="heart_position">Centre of chest (not heart on left)</string>
+    <string name="solar_plexus_position">upper naval/base of sternum</string>
+    <string name="sacral_position">upper naval/base of sternum</string>
+    <string name="root_position">between anus &amp; genitals/base of spine</string>
+
+    <string name="crown_tips"><![CDATA[spirituality & peace, transcendence of self/selflessness, expansion of consciousness, miracles & manifestation]]></string>
+    <string name="third_eye_tips">inner wisdom and powerful intuition, clarity of inner vision, psychic ability, own insights, open to unknowns</string>
+    <string name="throat_tips"><![CDATA[good communication, ability to express self fully, truthful & authentic self, inner & outer self matches]]></string>
+    <string name="heart_tips"><![CDATA[Love for self & others, acceptance of self & others, compassion & forgiveness, genuine relationships]]></string>
+    <string name="solar_plexus_tips"><![CDATA[self – respect, power, endurance, motivation, effectiveness, fearlessness, true self, confidence & esteem]]></string>
+    <string name="sacral_tips"><![CDATA[emotional balance, sexual (sexuality) balance, allowance of pleasure in life, trusting & in touch with self]]></string>
+    <string name="root_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="seeguide">See guidelines</string>
@@ -15,36 +22,51 @@
     <string name="silence_day_info"><![CDATA[Choose a convenient day to practice Silence/Non-Talking You CAN still do the usual things (perhaps not job) but will just be doing things without the added talking.]]></string>
     <string name="silence_day">Silence Day</string>
 
-        <string name="lblAcc">Select Account Type</string>
-        <string name="lblSubAcc">Select Account Head</string>
+        
+    <string name="lblAcc">Select Account Type</string>
+        
+    <string name="lblSubAcc">Select Account Head</string>
      
-        <string-array name="acc_type">
-            <item>Income</item>
-            <item>Expense</item>
-        </string-array>
+        
+    <string-array name="acc_type">
+                
+        <item>Income</item>
+                
+        <item>Expense</item>
+            
+    </string-array>
 
-     <string-array name="chakras_array">
-            <item>Crown</item>
-            <item>Third Eye</item>
-            <item>Throat</item>
-            <item>Heart</item>
-            <item>Sacral</item>
-            <item>Solar Plexus</item>
-            <item>Root</item>
-        </string-array>
+     
+    <string-array name="chakras_array">
+                
+        <item>Crown</item>
+                
+        <item>Third Eye</item>
+                
+        <item>Throat</item>
+                
+        <item>Heart</item>
+                
+        <item>Sacral</item>
+                
+        <item>Solar Plexus</item>
+                
+        <item>Root</item>
+            
+    </string-array>
 
-        <string-array name="crown_mantras_array" >
-            <item>1. I am deeply connected to unseen powers</item>
-            <item>2. I am free from all limitations of life</item>
-            <item>3.	I ‘tune in’ and receive energy at any time</item>
-            <item>4.	There is no trying because I create what I want</item>
-            <item>5.	I experience high states of consciousness</item>
-            <item>6.	I am in a natural state of gratitude</item>
-            <item>7.	Magical coincidences happen regularly</item>
-            <item>8.	I am a glorious and radiant being</item>
-            <item>9.	I don’t need answers: they come with ease</item>
-            <item>10.	I control my destiny and manifest my desires</item>
-        </string-array>
+    <string-array name="crown_mantras_array">
+        <item>1. I am deeply connected to unseen powers</item>
+        <item>2. I am free from all limitations of life</item>
+        <item>3.	I ‘tune in’ and receive energy at any time</item>
+        <item>4.	There is no trying because I create what I want</item>
+        <item>5.	I experience high states of consciousness</item>
+        <item>6.	I am in a natural state of gratitude</item>
+        <item>7.	Magical coincidences happen regularly</item>
+        <item>8.	I am a glorious and radiant being</item>
+        <item>9.	I don’t need answers: they come with ease</item>
+        <item>10.	I control my destiny and manifest my desires</item>
+    </string-array>
 
     <string-array name="third_eye_mantras_array">
         <item>1.	I see everything around me clearly</item>

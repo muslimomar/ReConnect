@@ -50,7 +50,6 @@ public class SilenceDay extends AppCompatActivity implements DatePickerDialog.On
     @OnClick(R.id.pick_day_btn)
     public void onPickDayBtnClicked() {
 
-
         Calendar newCalendar = Calendar.getInstance();
 
         int year = newCalendar.get(Calendar.YEAR);

@@ -12,9 +12,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.reminder.AlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.meditations_list_item, parent, false);
         }
 
-        Reminder reminder = getItem(position);
+        final Reminder reminder = getItem(position);
 
         ImageView reminderIcon = listItemView.findViewById(R.id.reminder_icon);
         TextView reminderName = listItemView.findViewById(R.id.type_tv);
@@ -60,15 +62,16 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
                 final Integer index = (Integer) deleteBtn.getTag();
                 Reminder deletedReminder = getItem(index);
                 if (deletedReminder == null) {
+                    Toast.makeText(getContext(), "Error in deleting!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 String id = deletedReminder.getId();
                 realm.beginTransaction();
-                boolean isDeleted = realm.where(Reminder.class)
+                RealmResults<Reminder> reminderObjs = realm.where(Reminder.class)
                         .equalTo("id", id)
-                        .findAll()
-                        .deleteAllFromRealm();
+                        .findAll();
+                boolean isDeleted = reminderObjs.deleteAllFromRealm();
                 realm.commitTransaction();
                 Log.d(TAG, "execute: " + isDeleted);
 
@@ -86,10 +89,10 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        Reminder reminder = getItem(index);
-
-
-                        remove(reminder);
+//                        notifyDataSetChanged();
+                        // this should be deletion not update
+                        updateReminders(realm.where(Reminder.class).findAll());
+                        new AlarmScheduler().cancelAlarm(getContext(),reminder.getId());
                         deleteBtn.setEnabled(true);
                     }
 
@@ -142,6 +145,5 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         addAll(new ArrayList<Reminder>(results));
         notifyDataSetChanged();
     }
-
 
 }

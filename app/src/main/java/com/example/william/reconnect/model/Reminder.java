@@ -70,7 +70,7 @@ public class Reminder extends RealmObject {
         this.mantraPlaybackType = mantraPlaybackType;
     }
 
-    public String getChakraPlaybackTYpe() {
+    public String getChakraPlaybackType() {
         return chakraPlaybackTYpe;
     }
 

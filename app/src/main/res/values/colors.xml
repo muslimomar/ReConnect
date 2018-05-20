@@ -9,4 +9,15 @@
     <color name="gray">#f4f4f4</color>
     <color name="secondary_text_color">#757575</color>
 
+    <!-- Chakra Playing -->
+    <color name="crown">#ae50ae</color>
+    <color name="third_eye">#5d00a2</color>
+    <color name="throat">#2896dd</color>
+    <color name="heart">#00a100</color>
+    <color name="solar_plexus">#ccc701</color>
+    <color name="sacral">#ff6526</color>
+    <color name="root">#ba0000</color>
+
+    <color name="light_solar_plexus">#e2e217</color>
+
 </resources>

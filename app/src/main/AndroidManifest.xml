@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.william.reconnect">
 
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -50,8 +52,10 @@
         <activity
             android:name=".activities.SilenceChoseSign"
             android:theme="@style/SplashTheme">
-
         </activity>
+
+        <service android:name=".reminder.ReminderAlarmService" android:exported="false"/>
+
     </application>
 
 </manifest>

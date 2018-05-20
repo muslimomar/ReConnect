@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.reminder.AlarmScheduler;
 
 import java.util.Calendar;
 import java.util.List;
@@ -38,11 +40,9 @@ import io.realm.RealmList;
 import static android.widget.AdapterView.OnItemSelectedListener;
 
 public class AddReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
-    public static final int TYPE_CHAKRA = 0;
-    public static final int TYPE_MANTRA = 1;
-    public static final int TYPE_MUSIC = 2;
     public static String TAG = AddReminderActivity.class.getSimpleName();
     public static int meditationType = 0;
+    long pickedTimeStamp;
     String pickedTime = "";
     String selectedMusicType = "";
     String selectedMantraType = "";
@@ -134,10 +134,9 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         adjustReminderLayout();
 
         realm = Realm.getDefaultInstance();
-   
-        defaultDummyData();
-        addReminder();
     }
+
+    // TODO:  delete this function after debugging finished
 
     private void defaultDummyData() {
         pickedTime = "16:00";
@@ -356,12 +355,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             }
         }
 
-        // Here it will add all data to the Database!
-        saveDataToRealm();
-    }
-
-
-    private void saveDataToRealm() {
+        // Add to Realm
         Reminder reminder = new Reminder(
                 meditationType,
                 selectedMusicType,
@@ -371,11 +365,24 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 selectedDays
         );
 
-        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(reminder);
         realm.commitTransaction();
+
+        // set Alarm
+        setAlarm(reminder.getId());
+
         finish();
+
+    }
+
+    private void setAlarm(String id) {
+
+        if(selectedDays.isEmpty()) {
+            new AlarmScheduler().setAlarm(getApplicationContext(),pickedTimeStamp,id);
+        }else if (!selectedDays.isEmpty()) {
+            new AlarmScheduler().setRepeatAlarm(getApplicationContext(),pickedTimeStamp,id,1000 * 120);
+        }
     }
 
 
@@ -430,7 +437,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
     @OnClick(R.id.pick_a_time_layout)
     public void pickTimeBtn(View view) {
-        Calendar mCurrentTime = Calendar.getInstance();
+        final Calendar mCurrentTime = Calendar.getInstance();
         int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mCurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
@@ -440,7 +447,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         String formattedTime = String.format("%02d:%02d", i, i1);
                         timeTv.setText(formattedTime);
-                        pickedTime = formattedTime;
+                        pickedTime = String.format("%2d:%02d", i, i1);
+                        pickedTimeStamp = mCurrentTime.getTimeInMillis();
                     }
                 }, hour, minute, true); // 24 hour time
         mTimePicker.setTitle("Select a time");

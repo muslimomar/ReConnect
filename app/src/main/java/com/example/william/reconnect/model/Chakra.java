@@ -13,17 +13,6 @@ public class Chakra {
     private int chakraPlaceImg;
     private String chakraInfo;
     private String chakraPosition;
-    private int chakraInfoColor;
-
-    public Chakra(int chakraIcon, String chakraName, int chakraColor, int chakraPlaceImg, String chakraInfo, String chakraPosition, int chakraInfoColor) {
-        this.chakraIcon = chakraIcon;
-        this.chakraName = chakraName;
-        this.chakraColor = chakraColor;
-        this.chakraPlaceImg = chakraPlaceImg;
-        this.chakraInfo = chakraInfo;
-        this.chakraPosition = chakraPosition;
-        this.chakraInfoColor = chakraInfoColor;
-    }
 
     public int getChakraIcon() {
         return chakraIcon;
@@ -73,11 +62,12 @@ public class Chakra {
         this.chakraPosition = chakraPosition;
     }
 
-    public int getChakraInfoColor() {
-        return chakraInfoColor;
-    }
-
-    public void setChakraInfoColor(int chakraInfoColor) {
-        this.chakraInfoColor = chakraInfoColor;
+    public Chakra(int chakraIcon, String chakraName, int chakraColor, int chakraPlaceImg, String chakraInfo, String chakraPosition) {
+        this.chakraIcon = chakraIcon;
+        this.chakraName = chakraName;
+        this.chakraColor = chakraColor;
+        this.chakraPlaceImg = chakraPlaceImg;
+        this.chakraInfo = chakraInfo;
+        this.chakraPosition = chakraPosition;
     }
 }
