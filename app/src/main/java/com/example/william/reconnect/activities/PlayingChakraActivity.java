@@ -1,6 +1,8 @@
 package com.example.william.reconnect.activities;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
@@ -8,9 +10,11 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -50,6 +54,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
     ImageView infoIv;
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
+    int ONE_MIN_MS = 60000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +77,35 @@ public class PlayingChakraActivity extends AppCompatActivity {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                finish();
+                // TODO:  Stop music
+                playingIconIv.clearAnimation();
+
+                showFinishDialog();
+
             }
         };
-        handler.postDelayed(r, 5000);
+        handler.postDelayed(r, ONE_MIN_MS);
+    }
+
+    private void showFinishDialog() {
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(PlayingChakraActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(PlayingChakraActivity.this);
+        }
+        builder.setTitle("Session Finished")
+                .setMessage("Your meditation session has finished!")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(PlayingChakraActivity.this, MainActivity.class));
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setCancelable(false)
+                .show();
     }
 
     private void prepareChakraList() {
@@ -105,6 +135,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
 
     private void initializeImages() {
+
 
         for (int i = 0; i < chakras.size(); i++) {
             if (chakraType.equalsIgnoreCase(chakras.get(i).getChakraName())) {
