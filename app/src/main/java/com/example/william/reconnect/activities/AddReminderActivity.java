@@ -1,6 +1,9 @@
 package com.example.william.reconnect.activities;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -11,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,10 +27,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.dpro.widgets.OnWeekdaysChangeListener;
 import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
+import com.example.william.reconnect.util.Extras;
 
 import java.util.Calendar;
 import java.util.List;
@@ -48,6 +54,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     String selectedMantraType = "";
     String selectedChakraType = "";
     RealmList<String> selectedDays = new RealmList<>();
+    RealmList<Integer> selectedDaysInt = new RealmList<>();
     @BindView(R.id.music_playback_radio_group)
     RadioGroup musicPlaybackRadioGroup;
     @BindView(R.id.music_list_spinner)
@@ -100,6 +107,16 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     @BindView(R.id.day_picker)
     WeekdaysPicker dayPicker;
     Realm realm;
+    String id;
+    Reminder receivedReminder;
+    private boolean mReminderHasChanged = false;
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mReminderHasChanged = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,46 +124,95 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         setContentView(R.layout.activity_add_reminder);
         ButterKnife.bind(this);
 
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            meditationType = intent.getIntExtra("meditationType", 0);
-
-            switch (meditationType) {
-                case Reminder.TYPE_CHAKRA:
-                    setTitle("Add Chakra");
-                    break;
-                case Reminder.TYPE_MANTRA:
-                    setTitle("Add Mantra");
-                    break;
-                case Reminder.TYPE_MUSIC:
-                    setTitle("Add Music");
-                    break;
-            }
-        }
+        realm = Realm.getDefaultInstance();
 
         prepareSpinners();
+        adjustRadiosSpinners();
         mantraFirstSpinner.setOnItemSelectedListener(this);
 
-        adjustRadiosSpinners();
+        Intent intent = getIntent();
+        id = intent.getExtras().getString(Extras.EXTRA_ID);
+
+        if (id != null) {
+            setTitle("Edit Reminder");
+            setupViewWithData();
+        }
+
+        setMeditationType(intent);
         adjustReminderLayout();
 
-        realm = Realm.getDefaultInstance();
+        pickATimeLayout.setOnTouchListener(mTouchListener);
+        musicListSpinner.setOnTouchListener(mTouchListener);
+        mantraFirstSpinner.setOnTouchListener(mTouchListener);
+        mantraSecondSpinner.setOnTouchListener(mTouchListener);
+        chakraListSpinner.setOnTouchListener(mTouchListener);
+        customMantraEt.setOnTouchListener(mTouchListener);
+
+
     }
 
-    // TODO:  delete this function after debugging finished
+    private void setupViewWithData() {
 
-    private void defaultDummyData() {
-        pickedTime = "16:00";
-        selectedDays.add("Monday");
-        selectedDays.add("Tuesday");
-        selectedDays.add("Friday");
-        musicNoMusicRb.setChecked(true);
-        chakraRandomRb.setChecked(true);
-        mantraExistingRb.setChecked(true);
+        realm.beginTransaction();
+        receivedReminder = realm.where(Reminder.class).equalTo("id", id).findFirst();
+        realm.commitTransaction();
+
+        timeTv.setText(receivedReminder.getHours());
+        dayPicker.setSelectedDays(receivedReminder.getWeekDaysInt());
+
+        int musicPlaybackRb = receivedReminder.getMusicPlaybackRb();
+        int chakraPlaybackRb = receivedReminder.getChakraPlaybackRb();
+        int mantraPlaybackRb = receivedReminder.getMantraPlaybackRb();
+
+        musicPlaybackRadioGroup.check(musicPlaybackRb);
+        chakraPlaybackRadioGroup.check(chakraPlaybackRb);
+        mantraPlaybackRadioGroup.check(mantraPlaybackRb);
+
+        if (musicPlaybackRb == musicSpecificRb.getId()) {
+            musicListSpinner.setSelection(receivedReminder.getMusicPlaybackSpinner());
+        }
+
+        if (chakraPlaybackRb == chakraSpecificRb.getId()) {
+            chakraListSpinner.setSelection(receivedReminder.getChakraSpinner());
+        }
+
+        if (mantraPlaybackRb == mantraExistingRb.getId()) {
+            mantraFirstSpinner.setSelection(receivedReminder.getMantraFirstSpinner());
+            mantraSecondSpinner.setSelection(receivedReminder.getMantraSecondSpinner());
+        } else {
+            customMantraEt.setText(receivedReminder.getMantraPlaybackType());
+        }
+
+
     }
+
+    private void setMeditationType(Intent intent) {
+        meditationType = intent.getIntExtra("meditationType", -1);
+
+        if (meditationType == -1) {
+            meditationType = receivedReminder.getReminderType();
+        }
+
+        switch (meditationType) {
+            case Reminder.TYPE_CHAKRA:
+                setTitle("Add Chakra");
+                break;
+            case Reminder.TYPE_MANTRA:
+                setTitle("Add Mantra");
+                break;
+            case Reminder.TYPE_MUSIC:
+                setTitle("Add Music");
+                break;
+        }
+
+
+
+    }
+
 
     private void adjustRadiosSpinners() {
         // it's disabled by default
@@ -159,6 +225,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         musicPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                mReminderHasChanged = true;
                 if (i == musicRandomRb.getId()) {
                     musicListSpinner.setEnabled(false);
                     selectedMusicType = "random";
@@ -187,6 +254,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         mantraPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                mReminderHasChanged = true;
+
                 if (i == mantraCustomRb.getId()) {
                     customMantraEt.setEnabled(true);
                     mantraFirstSpinner.setEnabled(false);
@@ -216,6 +285,9 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     mantraSecondSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            if(receivedReminder!=null) {
+                                mantraSecondSpinner.setSelection(receivedReminder.getMantraSecondSpinner());
+                            }
                             selectedMantraType = mantraSecondSpinner.getItemAtPosition(i).toString();
                         }
 
@@ -231,6 +303,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         chakraPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                mReminderHasChanged = true;
                 if (i == chakraSpecificRb.getId()) {
                     chakraListSpinner.setEnabled(true);
                     chakraListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -251,6 +324,14 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 }
             }
         });
+
+        dayPicker.setOnWeekdaysChangeListener(new OnWeekdaysChangeListener() {
+            @Override
+            public void onChange(View view, int i, List<Integer> list) {
+                mReminderHasChanged = true;
+            }
+        });
+
 
     }
 
@@ -284,6 +365,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 android.R.layout.simple_spinner_dropdown_item, songs);
         musicListSpinner.setAdapter(adapter);
 
+        adapter.getCount();
+
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.chakras_array));
         mantraFirstSpinner.setAdapter(adapter2);
@@ -307,17 +390,32 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.check_btn) {
-            addReminder();
+            saveReminder();
             return true;
         }
         if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-        }
-        return super.onOptionsItemSelected(item);
+            if (!mReminderHasChanged) {
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            }
 
+            DialogInterface.OnClickListener discardButtonClickListener =
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            NavUtils.navigateUpFromSameTask(AddReminderActivity.this);
+                        }
+                    };
+
+
+            showUnsavedChangesDialog(discardButtonClickListener);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    private void addReminder() {
+    private void saveReminder() {
 
         if (pickedTime.isEmpty()) {
             Toast.makeText(this, "Please pick a time!", Toast.LENGTH_SHORT).show();
@@ -325,11 +423,16 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         }
 
         List<String> days = dayPicker.getSelectedDaysText();
-        for (String day :
-                days) {
+        List<Integer> daysInt = dayPicker.getSelectedDays();
+
+        for (String day : days) {
             selectedDays.add(day);
         }
 
+        for (Integer day :
+                daysInt) {
+            selectedDaysInt.add(day);
+        }
 
         if (musicPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
@@ -362,26 +465,42 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 selectedMantraType,
                 selectedChakraType,
                 pickedTime,
-                selectedDays
+                selectedDays,
+                // preferences
+                musicPlaybackRadioGroup.getCheckedRadioButtonId(),
+                musicListSpinner.getSelectedItemPosition(),
+                mantraPlaybackRadioGroup.getCheckedRadioButtonId(),
+                mantraFirstSpinner.getSelectedItemPosition(),
+                mantraSecondSpinner.getSelectedItemPosition(),
+                chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
+                chakraListSpinner.getSelectedItemPosition(),
+                selectedDaysInt
         );
 
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(reminder);
+        if(id != null) {
+            // edit mode
+            Reminder editedReminder = realm.where(Reminder.class).equalTo("id", id).findFirst();
+            realm.copyToRealmOrUpdate(editedReminder);
+
+        }else{
+            // add mode
+            realm.copyToRealm(reminder);
+        }
         realm.commitTransaction();
 
         // set Alarm
         setAlarm(reminder.getId());
 
         finish();
-
     }
 
     private void setAlarm(String id) {
 
-        if(selectedDays.isEmpty()) {
-            new AlarmScheduler().setAlarm(getApplicationContext(),pickedTimeStamp,id);
-        }else if (!selectedDays.isEmpty()) {
-            new AlarmScheduler().setRepeatAlarm(getApplicationContext(),pickedTimeStamp,id,1000 * 120);
+        if (selectedDays.isEmpty()) {
+            new AlarmScheduler().setAlarm(getApplicationContext(), pickedTimeStamp, id);
+        } else if (!selectedDays.isEmpty()) {
+            new AlarmScheduler().setRepeatAlarm(getApplicationContext(), pickedTimeStamp, id, AlarmManager.INTERVAL_HOUR);
         }
     }
 
@@ -391,6 +510,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                                long arg3) {
 
         String sp1 = String.valueOf(mantraFirstSpinner.getSelectedItem());
+        selectedChakraType = sp1;
 
         switch (sp1) {
             case "Crown":
@@ -415,6 +535,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 prepareMantrasList(R.array.root_mantras_array);
                 break;
         }
+
+
     }
 
 
@@ -447,13 +569,50 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         String formattedTime = String.format("%02d:%02d", i, i1);
                         timeTv.setText(formattedTime);
-                        pickedTime = String.format("%2d:%02d", i, i1);
+                        pickedTime = formattedTime;
+
                         pickedTimeStamp = mCurrentTime.getTimeInMillis();
                     }
                 }, hour, minute, true); // 24 hour time
         mTimePicker.setTitle("Select a time");
         mTimePicker.show();
     }
+
+
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                };
+
+        if(mReminderHasChanged) {
+            showUnsavedChangesDialog(discardButtonClickListener);
+            return;
+        }
+            super.onBackPressed();
+    }
+
 
 }
 

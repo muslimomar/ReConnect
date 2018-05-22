@@ -9,12 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.adapter.ReminderAdapter;
 import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.util.Extras;
 
 import java.util.ArrayList;
 
@@ -23,12 +25,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.example.william.reconnect.util.Extras.EXTRA_ID;
+
 public class MeditationsActivity extends AppCompatActivity {
 
     public static String TAG = MeditationsActivity.class.getSimpleName();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    ArrayList<Reminder> reminders = new ArrayList<>();
     ReminderAdapter mAdapter;
     @BindView(R.id.list_view)
     ListView listView;
@@ -46,6 +49,16 @@ public class MeditationsActivity extends AppCompatActivity {
         listView.setAdapter(mAdapter);
         listView.setEmptyView(emptyView);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MeditationsActivity.this, AddReminderActivity.class);
+                String id = mAdapter.getItem(i).getId();
+                intent.putExtra(EXTRA_ID, id);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void configureActionbar() {
@@ -59,6 +72,8 @@ public class MeditationsActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -102,4 +117,5 @@ public class MeditationsActivity extends AppCompatActivity {
         mAdapter.updateReminders(realm.where(Reminder.class).findAll());
 
     }
+
 }

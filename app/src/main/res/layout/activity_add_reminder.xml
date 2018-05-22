@@ -321,7 +321,8 @@
                         android:textColor="@color/secondary_text_color"
                         android:textColorHighlight="@color/secondary_text_color"
                         android:textColorHint="@color/secondary_text_color"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        />
 
                     <RadioButton
                         android:id="@+id/mantra_existing_rb"

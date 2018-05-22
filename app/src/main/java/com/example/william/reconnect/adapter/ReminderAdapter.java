@@ -1,6 +1,7 @@
 package com.example.william.reconnect.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
 
@@ -65,6 +67,14 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
 
                 deleteItem(position, finalContentView, holder.deleteBtn);
 
+            }
+        });
+
+        holder.playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =setIntent(reminder);
+                getContext().startActivity(intent);
             }
         });
 
@@ -160,10 +170,34 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         TextView reminderDays;
         @BindView(R.id.delete_btn)
         ImageView deleteBtn;
+        @BindView(R.id.play_btn)
+        ImageView playBtn;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    private Intent setIntent(Reminder reminder) {
+        Intent intent = null;
+        // intent to Chakra Activity
+        if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
+            intent = new Intent(getContext(),PlayingChakraActivity.class);
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
+
+        }
+        // intent to Mantra Activity
+        if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
+            intent = new Intent(getContext(),PlayingChakraActivity.class);
+
+        }
+        // intent to Music Activity
+        if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
+            intent = new Intent(getContext(),PlayingChakraActivity.class);
+        }
+        return intent;
+
     }
 
 }

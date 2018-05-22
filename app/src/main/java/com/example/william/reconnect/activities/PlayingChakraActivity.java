@@ -1,5 +1,6 @@
 package com.example.william.reconnect.activities;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -73,6 +74,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         initializeImages();
         rotateChakra();
 
+        // TODO: What happens if activity is closed before countdown finishes (crash) Fix Needed
         Handler handler = new Handler();
         Runnable r = new Runnable() {
             @Override
@@ -80,11 +82,13 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 // TODO:  Stop music
                 playingIconIv.clearAnimation();
 
-                showFinishDialog();
+                if(!((Activity) PlayingChakraActivity.this).isFinishing()) {
+                    showFinishDialog();
+                }
 
             }
         };
-        handler.postDelayed(r, ONE_MIN_MS);
+        handler.postDelayed(r, ONE_MIN_MS/ 10);
     }
 
     private void showFinishDialog() {
@@ -143,6 +147,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
             }
         }
 
+
         playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
 
@@ -163,7 +168,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
     public void backArrowBtn(View view) {
         NavUtils.navigateUpFromSameTask(this);
     }
-
 
     private void backgroundGradient(View v) {
         final View view = v;

@@ -2,10 +2,12 @@ package com.example.william.reconnect.reminder;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -68,26 +70,39 @@ public class ReminderAlarmService extends IntentService {
 
         String reminderDescription = "You have a " + reminderType + " meditation session";
 
-        Notification note = new NotificationCompat.Builder(this)
+
+        NotificationCompat.Builder note = new NotificationCompat.Builder(this)
                 .setContentTitle(reminderType)
                 .setContentText(reminderDescription)
                 .setSmallIcon(chakraIcon)
                 .setContentIntent(operation)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                .setAutoCancel(true)
-                .build();
+                .setAutoCancel(true);
 
-        manager.notify(NOTIFICATION_ID, note);
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            NotificationChannel channel = new NotificationChannel("channel_01", "Reminders",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("Get reminds about meditation sessions");
+            manager.createNotificationChannel(channel);
+            note.setChannelId("channel_01");
+        }
+
+
+        manager.notify(NOTIFICATION_ID, note.build());
+
+
+
     }
 
     private Intent setIntent() {
         Intent intent = null;
-        // intent to Chakra
+        // intent to Chakra Activity
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
              intent = new Intent(this,PlayingChakraActivity.class);
              intent.putExtra("music_type", reminder.getMusicPlaybackType());
-             intent.putExtra("chakra_type", reminder.getChakraPlaybackType());
+             intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
         }
         // intent to Mantra Activity
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {

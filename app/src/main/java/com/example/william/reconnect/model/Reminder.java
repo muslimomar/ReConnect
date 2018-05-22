@@ -23,19 +23,23 @@ public class Reminder extends RealmObject {
     private String mantraPlaybackType;
     private String chakraPlaybackTYpe;
     private String hours;
+
+    // preferences
+    private int musicPlaybackRb;
+    private int musicPlaybackSpinner;
+
+    private int mantraPlaybackRb;
+    private int mantraFirstSpinner;
+    private int mantraSecondSpinner;
+
+    private int chakraPlaybackRb;
+    private int chakraSpinner;
+
+    private RealmList<Integer> weekDaysInt;
+
     private RealmList<String> weekDays = new RealmList<>();
 
     public Reminder() {
-    }
-
-    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe, String hours, RealmList<String> weekDays) {
-        this.id = UUID.randomUUID().toString();
-        this.reminderType = reminderType;
-        this.musicPlaybackType = musicPlaybackType;
-        this.mantraPlaybackType = mantraPlaybackType;
-        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
-        this.hours = hours;
-        this.weekDays = weekDays;
     }
 
     public String getId() {
@@ -70,7 +74,7 @@ public class Reminder extends RealmObject {
         this.mantraPlaybackType = mantraPlaybackType;
     }
 
-    public String getChakraPlaybackType() {
+    public String getChakraPlaybackTYpe() {
         return chakraPlaybackTYpe;
     }
 
@@ -86,6 +90,70 @@ public class Reminder extends RealmObject {
         this.hours = hours;
     }
 
+    public int getMusicPlaybackRb() {
+        return musicPlaybackRb;
+    }
+
+    public void setMusicPlaybackRb(int musicPlaybackRb) {
+        this.musicPlaybackRb = musicPlaybackRb;
+    }
+
+    public int getMusicPlaybackSpinner() {
+        return musicPlaybackSpinner;
+    }
+
+    public void setMusicPlaybackSpinner(int musicPlaybackSpinner) {
+        this.musicPlaybackSpinner = musicPlaybackSpinner;
+    }
+
+    public int getMantraPlaybackRb() {
+        return mantraPlaybackRb;
+    }
+
+    public void setMantraPlaybackRb(int mantraPlaybackRb) {
+        this.mantraPlaybackRb = mantraPlaybackRb;
+    }
+
+    public int getMantraFirstSpinner() {
+        return mantraFirstSpinner;
+    }
+
+    public void setMantraFirstSpinner(int mantraFirstSpinner) {
+        this.mantraFirstSpinner = mantraFirstSpinner;
+    }
+
+    public int getMantraSecondSpinner() {
+        return mantraSecondSpinner;
+    }
+
+    public void setMantraSecondSpinner(int mantraSecondSpinner) {
+        this.mantraSecondSpinner = mantraSecondSpinner;
+    }
+
+    public int getChakraPlaybackRb() {
+        return chakraPlaybackRb;
+    }
+
+    public void setChakraPlaybackRb(int chakraPlaybackRb) {
+        this.chakraPlaybackRb = chakraPlaybackRb;
+    }
+
+    public int getChakraSpinner() {
+        return chakraSpinner;
+    }
+
+    public void setChakraSpinner(int chakraSpinner) {
+        this.chakraSpinner = chakraSpinner;
+    }
+
+    public RealmList<Integer> getWeekDaysInt() {
+        return weekDaysInt;
+    }
+
+    public void setWeekDaysInt(RealmList<Integer> weekDaysInt) {
+        this.weekDaysInt = weekDaysInt;
+    }
+
     public RealmList<String> getWeekDays() {
         return weekDays;
     }
@@ -94,6 +162,26 @@ public class Reminder extends RealmObject {
         this.weekDays = weekDays;
     }
 
+    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe,
+                    String hours, RealmList<String> weekDays, int musicPlaybackRb, int musicPlaybackSpinner, int mantraPlaybackRb,
+                    int mantraFirstSpinner, int mantraSecondSpinner, int chakraPlaybackRb, int chakraSpinner,
+                    RealmList<Integer> weekDaysInt) {
+        this.id = UUID.randomUUID().toString();
+        this.reminderType = reminderType;
+        this.musicPlaybackType = musicPlaybackType;
+        this.mantraPlaybackType = mantraPlaybackType;
+        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
+        this.hours = hours;
+        this.musicPlaybackRb = musicPlaybackRb;
+        this.musicPlaybackSpinner = musicPlaybackSpinner;
+        this.mantraPlaybackRb = mantraPlaybackRb;
+        this.mantraFirstSpinner = mantraFirstSpinner;
+        this.mantraSecondSpinner = mantraSecondSpinner;
+        this.chakraPlaybackRb = chakraPlaybackRb;
+        this.chakraSpinner = chakraSpinner;
+        this.weekDaysInt = weekDaysInt;
+        this.weekDays = weekDays;
+    }
 }
 
 

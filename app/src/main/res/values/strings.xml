@@ -155,4 +155,10 @@
     <string name="create">Create My Own</string>
     <string name="whychoos" tools:ignore="StringEscaping"><![CDATA[Why Choosing a Sign?
     \n This is a scripted message to show people when they forget \n (or dont know) that you are practicing silence. This saves you from having to speak.]]></string>
+
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+
+    <string name="keep_editing">Keep Editing</string>
+
 </resources>
