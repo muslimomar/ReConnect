@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/silence_playing_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.william.reconnect.activities.SilencePlaying">
+
+
+    <TextView
+        android:id="@+id/silence_day_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Silence Day"
+        android:textColor="#099db8"
+        android:textSize="41.7sp" />
+
+    <TextView
+        android:id="@+id/silence_sign_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/silence_day_sign"
+        android:gravity="center_horizontal"
+        android:letterSpacing="0.01"
+        android:layout_margin="50dp"
+        tools:text="@string/ipractis"
+        android:textColor="#2f2a30"
+        android:textSize="24.7sp" />
+
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="320dp"
+        android:textColor="#099db8"
+        android:textSize="20sp"
+        android:text="Counter" />
+
+    <TextView
+        android:id="@+id/countUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/counter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="40sp"
+
+
+        />
+
+    <Button
+        android:id="@+id/btn_stop_silence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/countUp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_rect"
+        android:text="stop"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+
+        />
+
+    <Button
+        android:id="@+id/btn_start_silence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_stop_silence"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/silence_btn_rect"
+        android:text="start"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+
+
+
+        />
+
+
+</RelativeLayout>
