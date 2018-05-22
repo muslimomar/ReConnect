@@ -225,5 +225,3 @@ public class SilencePlaying extends AppCompatActivity {
         realm.close();
     }
 }
-
-
