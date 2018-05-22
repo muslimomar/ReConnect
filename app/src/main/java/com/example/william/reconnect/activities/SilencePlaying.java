@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.fragments.Home;
+import com.example.william.reconnect.model.SilenceModel;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 public class SilencePlaying extends AppCompatActivity {
 
@@ -49,8 +50,9 @@ public class SilencePlaying extends AppCompatActivity {
     TextView countUp;
     @BindView(R.id.silence_sign_text)
     TextView silenceSignText;
-    TextView silenceTimeSpentTxt;
+    Realm realm;
 
+    long silenceSpentTime;
     long startTime2;
     long endTime2;
 
@@ -60,13 +62,10 @@ public class SilencePlaying extends AppCompatActivity {
         setContentView(R.layout.activity_silence_playing);
         ButterKnife.bind(this);
         backgroundGradient(silencePlayingScreen);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        realm = Realm.getDefaultInstance();
+        btnStopSilence.setEnabled(false);
 
         /* Getting silenceSignText value from Custom Sign Dialog */
-
 
         Intent intent = getIntent();
         String text = intent.getExtras().getString("sign", "sendSign");
@@ -79,27 +78,10 @@ public class SilencePlaying extends AppCompatActivity {
         } else {
             silenceSignText.setText(text2);
         }
-
-
-        // ArrayList<String> text = intent.getExtras().getStringArrayList("silence");
-
-        // Display full ArrayList of week days
-
-        /*
-         StringBuilder activeToggles = new StringBuilder();
-         for (String s : text) {
-         activeToggles.append(s).append(" - ");
-         }
-
-         silenceSignText.setText(activeToggles.toString());
-
-         Log.d("hiiiiiiii", "onCreate: " + text);
-
-         */
     }
 
 
-    //Gradient for background
+    /* Gradient for background */
     private void backgroundGradient(View v) {
         final View view = v;
         Drawable[] layers = new Drawable[1];
@@ -107,7 +89,6 @@ public class SilencePlaying extends AppCompatActivity {
         ShapeDrawable.ShaderFactory sf = new ShapeDrawable.ShaderFactory() {
             @Override
             public Shader resize(int width, int height) {
-
                 RadialGradient radialGradient = new RadialGradient(view.getWidth() / 2, view.getHeight() / 2, 900f,
                         getResources().getColor(android.R.color.white), Color.parseColor("#aeaaaa"),
                         Shader.TileMode.CLAMP);
@@ -127,7 +108,6 @@ public class SilencePlaying extends AppCompatActivity {
 
     }
 
-
     @OnClick(R.id.btn_stop_silence)
     public void onBtnStopSilenceClicked() {
         //    timer.cancel();
@@ -138,6 +118,7 @@ public class SilencePlaying extends AppCompatActivity {
 
     @OnClick(R.id.btn_start_silence)
     public void onBtnStartSilenceClicked() {
+        btnStopSilence.setEnabled(true);
         startTime2 = System.currentTimeMillis();
         timer.start();
         Toast.makeText(this, "Silence Day Started!", Toast.LENGTH_SHORT).show();
@@ -145,7 +126,6 @@ public class SilencePlaying extends AppCompatActivity {
 
     long totalSeconds = 86400;
     long intervalSeconds = 1;
-    long spentTime;
     long startTime;
     long elapsedSeconds;
 
@@ -183,34 +163,65 @@ public class SilencePlaying extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SilencePlaying.this, MainActivity.class);
                 startActivity(intent);
+
+
             }
         });
-        Log.d("fuck", elapsedSeconds + "Hello");
 
-        /*
-         *  Get Elapsed Time
-         */
+        //
+        //**  Get Elapsed Time
+        //
 
         endTime2 = System.currentTimeMillis();
         long timeSpend = endTime2 - startTime2;
-
         timer.cancel();
-
         int seconds = (int) (timeSpend / 1000) % 60;
         int minutes = (int) ((timeSpend / (1000 * 60)) % 60);
         int hours = (int) ((timeSpend / (1000 * 60 * 60)) % 24);
-
-        silenceTimeSpentTxt.setText(String.valueOf((timeSpend / 1000) + 1 + " Seconds"));
-
-        Log.i("TimeSpent", "showTimeSpentDialog: " + timeSpend / 1000);
-
-
+        silenceSpentTime = timeSpend / 1000 + 1;
+        // Write timespent to Database
+        writeToDB();
+        silenceTimeSpentTxt.setText(String.valueOf((silenceSpentTime) + " Seconds"));
         Toast.makeText(this, "You stopped being silence!", Toast.LENGTH_SHORT).show();
 
 
         dialog.show();
     }
 
+    private void writeToDB() {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+
+                /* Creating the timespent or update it */
+                SilenceModel user = bgRealm.where(SilenceModel.class).findFirst();
+                if (user == null) {
+                    user = bgRealm.createObject(SilenceModel.class);
+                    user.setTimespent(silenceSpentTime);
+                } else {
+                    user.setTimespent(silenceSpentTime);
+                }
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                /* Transaction was a success. */
+                Toast.makeText(SilencePlaying.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                /* Transaction failed and was automatically canceled. */
+                Toast.makeText(SilencePlaying.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
 }
-
-
