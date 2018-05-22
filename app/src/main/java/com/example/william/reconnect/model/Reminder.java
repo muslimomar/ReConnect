@@ -35,8 +35,7 @@ public class Reminder extends RealmObject {
     private int chakraPlaybackRb;
     private int chakraSpinner;
 
-    private RealmList<Integer> weekDaysInt;
-
+    private RealmList<Integer> weekDaysInt = new RealmList<>();
     private RealmList<String> weekDays = new RealmList<>();
 
     public Reminder() {

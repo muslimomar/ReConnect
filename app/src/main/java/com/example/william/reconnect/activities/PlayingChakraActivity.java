@@ -18,6 +18,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,12 +31,16 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Chakra;
+import com.example.william.reconnect.util.Extras;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class PlayingChakraActivity extends AppCompatActivity {
 
@@ -74,7 +80,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         initializeImages();
         rotateChakra();
 
-        // TODO: What happens if activity is closed before countdown finishes (crash) Fix Needed
         Handler handler = new Handler();
         Runnable r = new Runnable() {
             @Override
@@ -89,6 +94,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(r, ONE_MIN_MS/ 10);
+
     }
 
     private void showFinishDialog() {
@@ -139,14 +145,17 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
 
     private void initializeImages() {
-
+chakraType = RANDOM;
+        if(chakraType.equals(RANDOM)) {
+             position = new Random().nextInt(chakras.size());
+        }else {
 
         for (int i = 0; i < chakras.size(); i++) {
             if (chakraType.equalsIgnoreCase(chakras.get(i).getChakraName())) {
                 position = i;
+                }
             }
         }
-
 
         playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
@@ -225,4 +234,15 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
