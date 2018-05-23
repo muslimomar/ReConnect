@@ -5,9 +5,9 @@
         <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name=".activities.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".activities.MyApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -22,18 +22,27 @@
             android:theme="@style/TransparentStatusBar" >
 
         </activity>
+
+        <activity
+            android:name=".activities.SilencePlaying"
+            android:theme="@style/SplashTheme">
+
+        </activity>
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme" />
-        <activity
-            android:name=".activities.MeditationsActivity"
-            android:theme="@style/BlackActionBar">
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.MeditationsActivity"
+            android:theme="@style/BlackActionBar">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
