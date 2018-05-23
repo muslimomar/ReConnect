@@ -42,12 +42,12 @@
 
 
         <TextView
-            android:id="@+id/week_days_tv"
+            android:id="@+id/repeat_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="@android:color/tab_indicator_text"
-            tools:text="Mon, Sun, Tue Mon, Sun, Tue, Thu" />
+            tools:text="Every hour" />
 
 
     </LinearLayout>

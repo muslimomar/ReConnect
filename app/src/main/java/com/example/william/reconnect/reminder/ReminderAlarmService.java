@@ -37,13 +37,6 @@ public class ReminderAlarmService extends IntentService {
         super(TAG);
     }
 
-    //This is a deep link intent, and needs the task stack
-    public static PendingIntent getReminderPendingIntent(Context context, String id, int requestCode) {
-        Intent action = new Intent(context, ReminderAlarmService.class);
-        action.putExtra(EXTRA_ID, id);
-        return PendingIntent.getService(context, requestCode, action, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
     @Override
     protected void onHandleIntent(Intent intent) {
 
@@ -97,18 +90,18 @@ public class ReminderAlarmService extends IntentService {
         // intent to Chakra Activity
         // TODO: Configure mantra and music accordingly
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
-             intent = new Intent(this,PlayingChakraActivity.class);
-             intent.putExtra("music_type", reminder.getMusicPlaybackType());
-             intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
+            intent = new Intent(this,PlayingChakraActivity.class);
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
         }
         // intent to Mantra Activity
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
-             intent = new Intent(this,PlayingChakraActivity.class);
+            intent = new Intent(this,PlayingChakraActivity.class);
 
         }
         // intent to Music Activity
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
-             intent = new Intent(this,PlayingChakraActivity.class);
+            intent = new Intent(this,PlayingChakraActivity.class);
         }
         return intent;
 

@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,14 +26,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.dpro.widgets.OnWeekdaysChangeListener;
-import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
 
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +47,9 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     public static String TAG = AddReminderActivity.class.getSimpleName();
     public static int meditationType = 0;
     long pickedTimeStamp;
-    String pickedTime = "";
+    String pickedHoursMins = "";
+    int pickedHours;
+    int pickedMinutes;
     String selectedMusicType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
@@ -108,13 +106,20 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     View mantraLayoutView;
     @BindView(R.id.time_tv)
     TextView timeTv;
-    @BindView(R.id.day_picker)
-    WeekdaysPicker dayPicker;
     Realm realm;
-    String id;
+    String receivedId;
+    long alarmInterval;
     Reminder receivedReminder;
     int requestCode;
-    long CalendarSystemTimeDiff;
+    @BindView(R.id.every_hour_rb)
+    RadioButton everyHourRb;
+    @BindView(R.id.every_day_rb)
+    RadioButton everyDayRb;
+    @BindView(R.id.every_week_rb)
+    RadioButton everyWeekRb;
+    @BindView(R.id.repeat_radio_group)
+    RadioGroup repeatRadioGroup;
+    boolean isTimePickerClicked = false;
     private boolean mReminderHasChanged = false;
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -141,9 +146,9 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         mantraFirstSpinner.setOnItemSelectedListener(this);
 
         Intent intent = getIntent();
-        id = intent.getExtras().getString(EXTRA_ID);
+        receivedId = intent.getExtras().getString(EXTRA_ID);
 
-        if (id != null) {
+        if (receivedId != null) {
             setTitle("Edit Reminder");
             setupViewWithData();
         }
@@ -164,13 +169,16 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     private void setupViewWithData() {
 
         realm.beginTransaction();
-        receivedReminder = realm.where(Reminder.class).equalTo("id", id).findFirst();
+        receivedReminder = realm.where(Reminder.class).equalTo("id", receivedId).findFirst();
         realm.commitTransaction();
 
-        pickedTime = receivedReminder.getHours();
-        timeTv.setText(receivedReminder.getHours());
+        String formattedTime = String.format("%02d:%02d", receivedReminder.getPickedHours(), receivedReminder.getPickedMinutes());
+        timeTv.setText(formattedTime);
+        pickedHours = receivedReminder.getPickedHours();
+        pickedMinutes = receivedReminder.getPickedMinutes();
         pickedTimeStamp = receivedReminder.getAlarmTimestamp();
-        dayPicker.setSelectedDays(receivedReminder.getWeekDaysInt());
+
+        pickedHoursMins = formattedTime;
 
         int musicPlaybackRb = receivedReminder.getMusicPlaybackRb();
         int chakraPlaybackRb = receivedReminder.getChakraPlaybackRb();
@@ -179,6 +187,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         musicPlaybackRadioGroup.check(musicPlaybackRb);
         chakraPlaybackRadioGroup.check(chakraPlaybackRb);
         mantraPlaybackRadioGroup.check(mantraPlaybackRb);
+        repeatRadioGroup.check(receivedReminder.getRepeatRb());
 
         if (musicPlaybackRb == musicSpecificRb.getId()) {
             musicListSpinner.setSelection(receivedReminder.getMusicPlaybackSpinner());
@@ -303,7 +312,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
                         }
                     });
-                }else if (i == mantraRandomRb.getId()) {
+                } else if (i == mantraRandomRb.getId()) {
                     customMantraEt.setEnabled(false);
                     mantraFirstSpinner.setEnabled(false);
                     mantraSecondSpinner.setEnabled(false);
@@ -338,13 +347,18 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             }
         });
 
-        dayPicker.setOnWeekdaysChangeListener(new OnWeekdaysChangeListener() {
+        repeatRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onChange(View view, int i, List<Integer> list) {
-                mReminderHasChanged = true;
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == everyHourRb.getId()) {
+                    alarmInterval = AlarmManager.INTERVAL_HOUR;
+                } else if (i == everyDayRb.getId()) {
+                    alarmInterval = AlarmManager.INTERVAL_DAY;
+                } else if (i == everyWeekRb.getId()) {
+                    alarmInterval = AlarmManager.INTERVAL_DAY * 7;
+                }
             }
         });
-
 
     }
 
@@ -430,27 +444,21 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
     private void saveReminder() {
 
-        if (pickedTime.isEmpty()) {
+        if (pickedHoursMins.isEmpty()) {
             Toast.makeText(this, "Please pick a time!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        List<String> days = dayPicker.getSelectedDaysText();
-        List<Integer> daysInt = dayPicker.getSelectedDays();
-
-        for (String day : days) {
-            selectedDays.add(day);
-        }
-
-        for (Integer day :
-                daysInt) {
-            selectedDaysInt.add(day);
+        if (repeatRadioGroup.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please select repeat type", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (musicPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         // Add Mantra Day
         if (meditationType == Reminder.TYPE_MANTRA) {
@@ -470,19 +478,35 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 return;
             }
         }
-        requestCode = (int) System.currentTimeMillis();
+
+        // if in edit mode get requestCode from Realm
+        if (receivedId != null) {
+            requestCode = receivedReminder.getRequestCode();
+        } else {
+            requestCode = (int) System.currentTimeMillis();
+        }
+
+        // if in edit mode, and no time is selected (previous time will be selected which will
+        // cause the alarm to trigger immediately if selected time was in past)
+        if (receivedId != null) {
+            if (!isTimePickerClicked) {
+                isSelectedTimeInPast();
+            }
+        }
 
         realm.beginTransaction();
-        if (id != null) {
+        if (receivedId != null) {
             // edit mode
             // Add to Realm
-            Reminder toEditReminder = realm.where(Reminder.class).equalTo("id", id).findFirst();
+            Reminder toEditReminder = realm.where(Reminder.class).equalTo("id", receivedId).findFirst();
             toEditReminder.setReminderType(meditationType);
             toEditReminder.setMusicPlaybackType(selectedMusicType);
             toEditReminder.setMantraPlaybackType(selectedMantraType);
             toEditReminder.setChakraPlaybackTYpe(selectedChakraType);
-            toEditReminder.setHours(pickedTime);
+            toEditReminder.setPickedHours(pickedHours);
+            toEditReminder.setPickedMinutes(pickedMinutes);
             toEditReminder.setAlarmTimestamp(pickedTimeStamp);
+            toEditReminder.setRepeatType(alarmInterval);
             // preferences
             toEditReminder.setMusicPlaybackRb(musicPlaybackRadioGroup.getCheckedRadioButtonId());
             toEditReminder.setMusicPlaybackSpinner(musicListSpinner.getSelectedItemPosition());
@@ -491,7 +515,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             toEditReminder.setMantraSecondSpinner(mantraSecondSpinner.getSelectedItemPosition());
             toEditReminder.setChakraPlaybackRb(chakraPlaybackRadioGroup.getCheckedRadioButtonId());
             toEditReminder.setChakraSpinner(chakraListSpinner.getSelectedItemPosition());
-            toEditReminder.setWeekDaysInt(selectedDaysInt);
+            toEditReminder.setRepeatRb(repeatRadioGroup.getCheckedRadioButtonId());
             realm.copyToRealmOrUpdate(toEditReminder);
 
             setAlarm(toEditReminder.getId());
@@ -504,9 +528,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     selectedMusicType,
                     selectedMantraType,
                     selectedChakraType,
-                    pickedTime,
+                    pickedHours,
+                    pickedMinutes,
                     pickedTimeStamp,
-                    selectedDays,
+                    alarmInterval,
                     // preferences
                     musicPlaybackRadioGroup.getCheckedRadioButtonId(),
                     musicListSpinner.getSelectedItemPosition(),
@@ -515,8 +540,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     mantraSecondSpinner.getSelectedItemPosition(),
                     chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
                     chakraListSpinner.getSelectedItemPosition(),
-                    selectedDaysInt,
-                    requestCode
+                    requestCode,
+                    repeatRadioGroup.getCheckedRadioButtonId()
             );
             realm.copyToRealm(reminder);
 
@@ -527,15 +552,25 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         finish();
     }
 
-    private void setAlarm(String id) {
+    private void isSelectedTimeInPast() {
+        Calendar calNow = Calendar.getInstance();
+        Calendar calSet = (Calendar) calNow.clone();
 
-        if (selectedDays.isEmpty()) {
-            new AlarmScheduler().setAlarm(getApplicationContext(), pickedTimeStamp, id, requestCode);
-        } else if (!selectedDays.isEmpty()) {
-            new AlarmScheduler().setRepeatAlarm(getApplicationContext(), pickedTimeStamp, id, AlarmManager.INTERVAL_HOUR, requestCode);
+        calSet.set(Calendar.HOUR_OF_DAY, receivedReminder.getPickedHours());
+        calSet.set(Calendar.MINUTE, receivedReminder.getPickedMinutes());
+        calSet.set(Calendar.SECOND, 0);
+        calSet.set(Calendar.MILLISECOND, 0);
+
+        // if in past increment one day
+        if (calSet.compareTo(calNow) <= 0) {
+            calSet.add(Calendar.DATE, 1);
         }
 
+        pickedTimeStamp = calSet.getTimeInMillis();
+    }
 
+    private void setAlarm(String id) {
+        new AlarmScheduler().setRepeatAlarm(getApplicationContext(), pickedTimeStamp, id, alarmInterval, requestCode);
     }
 
     @Override
@@ -601,22 +636,27 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        isTimePickerClicked = true;
+
                         String formattedTime = String.format("%02d:%02d", i, i1);
                         timeTv.setText(formattedTime);
-                        pickedTime = formattedTime;
+                        pickedHoursMins = formattedTime;
+                        pickedHours = i;
+                        pickedMinutes = i1;
 
                         Calendar calNow = Calendar.getInstance();
                         Calendar calSet = (Calendar) calNow.clone();
 
                         calSet.set(Calendar.HOUR_OF_DAY, i);
-                        calSet.set(Calendar.MINUTE,i1);
+                        calSet.set(Calendar.MINUTE, i1);
                         calSet.set(Calendar.SECOND, 0);
                         calSet.set(Calendar.MILLISECOND, 0);
 
                         // make sure we're not in past (cause the alarm to trigger immediately)
-                        if(calSet.compareTo(calNow) <= 0) {
+                        if (calSet.compareTo(calNow) <= 0) {
                             calSet.add(Calendar.DATE, 1);
                         }
+
 
                         pickedTimeStamp = calSet.getTimeInMillis();
                     }

@@ -1,6 +1,10 @@
+// Reminder Adapter
+
+
 package com.example.william.reconnect.adapter;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -23,7 +27,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class ReminderAdapter extends ArrayAdapter<Reminder> {
@@ -52,10 +55,11 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         final Reminder reminder = getItem(position);
 
         setReminderType(reminder, holder.reminderIcon, holder.reminderType);
-        holder.reminderHour.setText(reminder.getHours());
 
-        String weekDays = ArrayToOrderedString(reminder.getWeekDays());
-        holder.reminderDays.setText(weekDays);
+        String formattedTime = String.format("%02d:%02d", reminder.getPickedHours(), reminder.getPickedMinutes());
+        holder.reminderHour.setText(formattedTime);
+
+        holder.repeatTv.setText(getRepeatType(reminder));
 
         holder.deleteBtn.setTag(position);
         final View finalContentView = contentView;
@@ -73,13 +77,25 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         holder.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =setIntent(reminder);
+                Intent intent = setIntent(reminder);
                 getContext().startActivity(intent);
             }
         });
 
 
         return contentView;
+    }
+
+    private String getRepeatType(Reminder reminder) {
+        String repeatType = "";
+        if (reminder.getRepeatType() == AlarmManager.INTERVAL_HOUR) {
+            repeatType = "Every Hour";
+        } else if (reminder.getRepeatType() == AlarmManager.INTERVAL_DAY) {
+            repeatType = "Every Day";
+        } else if (reminder.getRepeatType() == AlarmManager.INTERVAL_DAY * 7) {
+            repeatType = "Every Week";
+        }
+        return repeatType;
     }
 
     private void deleteItem(int position, View contentView, final ImageView deleteBtn) {
@@ -92,7 +108,7 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         }
 
         String id = deletedReminder.getId();
-        new AlarmScheduler().cancelAlarm(getContext(), id , deletedReminder.getRequestCode());
+        new AlarmScheduler().cancelAlarm(getContext(), id, deletedReminder.getRequestCode());
 
         realm.beginTransaction();
         realm.where(Reminder.class).equalTo("id", id).findFirst().deleteFromRealm();
@@ -139,22 +155,32 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
 
     }
 
-    private String ArrayToOrderedString(RealmList<String> weekDays) {
-        String weekDaysString = "";
-
-        for (int i = 0; i < weekDays.size(); i++) {
-            weekDaysString += weekDays.get(i).substring(0, 3);
-            if (i + 1 != weekDays.size()) {
-                weekDaysString += ", ";
-            }
-        }
-        return weekDaysString;
-    }
-
     public void updateReminders(RealmResults results) {
         clear();
         addAll(new ArrayList<Reminder>(results));
         notifyDataSetChanged();
+    }
+
+    private Intent setIntent(Reminder reminder) {
+        Intent intent = null;
+        // intent to Chakra Activity
+        if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
+
+        }
+        // intent to Mantra Activity
+        if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
+
+        }
+        // intent to Music Activity
+        if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
+        }
+        return intent;
+
     }
 
     public static class ViewHolder {
@@ -165,8 +191,8 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         TextView reminderType;
         @BindView(R.id.hour_tv)
         TextView reminderHour;
-        @BindView(R.id.week_days_tv)
-        TextView reminderDays;
+        @BindView(R.id.repeat_tv)
+        TextView repeatTv;
         @BindView(R.id.delete_btn)
         ImageView deleteBtn;
         @BindView(R.id.play_btn)
@@ -175,28 +201,6 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
-    }
-
-    private Intent setIntent(Reminder reminder) {
-        Intent intent = null;
-        // intent to Chakra Activity
-        if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
-            intent = new Intent(getContext(),PlayingChakraActivity.class);
-            intent.putExtra("music_type", reminder.getMusicPlaybackType());
-            intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
-
-        }
-        // intent to Mantra Activity
-        if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
-            intent = new Intent(getContext(),PlayingChakraActivity.class);
-
-        }
-        // intent to Music Activity
-        if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
-            intent = new Intent(getContext(),PlayingChakraActivity.class);
-        }
-        return intent;
-
     }
 
 }
