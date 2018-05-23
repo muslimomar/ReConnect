@@ -95,6 +95,7 @@ public class ReminderAlarmService extends IntentService {
     private Intent setIntent() {
         Intent intent = null;
         // intent to Chakra Activity
+        // TODO: Configure mantra and music accordingly
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
              intent = new Intent(this,PlayingChakraActivity.class);
              intent.putExtra("music_type", reminder.getMusicPlaybackType());

@@ -142,7 +142,6 @@
         <item>10.	I am strong and capable</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="choos">Choose Sign</string>
     <string name="insilence">In Silence</string>
     <string name="iopted">I’ve opted for a Silent - Non-Talking day</string>

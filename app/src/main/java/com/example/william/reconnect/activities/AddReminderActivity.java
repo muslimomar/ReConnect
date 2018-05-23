@@ -168,8 +168,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         realm.commitTransaction();
 
         pickedTime = receivedReminder.getHours();
-
         timeTv.setText(receivedReminder.getHours());
+        pickedTimeStamp = receivedReminder.getAlarmTimestamp();
         dayPicker.setSelectedDays(receivedReminder.getWeekDaysInt());
 
         int musicPlaybackRb = receivedReminder.getMusicPlaybackRb();
@@ -482,6 +482,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             toEditReminder.setMantraPlaybackType(selectedMantraType);
             toEditReminder.setChakraPlaybackTYpe(selectedChakraType);
             toEditReminder.setHours(pickedTime);
+            toEditReminder.setAlarmTimestamp(pickedTimeStamp);
             // preferences
             toEditReminder.setMusicPlaybackRb(musicPlaybackRadioGroup.getCheckedRadioButtonId());
             toEditReminder.setMusicPlaybackSpinner(musicListSpinner.getSelectedItemPosition());
@@ -504,6 +505,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     selectedMantraType,
                     selectedChakraType,
                     pickedTime,
+                    pickedTimeStamp,
                     selectedDays,
                     // preferences
                     musicPlaybackRadioGroup.getCheckedRadioButtonId(),
