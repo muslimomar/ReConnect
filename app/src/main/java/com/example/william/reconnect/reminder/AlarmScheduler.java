@@ -3,13 +3,7 @@ package com.example.william.reconnect.reminder;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-
-import com.example.william.reconnect.model.Reminder;
-
-import io.realm.Realm;
 
 public class AlarmScheduler {
 
@@ -17,20 +11,15 @@ public class AlarmScheduler {
      * Schedule a reminder alarm at the specified time for the given task.
      *
      * @param context Local application or activity context
-
-     * @param id Uri referencing the task in the content provider
+     * @param id      Uri referencing the task in the content provider
      */
 
-    public void setAlarm(Context context, long alarmTime, String id) {
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.where(Reminder.class).findFirst().getId();
+    public void setAlarm(Context context, long alarmTime, String id, int requestCode) {
 
         AlarmManager manager = AlarmManagerProvider.getAlarmManager(context);
 
         PendingIntent operation =
-                ReminderAlarmService.getReminderPendingIntent(context, id);
+                ReminderAlarmService.getReminderPendingIntent(context, id, requestCode);
 
 
         if (Build.VERSION.SDK_INT >= 23) {
@@ -48,21 +37,22 @@ public class AlarmScheduler {
         }
     }
 
-    public void setRepeatAlarm(Context context, long alarmTime, String id, long RepeatTime) {
+    public void setRepeatAlarm(Context context, long alarmTime, String id, long RepeatTime, int requestCode) {
         AlarmManager manager = AlarmManagerProvider.getAlarmManager(context);
 
         PendingIntent operation =
-                ReminderAlarmService.getReminderPendingIntent(context, id);
+                ReminderAlarmService.getReminderPendingIntent(context, id, requestCode);
 
         manager.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, RepeatTime, operation);
+//        manager.setExact();
 
     }
 
-    public void cancelAlarm(Context context, String id) {
+    public void cancelAlarm(Context context, String id, int requestCode) {
         AlarmManager manager = AlarmManagerProvider.getAlarmManager(context);
 
         PendingIntent operation =
-                ReminderAlarmService.getReminderPendingIntent(context, id);
+                ReminderAlarmService.getReminderPendingIntent(context, id, requestCode);
 
         manager.cancel(operation);
 

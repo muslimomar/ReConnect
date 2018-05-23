@@ -32,17 +32,16 @@ public class ReminderAlarmService extends IntentService {
     String reminderType = "";
     int chakraIcon;
     Reminder reminder;
-    String reminderTitle = "";
 
     public ReminderAlarmService() {
         super(TAG);
     }
 
     //This is a deep link intent, and needs the task stack
-    public static PendingIntent getReminderPendingIntent(Context context, String id) {
+    public static PendingIntent getReminderPendingIntent(Context context, String id, int requestCode) {
         Intent action = new Intent(context, ReminderAlarmService.class);
         action.putExtra(EXTRA_ID, id);
-        return PendingIntent.getService(context, 0, action, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getService(context, requestCode, action, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
@@ -70,7 +69,6 @@ public class ReminderAlarmService extends IntentService {
 
         String reminderDescription = "You have a " + reminderType + " meditation session";
 
-
         NotificationCompat.Builder note = new NotificationCompat.Builder(this)
                 .setContentTitle(reminderType)
                 .setContentText(reminderDescription)
@@ -91,8 +89,6 @@ public class ReminderAlarmService extends IntentService {
 
 
         manager.notify(NOTIFICATION_ID, note.build());
-
-
 
     }
 

@@ -92,8 +92,7 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         }
 
         String id = deletedReminder.getId();
-        new AlarmScheduler().cancelAlarm(getContext(), id);
-
+        new AlarmScheduler().cancelAlarm(getContext(), id , deletedReminder.getRequestCode());
 
         realm.beginTransaction();
         realm.where(Reminder.class).equalTo("id", id).findFirst().deleteFromRealm();

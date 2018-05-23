@@ -18,7 +18,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Chakra;
-import com.example.william.reconnect.util.Extras;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -87,13 +85,13 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 // TODO:  Stop music
                 playingIconIv.clearAnimation();
 
-                if(!((Activity) PlayingChakraActivity.this).isFinishing()) {
+                if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
                     showFinishDialog();
                 }
 
             }
         };
-        handler.postDelayed(r, ONE_MIN_MS/ 10);
+        handler.postDelayed(r, ONE_MIN_MS / 10);
 
     }
 
@@ -145,14 +143,14 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
 
     private void initializeImages() {
-chakraType = RANDOM;
-        if(chakraType.equals(RANDOM)) {
-             position = new Random().nextInt(chakras.size());
-        }else {
 
-        for (int i = 0; i < chakras.size(); i++) {
-            if (chakraType.equalsIgnoreCase(chakras.get(i).getChakraName())) {
-                position = i;
+        if (chakraType.equals(RANDOM)) {
+            position = new Random().nextInt(chakras.size());
+        } else {
+
+            for (int i = 0; i < chakras.size(); i++) {
+                if (chakraType.equalsIgnoreCase(chakras.get(i).getChakraName())) {
+                    position = i;
                 }
             }
         }

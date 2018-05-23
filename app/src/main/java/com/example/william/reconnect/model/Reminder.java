@@ -23,6 +23,15 @@ public class Reminder extends RealmObject {
     private String mantraPlaybackType;
     private String chakraPlaybackTYpe;
     private String hours;
+    private int requestCode;
+
+    public int getRequestCode() {
+        return requestCode;
+    }
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
 
     // preferences
     private int musicPlaybackRb;
@@ -164,7 +173,7 @@ public class Reminder extends RealmObject {
     public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe,
                     String hours, RealmList<String> weekDays, int musicPlaybackRb, int musicPlaybackSpinner, int mantraPlaybackRb,
                     int mantraFirstSpinner, int mantraSecondSpinner, int chakraPlaybackRb, int chakraSpinner,
-                    RealmList<Integer> weekDaysInt) {
+                    RealmList<Integer> weekDaysInt, int requestCode) {
         this.id = UUID.randomUUID().toString();
         this.reminderType = reminderType;
         this.musicPlaybackType = musicPlaybackType;
@@ -180,6 +189,7 @@ public class Reminder extends RealmObject {
         this.chakraSpinner = chakraSpinner;
         this.weekDaysInt = weekDaysInt;
         this.weekDays = weekDays;
+        this.requestCode = requestCode;
     }
 }
 

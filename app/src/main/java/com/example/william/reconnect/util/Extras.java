@@ -13,6 +13,5 @@ public final class Extras {
 
     public static final String NO_MUSIC = "no_music";
     public static final String RANDOM = "random";
-    // TODO: fill extras with some info
 
 }

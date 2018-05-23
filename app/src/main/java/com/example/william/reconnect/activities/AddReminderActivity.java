@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -31,7 +32,6 @@ import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
-import com.example.william.reconnect.util.Extras;
 
 import java.util.Calendar;
 import java.util.List;
@@ -113,6 +113,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     Realm realm;
     String id;
     Reminder receivedReminder;
+    int requestCode;
+    long CalendarSystemTimeDiff;
     private boolean mReminderHasChanged = false;
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -468,6 +470,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 return;
             }
         }
+        requestCode = (int) System.currentTimeMillis();
 
         realm.beginTransaction();
         if (id != null) {
@@ -510,7 +513,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     mantraSecondSpinner.getSelectedItemPosition(),
                     chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
                     chakraListSpinner.getSelectedItemPosition(),
-                    selectedDaysInt
+                    selectedDaysInt,
+                    requestCode
             );
             realm.copyToRealm(reminder);
 
@@ -524,10 +528,12 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     private void setAlarm(String id) {
 
         if (selectedDays.isEmpty()) {
-            new AlarmScheduler().setAlarm(getApplicationContext(), pickedTimeStamp, id);
+            new AlarmScheduler().setAlarm(getApplicationContext(), pickedTimeStamp, id, requestCode);
         } else if (!selectedDays.isEmpty()) {
-            new AlarmScheduler().setRepeatAlarm(getApplicationContext(), pickedTimeStamp, id, AlarmManager.INTERVAL_DAY);
+            new AlarmScheduler().setRepeatAlarm(getApplicationContext(), pickedTimeStamp, id, AlarmManager.INTERVAL_HOUR, requestCode);
         }
+
+
     }
 
     @Override
@@ -584,9 +590,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
     @OnClick(R.id.pick_a_time_layout)
     public void pickTimeBtn(View view) {
-        final Calendar mCurrentTime = Calendar.getInstance();
-        int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mCurrentTime.get(Calendar.MINUTE);
+        final Calendar mCalendar = Calendar.getInstance();
+        final int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        int minute = mCalendar.get(Calendar.MINUTE);
+
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(AddReminderActivity.this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -596,11 +603,27 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                         timeTv.setText(formattedTime);
                         pickedTime = formattedTime;
 
-                        pickedTimeStamp = mCurrentTime.getTimeInMillis();
+                        Calendar calNow = Calendar.getInstance();
+                        Calendar calSet = (Calendar) calNow.clone();
+
+                        calSet.set(Calendar.HOUR_OF_DAY, i);
+                        calSet.set(Calendar.MINUTE,i1);
+                        calSet.set(Calendar.SECOND, 0);
+                        calSet.set(Calendar.MILLISECOND, 0);
+
+                        // make sure we're not in past (cause the alarm to trigger immediately)
+                        if(calSet.compareTo(calNow) <= 0) {
+                            calSet.add(Calendar.DATE, 1);
+                        }
+
+                        pickedTimeStamp = calSet.getTimeInMillis();
                     }
+
                 }, hour, minute, true); // 24 hour time
         mTimePicker.setTitle("Select a time");
         mTimePicker.show();
+
+
     }
 
 
