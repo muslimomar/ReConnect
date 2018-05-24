@@ -85,7 +85,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 // TODO:  Stop music
                 playingIconIv.clearAnimation();
 
-                if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
+                if (!PlayingChakraActivity.this.isFinishing()) {
                     showFinishDialog();
                 }
 
@@ -195,7 +195,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         p.setShape(new RectShape());
         p.setShaderFactory(sf);
         p.setCornerRadii(new float[]{5, 5, 5, 5, 0, 0, 0, 0});
-        layers[0] = (Drawable) p;
+        layers[0] = p;
 
         LayerDrawable composite = new LayerDrawable(layers);
         view.setBackgroundDrawable(composite);

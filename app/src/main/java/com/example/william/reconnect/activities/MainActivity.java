@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction().replace(R.id.fragment, new Home()).commit();
         }
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mDrawerLayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nv);
+        NavigationView navigationView = findViewById(R.id.nv);
         mToggle.syncState();
 
         ActionBar actionBar = getSupportActionBar();

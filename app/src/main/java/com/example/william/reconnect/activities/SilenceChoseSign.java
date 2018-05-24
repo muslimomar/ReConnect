@@ -151,7 +151,7 @@ public class SilenceChoseSign extends AppCompatActivity {
         final EditText editCustomSign = dialog.findViewById(R.id.edit_custom_sign);
 
         final String typedText = editCustomSign.getText().toString();
-        final Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+        final Button dialogButton = dialog.findViewById(R.id.btn_dialog);
 
 
         /* TextWatcher to check if edittext is not empty */
@@ -214,10 +214,10 @@ public class SilenceChoseSign extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.silence_why_choose_sign);
 
-        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        TextView text = dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+        Button dialogButton = dialog.findViewById(R.id.btn_dialog);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

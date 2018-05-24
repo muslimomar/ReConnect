@@ -22,10 +22,10 @@ public class SilenceWhy {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.silence_why_choose_sign);
 
-        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        TextView text = dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+        Button dialogButton = dialog.findViewById(R.id.btn_dialog);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
