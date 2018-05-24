@@ -63,9 +63,6 @@
         <activity
             android:name=".activities.PlayingMusicActivity"
             android:theme="@style/BlackStatusBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
 
         </activity>
 
