@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
-import com.example.william.reconnect.activities.PlayingMusicActivity;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
 
@@ -179,8 +178,7 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         }
         // intent to Music Activity
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
-            intent = new Intent(getContext(), PlayingMusicActivity.class);
-            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
         }
         return intent;
 
