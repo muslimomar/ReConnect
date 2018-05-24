@@ -91,7 +91,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
             }
         };
-        handler.postDelayed(r, ONE_MIN_MS / 10);
+        handler.postDelayed(r, ONE_MIN_MS);
 
     }
 
@@ -216,11 +216,10 @@ public class PlayingChakraActivity extends AppCompatActivity {
         ImageView chakraInfoPlaceIv = dialog.findViewById(R.id.chakra_place_iv);
         LinearLayout dialogCenterLayout = dialog.findViewById(R.id.dialog_center_layout);
 
-        dialogCenterLayout.setBackgroundColor(chakra.getChakraColor());
-        chakraInfoTv.setText(chakra.getChakraInfo());
-        chakraInfoPlaceIv.setImageResource(chakra.getChakraPlaceImg());
-
         chakraTitle.setText(chakra.getChakraName());
+        chakraInfoPlaceIv.setImageResource(chakra.getChakraPlaceImg());
+        chakraInfoTv.setText(chakra.getChakraInfo());
+        dialogCenterLayout.setBackgroundColor(getResources().getColor(chakra.getChakraColor()));
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
