@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<Button
+    android:id="@+id/play_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_music_play"
+    android:layout_marginLeft="25dp"
+    />
+
+    <TextView
+        android:id="@+id/music_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#000"
+        tools:text="Voodoo Mon Amour"
+        android:layout_toRightOf="@id/play_btn"
+        android:layout_marginLeft="18dp"
+        />
+
+    <TextView
+        android:id="@+id/music_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13.3sp"
+        android:textColor="#66ffffff"
+        tools:text="4:31"
+        android:layout_toRightOf="@id/music_title"
+        android:layout_marginLeft="50dp"
+        />
+
+
+</LinearLayout>

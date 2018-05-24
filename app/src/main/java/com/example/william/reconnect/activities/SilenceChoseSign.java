@@ -79,49 +79,49 @@ public class SilenceChoseSign extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.silence_btn_1:
                 sendSign = shoppingItems[0];
-                Intent intent = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent.putExtra("sign", sendSign);
                 startActivity(intent);
                 break;
             case R.id.silence_btn_2:
                 sendSign = shoppingItems[1];
-                Intent intent1 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent1 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent1.putExtra("sign", sendSign);
                 startActivity(intent1);
                 break;
             case R.id.silence_btn_3:
                 sendSign = shoppingItems[2];
-                Intent intent2 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent2 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent2.putExtra("sign", sendSign);
                 startActivity(intent2);
                 break;
             case R.id.silence_btn_4:
                 sendSign = shoppingItems[3];
-                Intent intent3 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent3 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent3.putExtra("sign", sendSign);
                 startActivity(intent3);
                 break;
             case R.id.silence_btn_5:
                 sendSign = shoppingItems[4];
-                Intent intent4 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent4 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent4.putExtra("sign", sendSign);
                 startActivity(intent4);
                 break;
             case R.id.silence_btn_6:
                 sendSign = shoppingItems[5];
-                Intent intent5 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent5 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent5.putExtra("sign", sendSign);
                 startActivity(intent5);
                 break;
             case R.id.silence_btn_7:
                 sendSign = shoppingItems[6];
-                Intent intent6 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent6 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent6.putExtra("sign", sendSign);
                 startActivity(intent6);
                 break;
             case R.id.silence_btn_8:
                 sendSign = shoppingItems[7];
-                Intent intent7 = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent7 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent7.putExtra("sign", sendSign);
                 startActivity(intent7);
                 break;
@@ -190,12 +190,12 @@ public class SilenceChoseSign extends AppCompatActivity {
 
                 dialog.dismiss();
                 final String typedText = editCustomSign.getText().toString();
-                Intent intent = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+                Intent intent = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
                 intent.putExtra("silence", typedText);
                 Log.d("hooooooooo", "onCreate: " + typedText);
                 startActivity(intent);
 
-                /* Sending typedText to SilencePlaying Activity */
+                /* Sending typedText to PlayingSilenceActivity Activity */
 
 
             }
@@ -246,38 +246,38 @@ public class SilenceChoseSign extends AppCompatActivity {
  * Resources res = getResources(); //assuming in an activity for example, otherwise you can provide a context.
  * String[] shoppingItems = res.getStringArray(R.array.seized_item);
  * String silence_sign_1 = shoppingItems[0];
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * intent.putExtra("sign_1", silence_sign_1);
  * startActivity(intent);
  * <p>
  * <p>
  * }
  * @OnClick(R.id.silence_btn_2) public void onSilenceBtn2Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.silence_btn_3) public void onSilenceBtn3Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.silence_btn_4) public void onSilenceBtn4Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.silence_btn_5) public void onSilenceBtn5Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.silence_btn_6) public void onSilenceBtn6Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.silence_btn_7) public void onSilenceBtn7Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.silence_btn_8) public void onSilenceBtn8Clicked() {
- * Intent intent = new Intent(this, SilencePlaying.class);
+ * Intent intent = new Intent(this, PlayingSilenceActivity.class);
  * startActivity(intent);
  * }
  * @OnClick(R.id.btn_create_sign) public void onBtnCreateSignClicked() {
@@ -307,9 +307,9 @@ public class SilenceChoseSign extends AppCompatActivity {
  * @Override public void onClick(View v) {
  * dialog.dismiss();
  * <p>
- * //Sending typedText to SilencePlaying Activity
+ * //Sending typedText to PlayingSilenceActivity Activity
  * final String typedText = editCustomSign.getText().toString();
- * Intent intent = new Intent(SilenceChoseSign.this, SilencePlaying.class);
+ * Intent intent = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
  * intent.putExtra("silence", typedText);
  * Log.d("hooooooooo", "onCreate: " + typedText);
  * startActivity(intent);

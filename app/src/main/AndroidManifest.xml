@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".activities.SilencePlaying"
+            android:name=".activities.PlayingSilenceActivity"
             android:theme="@style/SplashTheme">
 
         </activity>
@@ -55,12 +55,18 @@
 
         </activity>
         <activity
-            android:name=".activities.SilenceDay"
+            android:name=".activities.SilenceDayFirstActivity"
             android:theme="@style/SplashTheme"
 
             >
 
         </activity>
+
+        <activity android:name=".activities.PlayingMusicActivity"
+            android:theme="@style/BlackStatusBar">
+
+        </activity>
+
         <activity
             android:name=".activities.SilenceChoseSign"
             android:theme="@style/SplashTheme">
