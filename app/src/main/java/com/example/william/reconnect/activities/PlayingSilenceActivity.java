@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-public class SilencePlaying extends AppCompatActivity {
+public class PlayingSilenceActivity extends AppCompatActivity {
 
     @BindView(R.id.silence_playing_screen)
     RelativeLayout silencePlayingScreen;
@@ -112,7 +111,7 @@ public class SilencePlaying extends AppCompatActivity {
     public void onBtnStopSilenceClicked() {
         //    timer.cancel();
 
-        showTimeSpentDialog(SilencePlaying.this, "Hello");
+        showTimeSpentDialog(PlayingSilenceActivity.this, "Hello");
 
     }
 
@@ -141,10 +140,10 @@ public class SilencePlaying extends AppCompatActivity {
 
         public void onFinish() {
             //TODO code onFinish Silence countdown
-            Toast.makeText(SilencePlaying.this, "Silence Day Finished!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(SilencePlaying.this, MainActivity.class);
+            Toast.makeText(PlayingSilenceActivity.this, "Silence Day Finished!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PlayingSilenceActivity.this, MainActivity.class);
             startActivity(intent);
-            showTimeSpentDialog(SilencePlaying.this, "hello");
+            showTimeSpentDialog(PlayingSilenceActivity.this, "hello");
         }
 
     };
@@ -161,7 +160,7 @@ public class SilencePlaying extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SilencePlaying.this, MainActivity.class);
+                Intent intent = new Intent(PlayingSilenceActivity.this, MainActivity.class);
                 startActivity(intent);
 
 
@@ -206,13 +205,13 @@ public class SilencePlaying extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 /* Transaction was a success. */
-                Toast.makeText(SilencePlaying.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlayingSilenceActivity.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
                 /* Transaction failed and was automatically canceled. */
-                Toast.makeText(SilencePlaying.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlayingSilenceActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
 
             }
         });

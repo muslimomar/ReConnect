@@ -10,29 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activities.MainActivity">
-
-        </activity>
-
-        <activity
-            android:name=".activities.PlayingChakraActivity"
-            android:theme="@style/TransparentStatusBar" />
+        <activity android:name=".activities.MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/SplashTheme"></activity>
         <activity
             android:name=".activities.MeditationsActivity"
             android:theme="@style/BlackActionBar">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -43,26 +29,27 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
-
         </activity>
         <activity
-            android:name=".activities.SilenceDay"
-            android:theme="@style/SplashTheme"
-
-            >
-
-        </activity>
+            android:name=".activities.SilenceDayFirstActivity"
+            android:theme="@style/SplashTheme"></activity>
         <activity
             android:name=".activities.SilenceChoseSign"
-            android:theme="@style/SplashTheme">
-
-        </activity>
-
+            android:theme="@style/SplashTheme"></activity>
         <activity
-            android:name=".activities.SilencePlaying"
-            android:theme="@style/SplashTheme">
+            android:name=".activities.PlayingSilenceActivity"
+            android:theme="@style/SplashTheme"></activity>
+        <activity android:name=".activities.PlayingMusicActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.PlayingChakraActivity"
+            android:theme="@style/NoActionBarMusic"></activity>
+        <activity android:name=".activities.MantraPlayingActivity"></activity>
     </application>
 
 </manifest>

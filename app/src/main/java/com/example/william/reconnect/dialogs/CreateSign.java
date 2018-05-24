@@ -1,17 +1,9 @@
 package com.example.william.reconnect.dialogs;
 
-import android.app.Activity;
-import android.app.Application;
-import android.app.Dialog;
-import android.content.Intent;
-import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.activities.SilencePlaying;
 
 import butterknife.BindView;
 import butterknife.OnClick;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.MeditationsActivity;
-import com.example.william.reconnect.activities.SilenceDay;
+import com.example.william.reconnect.activities.SilenceDayFirstActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +63,7 @@ public class Home extends Fragment {
 
     @OnClick(R.id.silence_day)
     public void onViewClicked() {
-        Intent intent = new Intent(getActivity(), SilenceDay.class);
+        Intent intent = new Intent(getActivity(), SilenceDayFirstActivity.class);
         startActivity(intent);
     }
 }

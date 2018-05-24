@@ -14,7 +14,6 @@ import android.widget.TimePicker;
 import com.dpro.widgets.WeekdaysPicker;
 import com.example.william.reconnect.R;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SilenceDay extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class SilenceDayFirstActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.silence_day_txt)
     TextView silenceDayTxt;
@@ -68,7 +67,7 @@ public class SilenceDay extends AppCompatActivity implements DatePickerDialog.On
         }
 
         /* Sending Days List to SilencePlaying Activity */
-        Intent intent = new Intent(SilenceDay.this, SilenceChoseSign.class);
+        Intent intent = new Intent(SilenceDayFirstActivity.this, SilenceChoseSign.class);
         intent.putStringArrayListExtra("silence", arraList);
         Log.d("hooooooooo", "onCreate: " + arraList);
         startActivity(intent);

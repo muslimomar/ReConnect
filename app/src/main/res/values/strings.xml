@@ -15,36 +15,51 @@
     <string name="silence_day_info"><![CDATA[Choose a convenient day to practice Silence/Non-Talking You CAN still do the usual things (perhaps not job) but will just be doing things without the added talking.]]></string>
     <string name="silence_day">Silence Day</string>
 
-        <string name="lblAcc">Select Account Type</string>
-        <string name="lblSubAcc">Select Account Head</string>
+        
+    <string name="lblAcc">Select Account Type</string>
+        
+    <string name="lblSubAcc">Select Account Head</string>
      
-        <string-array name="acc_type">
-            <item>Income</item>
-            <item>Expense</item>
-        </string-array>
+        
+    <string-array name="acc_type">
+                
+        <item>Income</item>
+                
+        <item>Expense</item>
+            
+    </string-array>
 
-     <string-array name="chakras_array">
-            <item>Crown</item>
-            <item>Third Eye</item>
-            <item>Throat</item>
-            <item>Heart</item>
-            <item>Sacral</item>
-            <item>Solar Plexus</item>
-            <item>Root</item>
-        </string-array>
+     
+    <string-array name="chakras_array">
+                
+        <item>Crown</item>
+                
+        <item>Third Eye</item>
+                
+        <item>Throat</item>
+                
+        <item>Heart</item>
+                
+        <item>Sacral</item>
+                
+        <item>Solar Plexus</item>
+                
+        <item>Root</item>
+            
+    </string-array>
 
-        <string-array name="crown_mantras_array" >
-            <item>1. I am deeply connected to unseen powers</item>
-            <item>2. I am free from all limitations of life</item>
-            <item>3.	I ‘tune in’ and receive energy at any time</item>
-            <item>4.	There is no trying because I create what I want</item>
-            <item>5.	I experience high states of consciousness</item>
-            <item>6.	I am in a natural state of gratitude</item>
-            <item>7.	Magical coincidences happen regularly</item>
-            <item>8.	I am a glorious and radiant being</item>
-            <item>9.	I don’t need answers: they come with ease</item>
-            <item>10.	I control my destiny and manifest my desires</item>
-        </string-array>
+    <string-array name="crown_mantras_array">
+        <item>1. I am deeply connected to unseen powers</item>
+        <item>2. I am free from all limitations of life</item>
+        <item>3.	I ‘tune in’ and receive energy at any time</item>
+        <item>4.	There is no trying because I create what I want</item>
+        <item>5.	I experience high states of consciousness</item>
+        <item>6.	I am in a natural state of gratitude</item>
+        <item>7.	Magical coincidences happen regularly</item>
+        <item>8.	I am a glorious and radiant being</item>
+        <item>9.	I don’t need answers: they come with ease</item>
+        <item>10.	I control my destiny and manifest my desires</item>
+    </string-array>
 
     <string-array name="third_eye_mantras_array">
         <item>1.	I see everything around me clearly</item>

@@ -42,6 +42,10 @@
 
     </style>
 
+    <style name="NoActionBarMusic" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#B71C13</item>
+    </style>
+
     <style name="TransparentStatusBarDarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
