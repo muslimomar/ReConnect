@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.william.reconnect">
 
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".activities.MyApplication"
         android:allowBackup="true"
@@ -10,15 +12,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity" />
+
+        <activity android:name=".activities.MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".activities.PlayingChakraActivity"
+            android:theme="@style/TransparentStatusBar" >
+
+        </activity>
+
+        <activity
+            android:name=".activities.PlayingSilenceActivity"
+            android:theme="@style/SplashTheme">
+
+        </activity>
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.MeditationsActivity"
             android:theme="@style/BlackActionBar">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -29,27 +53,28 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
+
         </activity>
         <activity
             android:name=".activities.SilenceDayFirstActivity"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme"
+
+            >
+
+        </activity>
+
+        <activity android:name=".activities.PlayingMusicActivity"
+            android:theme="@style/BlackStatusBar">
+
+        </activity>
+
         <activity
             android:name=".activities.SilenceChoseSign"
-            android:theme="@style/SplashTheme"></activity>
-        <activity
-            android:name=".activities.PlayingSilenceActivity"
-            android:theme="@style/SplashTheme"></activity>
-        <activity android:name=".activities.PlayingMusicActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/SplashTheme">
         </activity>
-        <activity
-            android:name=".activities.PlayingChakraActivity"
-            android:theme="@style/NoActionBarMusic"></activity>
-        <activity android:name=".activities.MantraPlayingActivity"></activity>
+
+        <service android:name=".reminder.ReminderAlarmService" android:exported="false"/>
+
     </application>
 
 </manifest>

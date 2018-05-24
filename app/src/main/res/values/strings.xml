@@ -1,13 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ReConnect</string>
-    <string name="info_1">The highest chakra represents our ability to be fully connected spiritually</string>
-    <string name="chakra_1_tips"><![CDATA[spirituality & peace, transcendence of self/selflessness, expansion of consciousness, miracles & manifestation]]></string>
-    <string name="chakra_2_tips">inner wisdom and powerful intuition, clarity of inner vision, psychic ability, own insights, open to unknowns</string>
-    <string name="chakra_3_tips"><![CDATA[good communication, ability to express self fully, truthful & authentic self, inner & outer self matches]]></string>
-    <string name="chakra_4_tips"><![CDATA[Love for self & others, acceptance of self & others, compassion & forgiveness, genuine relationships]]></string>
-    <string name="chakra_5_tips"><![CDATA[self – respect, power, endurance, motivation, effectiveness, fearlessness, true self, confidence & esteem]]></string>
-    <string name="chakra_6_tips"><![CDATA[emotional balance, sexual (sexuality) balance, allowance of pleasure in life, trusting & in touch with self]]></string>
-    <string name="chakra_7_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
+    <string name="crown_position">The highest chakra represents our ability to be fully connected spiritually</string>
+    <string name="third_eye_position">forehead: above/between eyebrows</string>
+    <string name="throat_position">Base of neck/lower chin</string>
+    <string name="heart_position">Centre of chest (not heart on left)</string>
+    <string name="solar_plexus_position">upper naval/base of sternum</string>
+    <string name="sacral_position">upper naval/base of sternum</string>
+    <string name="root_position">between anus &amp; genitals/base of spine</string>
+
+    <string name="crown_tips"><![CDATA[spirituality & peace, transcendence of self/selflessness, expansion of consciousness, miracles & manifestation]]></string>
+    <string name="third_eye_tips">inner wisdom and powerful intuition, clarity of inner vision, psychic ability, own insights, open to unknowns</string>
+    <string name="throat_tips"><![CDATA[good communication, ability to express self fully, truthful & authentic self, inner & outer self matches]]></string>
+    <string name="heart_tips"><![CDATA[Love for self & others, acceptance of self & others, compassion & forgiveness, genuine relationships]]></string>
+    <string name="solar_plexus_tips"><![CDATA[self – respect, power, endurance, motivation, effectiveness, fearlessness, true self, confidence & esteem]]></string>
+    <string name="sacral_tips"><![CDATA[emotional balance, sexual (sexuality) balance, allowance of pleasure in life, trusting & in touch with self]]></string>
+    <string name="root_tips"><![CDATA[grounding, safety & security, stability in life, stillness & peace, physical health & fitness, self-care and capability]]></string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="seeguide">See guidelines</string>
@@ -135,7 +142,6 @@
         <item>10.	I am strong and capable</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="choos">Choose Sign</string>
     <string name="insilence">In Silence</string>
     <string name="iopted">I’ve opted for a Silent - Non-Talking day</string>
@@ -148,4 +154,10 @@
     <string name="create">Create My Own</string>
     <string name="whychoos" tools:ignore="StringEscaping"><![CDATA[Why Choosing a Sign?
     \n This is a scripted message to show people when they forget \n (or dont know) that you are practicing silence. This saves you from having to speak.]]></string>
+
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+
+    <string name="keep_editing">Keep Editing</string>
+
 </resources>

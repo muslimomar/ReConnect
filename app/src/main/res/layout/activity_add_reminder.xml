@@ -54,7 +54,6 @@
                     android:id="@+id/time_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="16:00"
                     android:textColor="@color/secondary_text_color" />
 
             </LinearLayout>
@@ -95,15 +94,40 @@
                     android:text="Repeat"
                     android:textColor="@color/black" />
 
-                <com.dpro.widgets.WeekdaysPicker
-                    android:id="@+id/day_picker"
+                <RadioGroup
+                    android:id="@+id/repeat_radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_between_elments"
-                    app:background_color="@color/gray"
-                    app:highlight_color="#029688">
+                    android:layout_marginTop="@dimen/space_between_elments">
 
-                </com.dpro.widgets.WeekdaysPicker>
+                    <RadioButton
+                        android:id="@+id/every_hour_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Every Hour"
+                        android:textColor="@color/secondary_text_color"
+
+                        />
+
+                    <RadioButton
+                        android:id="@+id/every_day_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Every Day"
+                        android:textColor="@color/secondary_text_color"
+
+                        />
+
+                    <RadioButton
+                        android:id="@+id/every_week_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Every Week"
+                        android:textColor="@color/secondary_text_color" />
+
+                </RadioGroup>
+
+
 
             </LinearLayout>
 
@@ -306,6 +330,13 @@
                     android:layout_marginTop="@dimen/space_between_elments">
 
                     <RadioButton
+                        android:id="@+id/mantra_random_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Random"
+                        android:textColor="@color/secondary_text_color" />
+
+                    <RadioButton
                         android:id="@+id/mantra_custom_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -322,7 +353,8 @@
                         android:textColor="@color/secondary_text_color"
                         android:textColorHighlight="@color/secondary_text_color"
                         android:textColorHint="@color/secondary_text_color"
-                        android:textSize="14sp" />
+                        android:textSize="16sp"
+                        />
 
                     <RadioButton
                         android:id="@+id/mantra_existing_rb"

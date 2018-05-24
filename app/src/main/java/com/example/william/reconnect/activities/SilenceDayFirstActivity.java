@@ -56,6 +56,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity implements DatePi
     @OnClick(R.id.pick_day_btn)
     public void onPickDayBtnClicked() {
 
+        Calendar newCalendar = Calendar.getInstance();
 
         WeekdaysPicker widget = findViewById(R.id.day_picker);
 

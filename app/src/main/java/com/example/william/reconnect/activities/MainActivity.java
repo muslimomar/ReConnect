@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().replace(R.id.fragment, new Balance()).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment, new Home()).commit();
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public void selectItemDrawer(MenuItem item) {
         Fragment myFragment = null;
         Class fragmentClass = null;
+
         switch (item.getItemId()) {
             case R.id.home:
                 fragmentClass = Home.class;
@@ -77,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
 
-                //Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
-                // Intent to Login
                 break;
         }
 

@@ -1,3 +1,5 @@
+
+
 package com.example.william.reconnect.model;
 
 import java.util.UUID;
@@ -22,20 +24,23 @@ public class Reminder extends RealmObject {
     private String musicPlaybackType;
     private String mantraPlaybackType;
     private String chakraPlaybackTYpe;
-    private String hours;
-    private RealmList<String> weekDays = new RealmList<>();
+    private int pickedHours;
+    private int pickedMinutes;
+    private long alarmTimestamp;
+    private int requestCode;
+    private long repeatType;
+
+    // preferences
+    private int musicPlaybackRb;
+    private int musicPlaybackSpinner;
+    private int mantraPlaybackRb;
+    private int mantraFirstSpinner;
+    private int mantraSecondSpinner;
+    private int chakraPlaybackRb;
+    private int chakraSpinner;
+    private int repeatRb;
 
     public Reminder() {
-    }
-
-    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe, String hours, RealmList<String> weekDays) {
-        this.id = UUID.randomUUID().toString();
-        this.reminderType = reminderType;
-        this.musicPlaybackType = musicPlaybackType;
-        this.mantraPlaybackType = mantraPlaybackType;
-        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
-        this.hours = hours;
-        this.weekDays = weekDays;
     }
 
     public String getId() {
@@ -62,6 +67,14 @@ public class Reminder extends RealmObject {
         this.musicPlaybackType = musicPlaybackType;
     }
 
+    public int getRepeatRb() {
+        return repeatRb;
+    }
+
+    public void setRepeatRb(int repeatRb) {
+        this.repeatRb = repeatRb;
+    }
+
     public String getMantraPlaybackType() {
         return mantraPlaybackType;
     }
@@ -78,22 +91,127 @@ public class Reminder extends RealmObject {
         this.chakraPlaybackTYpe = chakraPlaybackTYpe;
     }
 
-    public String getHours() {
-        return hours;
+    public int getPickedHours() {
+        return pickedHours;
     }
 
-    public void setHours(String hours) {
-        this.hours = hours;
+    public void setPickedHours(int pickedHours) {
+        this.pickedHours = pickedHours;
     }
 
-    public RealmList<String> getWeekDays() {
-        return weekDays;
+    public int getPickedMinutes() {
+        return pickedMinutes;
     }
 
-    public void setWeekDays(RealmList<String> weekDays) {
-        this.weekDays = weekDays;
+    public void setPickedMinutes(int pickedMinutes) {
+        this.pickedMinutes = pickedMinutes;
     }
 
+    public int getMusicPlaybackRb() {
+        return musicPlaybackRb;
+    }
+
+    public void setMusicPlaybackRb(int musicPlaybackRb) {
+        this.musicPlaybackRb = musicPlaybackRb;
+    }
+
+    public int getMusicPlaybackSpinner() {
+        return musicPlaybackSpinner;
+    }
+
+    public void setMusicPlaybackSpinner(int musicPlaybackSpinner) {
+        this.musicPlaybackSpinner = musicPlaybackSpinner;
+    }
+
+    public int getMantraPlaybackRb() {
+        return mantraPlaybackRb;
+    }
+
+    public void setMantraPlaybackRb(int mantraPlaybackRb) {
+        this.mantraPlaybackRb = mantraPlaybackRb;
+    }
+
+    public int getMantraFirstSpinner() {
+        return mantraFirstSpinner;
+    }
+
+    public void setMantraFirstSpinner(int mantraFirstSpinner) {
+        this.mantraFirstSpinner = mantraFirstSpinner;
+    }
+
+    public int getMantraSecondSpinner() {
+        return mantraSecondSpinner;
+    }
+
+    public void setMantraSecondSpinner(int mantraSecondSpinner) {
+        this.mantraSecondSpinner = mantraSecondSpinner;
+    }
+
+    public int getChakraPlaybackRb() {
+        return chakraPlaybackRb;
+    }
+
+    public void setChakraPlaybackRb(int chakraPlaybackRb) {
+        this.chakraPlaybackRb = chakraPlaybackRb;
+    }
+
+    public int getChakraSpinner() {
+        return chakraSpinner;
+    }
+
+    public void setChakraSpinner(int chakraSpinner) {
+        this.chakraSpinner = chakraSpinner;
+    }
+
+    public long getAlarmTimestamp() {
+        return alarmTimestamp;
+    }
+
+    public void setAlarmTimestamp(long alarmTimestamp) {
+        this.alarmTimestamp = alarmTimestamp;
+    }
+
+
+    public int getRequestCode() {
+        return requestCode;
+    }
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public long getRepeatType() {
+        return repeatType;
+    }
+
+    public void setRepeatType(long repeatType) {
+        this.repeatType = repeatType;
+    }
+
+    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe,
+                    int pickedHours,int pickedMinutes,long alarmTimestamp,long repeatType ,int musicPlaybackRb,
+                    int musicPlaybackSpinner, int mantraPlaybackRb,
+                    int mantraFirstSpinner, int mantraSecondSpinner, int chakraPlaybackRb, int chakraSpinner
+                    , int requestCode, int repeatRb) {
+        this.id = UUID.randomUUID().toString();
+        this.reminderType = reminderType;
+        this.musicPlaybackType = musicPlaybackType;
+        this.mantraPlaybackType = mantraPlaybackType;
+        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
+        this.pickedHours = pickedHours;
+        this.pickedMinutes = pickedMinutes;
+        this.alarmTimestamp = alarmTimestamp;
+        this.repeatRb = repeatRb;
+        this.musicPlaybackRb = musicPlaybackRb;
+        this.musicPlaybackSpinner = musicPlaybackSpinner;
+        this.mantraPlaybackRb = mantraPlaybackRb;
+        this.mantraFirstSpinner = mantraFirstSpinner;
+        this.mantraSecondSpinner = mantraSecondSpinner;
+        this.chakraPlaybackRb = chakraPlaybackRb;
+        this.chakraSpinner = chakraSpinner;
+        this.requestCode = requestCode;
+        this.repeatType = repeatType;
+    }
 }
 
 

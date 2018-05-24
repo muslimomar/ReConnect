@@ -1,9 +1,12 @@
+// Reminder Adapter
+
+
 package com.example.william.reconnect.adapter;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,129 +15,145 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.reminder.AlarmScheduler;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
-
-import static com.example.william.reconnect.activities.AddReminderActivity.TAG;
-
 
 public class ReminderAdapter extends ArrayAdapter<Reminder> {
 
     private Realm realm;
 
-    public ReminderAdapter(Context context, List<Reminder> reminders) {
-        super(context, 0, reminders);
+    public ReminderAdapter(@NonNull Activity context) {
+        super(context, 0, new ArrayList<Reminder>());
     }
 
     @Override
-    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, View contentView, ViewGroup parent) {
 
         realm = Realm.getDefaultInstance();
 
-        View listItemView = convertView;
-
-        if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.meditations_list_item, parent, false);
+        final ViewHolder holder;
+        if (contentView == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            contentView = inflater.inflate(R.layout.meditations_list_item, parent, false);
+            holder = new ViewHolder(contentView);
+            contentView.setTag(holder);
+        } else {
+            holder = (ViewHolder) contentView.getTag();
         }
 
-        Reminder reminder = getItem(position);
+        final Reminder reminder = getItem(position);
 
-        ImageView reminderIcon = listItemView.findViewById(R.id.reminder_icon);
-        TextView reminderName = listItemView.findViewById(R.id.type_tv);
-        TextView reminderHour = listItemView.findViewById(R.id.hour_tv);
-        final TextView reminderDays = listItemView.findViewById(R.id.week_days_tv);
-        final ImageView deleteBtn = listItemView.findViewById(R.id.delete_btn);
-        deleteBtn.setTag(position);
-        final View finalListItemView = listItemView;
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        setReminderType(reminder, holder.reminderIcon, holder.reminderType);
+
+        String formattedTime = String.format("%02d:%02d", reminder.getPickedHours(), reminder.getPickedMinutes());
+        holder.reminderHour.setText(formattedTime);
+
+        holder.repeatTv.setText(getRepeatType(reminder));
+        holder.musicTv.setText(reminder.getMusicPlaybackType());
+
+        holder.deleteBtn.setTag(position);
+        final View finalContentView = contentView;
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Integer index = (Integer) deleteBtn.getTag();
-                Reminder deletedReminder = getItem(index);
-                if (deletedReminder == null) {
-                    return;
-                }
 
-                String id = deletedReminder.getId();
-                realm.beginTransaction();
-                boolean isDeleted = realm.where(Reminder.class)
-                        .equalTo("id", id)
-                        .findAll()
-                        .deleteAllFromRealm();
-                realm.commitTransaction();
-                Log.d(TAG, "execute: " + isDeleted);
+                int position = (Integer) holder.deleteBtn.getTag();
 
-                Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
-                animation.setDuration(500);
-                finalListItemView.startAnimation(animation);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        // disable the button to prevent the user from clicking on it, when the
-                        // fading out is in progress (Because the item would've been already deleted in Realm, clicking it again will cause it to crash).
-                        // plus to prevent repeating the animation (:
-                        deleteBtn.setEnabled(false);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        Reminder reminder = getItem(index);
-
-
-                        remove(reminder);
-                        deleteBtn.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
+                deleteItem(position, finalContentView, holder.deleteBtn);
 
             }
         });
 
-        String weekDays = ArrayToOrderedString(reminder.getWeekDays());
+        holder.playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = setIntent(reminder);
+                getContext().startActivity(intent);
+            }
+        });
 
-        reminderHour.setText(reminder.getHours());
-        reminderDays.setText(weekDays);
 
+        return contentView;
+    }
+
+    private String getRepeatType(Reminder reminder) {
+        String repeatType = "";
+        if (reminder.getRepeatType() == AlarmManager.INTERVAL_HOUR) {
+            repeatType = "Every Hour";
+        } else if (reminder.getRepeatType() == AlarmManager.INTERVAL_DAY) {
+            repeatType = "Every Day";
+        } else if (reminder.getRepeatType() == AlarmManager.INTERVAL_DAY * 7) {
+            repeatType = "Every Week";
+        }
+        return repeatType;
+    }
+
+    private void deleteItem(int position, View contentView, final ImageView deleteBtn) {
+
+        Reminder deletedReminder = getItem(position);
+
+        if (deletedReminder == null) {
+            Toast.makeText(getContext(), "Error in deleting!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String id = deletedReminder.getId();
+        new AlarmScheduler().cancelAlarm(getContext(), id, deletedReminder.getRequestCode());
+
+        realm.beginTransaction();
+        realm.where(Reminder.class).equalTo("id", id).findFirst().deleteFromRealm();
+        realm.commitTransaction();
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
+        animation.setDuration(600);
+        contentView.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                deleteBtn.setEnabled(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                updateReminders(realm.where(Reminder.class).findAll());
+                deleteBtn.setEnabled(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+    }
+
+    private void setReminderType(Reminder reminder, ImageView reminderIcon, TextView reminderType) {
         switch (reminder.getReminderType()) {
             case Reminder.TYPE_CHAKRA:
                 reminderIcon.setImageResource(R.drawable.ic_chakra_large);
-                reminderName.setText("Chakra Day");
+                reminderType.setText("Chakra Day");
                 break;
             case Reminder.TYPE_MANTRA:
                 reminderIcon.setImageResource(R.drawable.ic_mantra_large);
-                reminderName.setText("Mantra Day");
+                reminderType.setText("Mantra Day");
                 break;
             case Reminder.TYPE_MUSIC:
                 reminderIcon.setImageResource(R.drawable.ic_music_large);
-                reminderName.setText("Music Day");
+                reminderType.setText("Music Day");
                 break;
         }
 
-        return listItemView;
-    }
-
-    private String ArrayToOrderedString(RealmList<String> weekDays) {
-        String weekDaysString = "";
-
-        for (int i = 0; i < weekDays.size(); i++) {
-            weekDaysString += weekDays.get(i).substring(0, 3);
-            if (i + 1 != weekDays.size()) {
-                weekDaysString += ", ";
-            }
-        }
-        return weekDaysString;
     }
 
     public void updateReminders(RealmResults results) {
@@ -143,5 +162,48 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         notifyDataSetChanged();
     }
 
+    private Intent setIntent(Reminder reminder) {
+        Intent intent = null;
+        // intent to Chakra Activity
+        if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
+
+        }
+        // intent to Mantra Activity
+        if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
+
+        }
+        // intent to Music Activity
+        if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
+            intent = new Intent(getContext(), PlayingChakraActivity.class);
+        }
+        return intent;
+
+    }
+
+    public static class ViewHolder {
+
+        @BindView(R.id.reminder_icon)
+        ImageView reminderIcon;
+        @BindView(R.id.type_tv)
+        TextView reminderType;
+        @BindView(R.id.hour_tv)
+        TextView reminderHour;
+        @BindView(R.id.repeat_tv)
+        TextView repeatTv;
+        @BindView(R.id.delete_btn)
+        ImageView deleteBtn;
+        @BindView(R.id.play_btn)
+        ImageView playBtn;
+        @BindView(R.id.music_tv)
+        TextView musicTv;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
 
 }
