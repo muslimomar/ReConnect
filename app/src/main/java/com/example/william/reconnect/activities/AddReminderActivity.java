@@ -245,6 +245,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 if (i == musicRandomRb.getId()) {
                     musicListSpinner.setEnabled(false);
                     selectedMusicType = RANDOM;
+
                 } else if (i == musicSpecificRb.getId()) {
                     musicListSpinner.setEnabled(true);
                     selectedMusicType = musicListSpinner.getSelectedItem().toString();
