@@ -173,7 +173,9 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
-        NavUtils.navigateUpFromSameTask(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void backgroundGradient(View v) {
@@ -231,15 +233,4 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
