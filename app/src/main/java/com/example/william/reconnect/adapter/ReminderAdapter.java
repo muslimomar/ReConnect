@@ -60,6 +60,7 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         holder.reminderHour.setText(formattedTime);
 
         holder.repeatTv.setText(getRepeatType(reminder));
+        holder.musicTv.setText(reminder.getMusicPlaybackType());
 
         holder.deleteBtn.setTag(position);
         final View finalContentView = contentView;
@@ -197,6 +198,8 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         ImageView deleteBtn;
         @BindView(R.id.play_btn)
         ImageView playBtn;
+        @BindView(R.id.music_tv)
+        TextView musicTv;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

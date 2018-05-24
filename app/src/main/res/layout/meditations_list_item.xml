@@ -37,17 +37,29 @@
             android:id="@+id/hour_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/tab_indicator_text"
-            tools:text="16:00" />
+            android:textColor="@color/colorAccent"
+            tools:text="16:00"
+            />
 
 
         <TextView
             android:id="@+id/repeat_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:textColor="@android:color/tab_indicator_text"
-            tools:text="Every hour" />
+            tools:text="Every hour"
+
+            />
+
+
+        <TextView
+            android:id="@+id/music_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/tab_indicator_text"
+            tools:text="Eminem" />
+
+
 
 
     </LinearLayout>
