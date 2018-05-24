@@ -14,6 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
+import com.example.william.reconnect.activities.PlayingMusicActivity;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.util.Extras;
 
@@ -101,7 +102,7 @@ public class ReminderAlarmService extends IntentService {
         }
         // intent to Music Activity
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
-            intent = new Intent(this,PlayingChakraActivity.class);
+            intent = new Intent(this,PlayingMusicActivity.class);
         }
         return intent;
 
