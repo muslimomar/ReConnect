@@ -4,7 +4,7 @@
     android:id="@+id/silence_playing_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.william.reconnect.activities.SilencePlaying">
+    tools:context="com.example.william.reconnect.activities.PlayingSilenceActivity">
 
 
     <TextView

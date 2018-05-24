@@ -29,7 +29,7 @@ public class Instructions extends Fragment {
         View view = inflater.inflate(R.layout.fragment_instructions, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        secondTv.setText(Html.fromHtml("1.\t<b>Music/Notification</b>: automatic music will play every hour - selected or random. When you hear the music, close your eyes and focus within. Or, you can choose a sound to notify you of the start and end of each minute.<br/>\n" +
+        secondTv.setText(Html.fromHtml("1.\t<b>Music/Notification</b>: automatic music will ic_music_play every hour - selected or random. When you hear the music, close your eyes and focus within. Or, you can choose a sound to notify you of the start and end of each minute.<br/>\n" +
                 "<br/>2.\t<b>Chakra/Body</b> : focus on the ic_chakra_small colour and it’s placement within your body. You can imagine it pulsating and can make a sound on breathing out. Note: they are centrally positioned within the body, along the spine.<br/>\n" +
                 "•\t<b>Beginner</b>: imagine the ic_chakra_small colour within you and surrounding you, or simply bring your attention to this area of your body.<br/>\n" +
                 "•\t<b>Intermediate</b>: see the colour and placement of the ic_chakra_small and imagine it pulsating, vibrating or gently spinning within you.<br/>\n" +
