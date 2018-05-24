@@ -1,11 +1,14 @@
 package com.example.william.reconnect.activities;
 
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
@@ -51,13 +54,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.playing_icon)
     ImageView playingIconIv;
-    @BindView(R.id.music_iv)
-    ImageView musicIv;
     @BindView(R.id.back_arrow_iv)
     ImageView backArrowIv;
     @BindView(R.id.info_iv)
     ImageView infoIv;
-    @BindView(R.id.relative_layout)
+    @BindView(R.id.playing_layout)
     RelativeLayout relativeLayout;
     int ONE_MIN_MS = 60000;
 
@@ -66,6 +67,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chakra_playing);
         ButterKnife.bind(this);
+
 
         prepareChakraList();
 
@@ -157,10 +159,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
         playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
-
-        // set Opacity
-        Drawable background3 = musicIv.getBackground();
-        background3.setAlpha(40);
 
     }
 

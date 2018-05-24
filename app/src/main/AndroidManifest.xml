@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.william.reconnect">
 
-        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".activities.MyApplication"
@@ -12,13 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"/>
 
-        </activity>
-
-        <activity
-            android:name=".activities.PlayingChakraActivity"
-            android:theme="@style/TransparentStatusBar" >
+        <activity android:name=".activities.PlayingChakraActivity"
+            android:theme="@style/TransparentStatusBar"
+            >
 
         </activity>
 
@@ -62,17 +60,19 @@
 
         </activity>
 
-        <activity android:name=".activities.PlayingMusicActivity"
+        <activity
+            android:name=".activities.PlayingMusicActivity"
             android:theme="@style/BlackStatusBar">
 
         </activity>
 
         <activity
             android:name=".activities.SilenceChoseSign"
-            android:theme="@style/SplashTheme">
-        </activity>
+            android:theme="@style/SplashTheme"></activity>
 
-        <service android:name=".reminder.ReminderAlarmService" android:exported="false"/>
+        <service
+            android:name=".reminder.ReminderAlarmService"
+            android:exported="false" />
 
     </application>
 
