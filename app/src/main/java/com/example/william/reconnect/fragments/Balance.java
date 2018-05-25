@@ -55,7 +55,7 @@ public class Balance extends Fragment {
         SilenceModel person = realm.where(SilenceModel.class).findFirst();
         if (person != null) {
             // Get the timespent on Silence Day.
-            Long data = person.getTimespent();
+            Long data = person.getSilenceTimeSpent();
 
             // Convert from seconds to time format
             long hours = data / 3600;
