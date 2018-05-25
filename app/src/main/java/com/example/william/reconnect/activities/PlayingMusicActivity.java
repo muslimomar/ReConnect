@@ -20,6 +20,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -28,7 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.adapter.MusicListAdapter;
 import com.example.william.reconnect.model.Music;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
@@ -40,8 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-
-import static com.example.william.reconnect.util.Extras.RANDOM;
+import io.realm.RealmResults;
 
 public class PlayingMusicActivity extends AppCompatActivity {
 
@@ -64,61 +63,81 @@ public class PlayingMusicActivity extends AppCompatActivity {
     String musicType = "";
     ArrayList<Music> musicModels;
     int ONE_MIN_MS = 60000;
-    private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation,R.raw.kevin_macleod_bathed_in_the_light,R.raw.kevin_macleod_dream_culture,R.raw.kevin_macleod_enchanted_journey,R.raw.kevin_macleod_meditation_impromptu,R.raw.kevin_macleod_smoother_move,R.raw.kevin_macleod_sovereign_quarter,R.raw.kevin_macleod_windswept,R.raw.lee_rosevere_betrayal,R.raw.lee_rosevere_everywhere,R.raw.lee_rosevere_not_my_problem,R.raw.ryan_andersen_day_to_night,R.raw.lee_rosevere_well_figure_it_out_together};
+    private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
     Realm realm;
+    long oldMusicTimeSpent;
+    long musicTimeSpent = 0;
+    long startTime = 0;
+    long endTime = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_playing);
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
+        startTime = System.currentTimeMillis();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             musicType = bundle.getString("music_type");
         }
 
-         Random random = new Random();
+        Random random = new Random();
 
 
-        switch (musicType){
-            case "Jason Shaw Acoustuc Meditation":player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
+        switch (musicType) {
+            case "Jason Shaw Acoustuc Meditation":
+                player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
                 player.start();
-            case "Kevin MacLeod - Sovereign Quarter":player = MediaPlayer.create(this,R.raw.kevin_macleod_sovereign_quarter);
+            case "Kevin MacLeod - Sovereign Quarter":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
                 player.start();
                 break;
-            case "Kevin MacLeod_Dream_Culture":player = MediaPlayer.create(this,R.raw.kevin_macleod_dream_culture);
-            player.start();
+            case "Kevin MacLeod_Dream_Culture":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
+                player.start();
                 break;
-            case "Kevin Macleod Bathed in The Light[Good for Chakra]":player = MediaPlayer.create(this,R.raw.kevin_macleod_bathed_in_the_light);
-            player.start();
+            case "Kevin Macleod Bathed in The Light[Good for Chakra]":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
+                player.start();
                 break;
-            case "Kevin Macleod Windswept":player = MediaPlayer.create(this,R.raw.kevin_macleod_windswept);
-            player.start();
+            case "Kevin Macleod Windswept":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_windswept);
+                player.start();
                 break;
-            case "Kevin MacLeod Enchanted Journey":player = MediaPlayer.create(this,R.raw.kevin_macleod_enchanted_journey);
-            player.start();
+            case "Kevin MacLeod Enchanted Journey":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_enchanted_journey);
+                player.start();
                 break;
-            case "Kevin MacLeod Smoother Move":player = MediaPlayer.create(this,R.raw.kevin_macleod_smoother_move);
-            player.start();
+            case "Kevin MacLeod Smoother Move":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_smoother_move);
+                player.start();
                 break;
-            case "Kevin MacLeod Meditation Impromptu":player = MediaPlayer.create(this,R.raw.kevin_macleod_meditation_impromptu);
-            player.start();
+            case "Kevin MacLeod Meditation Impromptu":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_meditation_impromptu);
+                player.start();
                 break;
-            case "Lee Rosevere Everywhere":player = MediaPlayer.create(this,R.raw.lee_rosevere_everywhere);
-            player.start();
+            case "Lee Rosevere Everywhere":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_everywhere);
+                player.start();
                 break;
-            case "Lee Rosevere Betrayal":player = MediaPlayer.create(this,R.raw.lee_rosevere_betrayal);
-            player.start();
+            case "Lee Rosevere Betrayal":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_betrayal);
+                player.start();
                 break;
-            case "Ryan Andersen Day to Night":player= MediaPlayer.create(this,R.raw.ryan_andersen_day_to_night);
-            player.start();
+            case "Ryan Andersen Day to Night":
+                player = MediaPlayer.create(this, R.raw.ryan_andersen_day_to_night);
+                player.start();
                 break;
-            case "Lee Rosevere We’ll figure it out together":player= MediaPlayer.create(this,R.raw.lee_rosevere_well_figure_it_out_together);
-            player.start();
+            case "Lee Rosevere We’ll figure it out together":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_well_figure_it_out_together);
+                player.start();
                 break;
-            case "Lee Rosevere Not My Problem":player = MediaPlayer.create(this,R.raw.lee_rosevere_not_my_problem);
-            player.start();
+            case "Lee Rosevere Not My Problem":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
+                player.start();
                 break;
            /* case "Random":player = MediaPlayer.create(this,rawRef[random.nextInt(rawRef.length)]);
             player.start();
@@ -131,8 +150,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
         if (reminder != null) {
             // Get the timespent on Silence Day.
             String musicType = reminder.getMusicPlaybackType();
-            if (musicType.equals("Random")){
-                player = MediaPlayer.create(this,rawRef[random.nextInt(rawRef.length)]);
+            if (musicType.equals("Random")) {
+                player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
             }
         }
@@ -154,8 +173,44 @@ public class PlayingMusicActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // TODO:  Stop music
-                    player.release();
-                    player = null;
+                endTime = System.currentTimeMillis();
+                musicTimeSpent = startTime - endTime;
+
+                /* Creating the timespent or update it */
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm bgRealm) {
+
+                        SilenceModel data = bgRealm.where(SilenceModel.class).findFirst();
+                        Long oldTime = data.getMusicTimeSpent();
+
+                        if (data == null) {
+
+                            data = bgRealm.createObject(SilenceModel.class);
+                            data.setSilenceTimeSpent(musicTimeSpent);
+                        } else
+
+                            data.setSilenceTimeSpent(musicTimeSpent);
+                        Log.d("Check if success", "Check data" + musicTimeSpent);
+                    }
+                }, new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                /* Transaction was a success. */
+                        Toast.makeText(PlayingMusicActivity.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                /* Transaction failed and was automatically canceled. */
+                        Toast.makeText(PlayingMusicActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                Log.d("TimeSpent", "musictime : " + musicTimeSpent);
+                player.release();
+                player = null;
                 playingIcon.clearAnimation();
 
                 if (!((Activity) PlayingMusicActivity.this).isFinishing()) {
@@ -218,6 +273,43 @@ public class PlayingMusicActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
+                endTime = System.currentTimeMillis();
+                musicTimeSpent = endTime - startTime;
+
+                Log.d("TimeSpent", "musictime : " + musicTimeSpent);
+
+                /* Creating the timespent or update it */
+
+
+                endTime = System.currentTimeMillis();
+                musicTimeSpent = startTime - endTime;
+
+                /* Creating the timespent or update it */
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm bgRealm) {
+
+                        RealmResults data = bgRealm.where(SilenceModel.class).equalTo("musicTimeSpent", false).findAll();
+                       // Long oldTime = data.getMusicTimeSpent();
+
+                        //Log.d("Check if success", "Check data" + musicTimeSpent + oldTime);
+                    }
+                }, new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                /* Transaction was a success. */
+                        Toast.makeText(PlayingMusicActivity.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                /* Transaction failed and was automatically canceled. */
+                        Toast.makeText(PlayingMusicActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
                 NavUtils.navigateUpFromSameTask(this);
                 player.stop();
                 break;
@@ -225,15 +317,9 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 break;
             case R.id.music_btn:
         }
+
     }
 
-    public void playMusic() {
-        if (player == null) {
-            player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
-
-        }
-        player.start();
-    }
 
     private void showFinishDialog() {
 

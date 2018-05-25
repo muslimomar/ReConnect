@@ -14,6 +14,7 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -187,18 +188,45 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         dialog.show();
     }
 
+
     private void writeToDB() {
+/*
+        realm.beginTransaction();
+        SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
+        if(silenceModel !=null) {
+            // exists
+            long time = silenceModel.getSilenceTimeSpent();
+            silenceModel.setSilenceTimeSpent(time + silenceSpentTime);
+
+        }else{
+            // first  time
+            silenceModel = realm.createObject(SilenceModel.class);
+            silenceModel.setSilenceTimeSpent(silenceSpentTime);
+
+        }
+
+        realm.commitTransaction();
+
+
+            }
+
+    */
+
+
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
 
                 /* Creating the timespent or update it */
                 SilenceModel user = bgRealm.where(SilenceModel.class).findFirst();
-                if (user == null) {
-                    user = bgRealm.createObject(SilenceModel.class);
-                    user.setTimespent(silenceSpentTime);
+                if (user != null) {
+                    //Exist
+                    long time = user.getSilenceTimeSpent();
+                    user.setSilenceTimeSpent(time + silenceSpentTime);
                 } else {
-                    user.setTimespent(silenceSpentTime);
+                    // first  time
+                    user = realm.createObject(SilenceModel.class);
+                    user.setSilenceTimeSpent(silenceSpentTime);
                 }
             }
         }, new Realm.Transaction.OnSuccess() {
@@ -209,14 +237,15 @@ public class PlayingSilenceActivity extends AppCompatActivity {
             }
         }, new Realm.Transaction.OnError() {
             @Override
-            public void onError(Throwable error) {
+            public void onError(@NonNull Throwable error) {
                 /* Transaction failed and was automatically canceled. */
                 Toast.makeText(PlayingSilenceActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
 
             }
         });
-
     }
+
+
 
     @Override
     protected void onDestroy() {
