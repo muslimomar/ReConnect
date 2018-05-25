@@ -15,9 +15,8 @@
         <LinearLayout
             android:id="@+id/middle_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_above="@id/bottom_container"
             android:layout_centerHorizontal="true"
             >
 
@@ -60,7 +59,8 @@
             android:layout_height="88dp"
             android:background="#6c6969"
             android:orientation="vertical"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/middle_layout"
+            android:layout_marginTop="50dp"
             >
 
             <TextView

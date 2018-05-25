@@ -1,11 +1,14 @@
 package com.example.william.reconnect.activities;
 
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
@@ -51,13 +54,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.playing_icon)
     ImageView playingIconIv;
-    @BindView(R.id.music_iv)
-    ImageView musicIv;
     @BindView(R.id.back_arrow_iv)
     ImageView backArrowIv;
     @BindView(R.id.info_iv)
     ImageView infoIv;
-    @BindView(R.id.relative_layout)
+    @BindView(R.id.playing_layout)
     RelativeLayout relativeLayout;
     int ONE_MIN_MS = 60000;
 
@@ -66,6 +67,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chakra_playing);
         ButterKnife.bind(this);
+
 
         prepareChakraList();
 
@@ -85,7 +87,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 // TODO:  Stop music
                 playingIconIv.clearAnimation();
 
-                if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
+                if (!PlayingChakraActivity.this.isFinishing()) {
                     showFinishDialog();
                 }
 
@@ -158,10 +160,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
 
-        // set Opacity
-        Drawable background3 = musicIv.getBackground();
-        background3.setAlpha(40);
-
     }
 
     private void rotateChakra() {
@@ -173,7 +171,9 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
-        NavUtils.navigateUpFromSameTask(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void backgroundGradient(View v) {
@@ -195,7 +195,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         p.setShape(new RectShape());
         p.setShaderFactory(sf);
         p.setCornerRadii(new float[]{5, 5, 5, 5, 0, 0, 0, 0});
-        layers[0] = (Drawable) p;
+        layers[0] = p;
 
         LayerDrawable composite = new LayerDrawable(layers);
         view.setBackgroundDrawable(composite);
@@ -231,15 +231,4 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
