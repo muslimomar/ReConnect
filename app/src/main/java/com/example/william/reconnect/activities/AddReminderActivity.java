@@ -69,7 +69,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     RadioGroup mantraPlaybackRadioGroup;
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
-    String[] songs = new String[]{"Eminem - Not Afraid", "Ahmet Kaya", "Halit Bilgic", "Ferhat Tunc"};
+    String[] songs = new String[]{"random","Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],","Kevin Macleod Windswept","Kevin MacLeod  Enchanted Journey","Kevin MacLeod Smoother Moves","Kevin MacLeod Meditation Impromptu","Lee Rosevere Everywhere","Lee Rosevere Betrayal","Lee Rosevere We’ll figure it out together","Lee Rosevere Not My Problem","Ryan Andersen Day to Night",};
     @BindView(R.id.pick_a_time_layout)
     LinearLayout pickATimeLayout;
     @BindView(R.id.days_layout)

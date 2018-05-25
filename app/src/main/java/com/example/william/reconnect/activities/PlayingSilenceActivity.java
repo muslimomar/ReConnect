@@ -101,7 +101,7 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         p.setShape(new RectShape());
         p.setShaderFactory(sf);
         p.setCornerRadii(new float[]{5, 5, 5, 5, 0, 0, 0, 0});
-        layers[0] = p;
+        layers[0] = (Drawable) p;
 
         LayerDrawable composite = new LayerDrawable(layers);
         view.setBackgroundDrawable(composite);
