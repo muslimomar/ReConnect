@@ -36,7 +36,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import io.realm.RealmList;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
 import static com.example.william.reconnect.util.Extras.EXTRA_ID;
@@ -53,8 +52,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     String selectedMusicType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
-    RealmList<String> selectedDays = new RealmList<>();
-    RealmList<Integer> selectedDaysInt = new RealmList<>();
     @BindView(R.id.music_playback_radio_group)
     RadioGroup musicPlaybackRadioGroup;
     @BindView(R.id.music_list_spinner)
@@ -495,7 +492,20 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             }
         }
 
+
+
+
         realm.beginTransaction();
+
+
+        if(isAlarmAlreadySet()) {
+
+
+            realm.commitTransaction();
+            return;
+        }
+
+
         if (receivedId != null) {
             // edit mode
             // Add to Realm
@@ -551,6 +561,32 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         realm.commitTransaction();
 
         finish();
+    }
+
+    private boolean isAlarmAlreadySet() {
+        // check if such an alarm already exists
+
+        Reminder reminder = realm.where(Reminder.class)
+                .equalTo("pickedHours", pickedHours)
+                .equalTo("pickedMinutes", pickedMinutes)
+                .findFirst();
+
+
+
+        if(reminder == null) {
+            return false;
+        }else{
+
+            // make sure we're not comparing @pickedhours with the edited item from realm's time
+            if(receivedId != null) {
+                if(receivedReminder.getPickedHours() == pickedHours && receivedReminder.getPickedMinutes() == pickedMinutes) {
+                    return false;
+                }
+            }
+
+            Toast.makeText(this, "Another reminder with the same time exists!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 
     private void isSelectedTimeInPast() {
