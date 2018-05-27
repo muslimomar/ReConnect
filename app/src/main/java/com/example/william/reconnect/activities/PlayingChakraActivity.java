@@ -74,6 +74,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
             chakraType = bundle.getString("chakra_type");
             musicType = bundle.getString("music_type");
         }
+        if (chakraType=="")
 
         initializeImages();
         rotateChakra();
@@ -143,6 +144,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
 
     private void initializeImages() {
+
 
         if (chakraType.equals(RANDOM)) {
             position = new Random().nextInt(chakras.size());

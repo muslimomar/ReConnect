@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.activities.MantraPlayingActivity;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
 import com.example.william.reconnect.model.Reminder;
@@ -174,7 +175,8 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         }
         // intent to Mantra Activity
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
-            intent = new Intent(getContext(), PlayingChakraActivity.class);
+            intent = new Intent(getContext(), MantraPlayingActivity.class);
+            intent.putExtra("mantra_type",reminder.getMantraPlaybackType());
 
         }
         // intent to Music Activity

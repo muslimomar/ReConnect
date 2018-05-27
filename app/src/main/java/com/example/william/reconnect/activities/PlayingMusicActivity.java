@@ -1,7 +1,6 @@
 package com.example.william.reconnect.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,28 +25,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.model.Music;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class PlayingMusicActivity extends AppCompatActivity {
 
-    Context context = this;
     MediaPlayer player;
-
-
     @BindView(R.id.back_arrow_btn)
     ImageView backArrowBtn;
     @BindView(R.id.info_btn)
@@ -61,14 +54,12 @@ public class PlayingMusicActivity extends AppCompatActivity {
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
     String musicType = "";
-    ArrayList<Music> musicModels;
     int ONE_MIN_MS = 60000;
     private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
     Realm realm;
-    long oldMusicTimeSpent;
-    long musicTimeSpent = 0;
-    long startTime = 0;
-    long endTime = 0;
+    long musicTimeSpent;
+    long startTime;
+    long endTime;
 
 
     @Override
@@ -95,7 +86,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
                 player.start();
                 break;
-            case "Kevin MacLeod_Dream_Culture":
+            case "Kevin MacLeod Dream Culture":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
                 player.start();
                 break;
@@ -148,7 +139,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
         Reminder reminder = realm.where(Reminder.class).findFirst();
         if (reminder != null) {
-            // Get the timespent on Silence Day.
+            // Get the Music Playback Type.
             String musicType = reminder.getMusicPlaybackType();
             if (musicType.equals("Random")) {
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
@@ -156,18 +147,9 @@ public class PlayingMusicActivity extends AppCompatActivity {
             }
         }
 
-     /*   if (musicType != null) {
-            if (musicType.equals(RANDOM)) {
-                Toast.makeText(context, musicType, Toast.LENGTH_SHORT).show();
-
-           }
-
-        }*/
-
         initializeImages();
         setImageOpacity();
         rotateChakra();
-        //playMusic();
         Handler handler = new Handler();
         Runnable r = new Runnable() {
             @Override
@@ -175,43 +157,10 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 // TODO:  Stop music
                 endTime = System.currentTimeMillis();
                 musicTimeSpent = startTime - endTime;
-
-                /* Creating the timespent or update it */
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm bgRealm) {
-
-                        SilenceModel data = bgRealm.where(SilenceModel.class).findFirst();
-                        Long oldTime = data.getMusicTimeSpent();
-
-                        if (data == null) {
-
-                            data = bgRealm.createObject(SilenceModel.class);
-                            data.setSilenceTimeSpent(musicTimeSpent);
-                        } else
-
-                            data.setSilenceTimeSpent(musicTimeSpent);
-                        Log.d("Check if success", "Check data" + musicTimeSpent);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                /* Transaction was a success. */
-                        Toast.makeText(PlayingMusicActivity.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                /* Transaction failed and was automatically canceled. */
-                        Toast.makeText(PlayingMusicActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-                Log.d("TimeSpent", "musictime : " + musicTimeSpent);
-                player.release();
+                //player.release();
                 player = null;
                 playingIcon.clearAnimation();
+                writeToDB();
 
                 if (!((Activity) PlayingMusicActivity.this).isFinishing()) {
                     showFinishDialog();
@@ -273,45 +222,11 @@ public class PlayingMusicActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
-                endTime = System.currentTimeMillis();
-                musicTimeSpent = endTime - startTime;
-
-                Log.d("TimeSpent", "musictime : " + musicTimeSpent);
-
-                /* Creating the timespent or update it */
-
-
-                endTime = System.currentTimeMillis();
-                musicTimeSpent = startTime - endTime;
-
-                /* Creating the timespent or update it */
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm bgRealm) {
-
-                        RealmResults data = bgRealm.where(SilenceModel.class).equalTo("musicTimeSpent", false).findAll();
-                       // Long oldTime = data.getMusicTimeSpent();
-
-                        //Log.d("Check if success", "Check data" + musicTimeSpent + oldTime);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                /* Transaction was a success. */
-                        Toast.makeText(PlayingMusicActivity.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                /* Transaction failed and was automatically canceled. */
-                        Toast.makeText(PlayingMusicActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-
-                NavUtils.navigateUpFromSameTask(this);
                 player.stop();
+                player.release();
+                writeToDB();
+                Log.d("TimeSpent", "musictime : " + musicTimeSpent);
+                NavUtils.navigateUpFromSameTask(this);
                 break;
             case R.id.info_btn:
                 break;
@@ -321,6 +236,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     }
 
 
+    /* Show dialog when finished meditation */
     private void showFinishDialog() {
 
         AlertDialog.Builder builder;
@@ -340,6 +256,44 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setCancelable(false)
                 .show();
+    }
+
+    /* Set Music Time Spent Fully working 27-05-2018 */
+    private void writeToDB() {
+
+        endTime = System.currentTimeMillis();
+        musicTimeSpent = endTime - startTime;
+        int seconds = (int) (musicTimeSpent / 1000) % 60;
+        int minutes = (int) ((musicTimeSpent / (1000 * 60)) % 60);
+        int hours = (int) ((musicTimeSpent / (1000 * 60 * 60)) % 24);
+        musicTimeSpent = musicTimeSpent / 1000 + 1;
+        realm.beginTransaction();
+        SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
+        if (silenceModel != null) {
+            // exists
+            if (silenceModel.getMusicTimeSpent() != null) {
+                long time = silenceModel.getMusicTimeSpent();
+                silenceModel.setMusicTimeSpent(time + musicTimeSpent);
+                realm.copyToRealmOrUpdate(silenceModel);
+            }
+        } else {
+            // first  time
+            silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+            silenceModel.setMusicTimeSpent(musicTimeSpent);
+            realm.copyToRealm(silenceModel);
+        }
+
+        realm.commitTransaction();
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        writeToDB();
+        player.stop();
+        player.release();
     }
 
 }
