@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
-import com.example.william.reconnect.dialogs.MusicList;
 import com.example.william.reconnect.model.Music;
 import com.example.william.reconnect.model.SilenceModel;
 

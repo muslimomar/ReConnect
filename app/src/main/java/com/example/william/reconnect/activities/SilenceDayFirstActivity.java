@@ -67,7 +67,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity implements DatePi
             arraList.add(strings.get(i));
         }
 
-        /* Sending Days List to SilencePlaying Activity */
+        /* Sending Days List to PlayingSilenceActivity Activity */
         Intent intent = new Intent(SilenceDayFirstActivity.this, SilenceChoseSign.class);
         intent.putStringArrayListExtra("silence", arraList);
         Log.d("hooooooooo", "onCreate: " + arraList);

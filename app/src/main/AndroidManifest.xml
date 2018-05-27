@@ -74,6 +74,13 @@
             android:name=".activities.SilenceChoseSign"
             android:theme="@style/SplashTheme">
         </activity>
+        <activity android:name=".activities.MantraPlayingActivity"
+            android:theme="@style/BlackStatusBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+
+        </activity>
 
         <service android:name=".reminder.ReminderAlarmService" android:exported="false"/>
 

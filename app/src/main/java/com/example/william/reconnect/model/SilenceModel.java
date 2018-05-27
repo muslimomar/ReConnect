@@ -3,6 +3,7 @@ package com.example.william.reconnect.model;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Mahmoud on 5/22/2018.
@@ -11,29 +12,32 @@ import io.realm.RealmObject;
 public class SilenceModel extends RealmObject {
 
 
+
+
+    @PrimaryKey
+    String id;
+    long silenceTimeSpent;
+    long musicTimeSpent;
+    long chakraTimeSpent;
+    long mantraTimeSpent;
+
+    public SilenceModel() {
+    }
+
+    public SilenceModel(String id, Long silenceTimeSpent, Long musicTimeSpent, Long chakraTimeSpent, Long mantraTimeSpent) {
+        this.id = UUID.randomUUID().toString();
+        this.silenceTimeSpent = silenceTimeSpent;
+        this.musicTimeSpent = musicTimeSpent;
+        this.chakraTimeSpent = chakraTimeSpent;
+        this.mantraTimeSpent = mantraTimeSpent;
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    String id;
-    Long silenceTimeSpent;
-    Long musicTimeSpent;
-    Long chakraTimeSpent;
-    Long mantraTimeSpent;
-
-    public SilenceModel() {
-    }
-
-    public SilenceModel(Long silenceTimeSpent, Long musicTimeSpent, Long chakraTimeSpent, Long mantraTimeSpent) {
-        this.id = UUID.randomUUID().toString();
-        this.silenceTimeSpent = silenceTimeSpent;
-        this.musicTimeSpent = musicTimeSpent;
-        this.chakraTimeSpent = chakraTimeSpent;
-        this.mantraTimeSpent = mantraTimeSpent;
     }
 
     public Long getSilenceTimeSpent() {

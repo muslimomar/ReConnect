@@ -14,8 +14,8 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -27,6 +27,7 @@ import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.SilenceModel;
 
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -188,64 +189,26 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /* Set Silence Time Spent Fully working 27-05-2018 */
 
     private void writeToDB() {
-/*
         realm.beginTransaction();
         SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
         if(silenceModel !=null) {
             // exists
             long time = silenceModel.getSilenceTimeSpent();
             silenceModel.setSilenceTimeSpent(time + silenceSpentTime);
+            realm.copyToRealmOrUpdate(silenceModel);
 
         }else{
             // first  time
-            silenceModel = realm.createObject(SilenceModel.class);
+            silenceModel = realm.createObject(SilenceModel.class,UUID.randomUUID().toString());
             silenceModel.setSilenceTimeSpent(silenceSpentTime);
-
+            realm.copyToRealm(silenceModel);
         }
 
         realm.commitTransaction();
-
-
-            }
-
-    */
-
-
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-
-                /* Creating the timespent or update it */
-                SilenceModel user = bgRealm.where(SilenceModel.class).findFirst();
-                if (user != null) {
-                    //Exist
-                    long time = user.getSilenceTimeSpent();
-                    user.setSilenceTimeSpent(time + silenceSpentTime);
-                } else {
-                    // first  time
-                    user = realm.createObject(SilenceModel.class);
-                    user.setSilenceTimeSpent(silenceSpentTime);
-                }
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                /* Transaction was a success. */
-                Toast.makeText(PlayingSilenceActivity.this, "Saving Data to Realm Success", Toast.LENGTH_SHORT).show();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(@NonNull Throwable error) {
-                /* Transaction failed and was automatically canceled. */
-                Toast.makeText(PlayingSilenceActivity.this, "Error saving data to Realm!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
-
-
 
     @Override
     protected void onDestroy() {

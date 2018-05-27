@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.activities.MantraPlayingActivity;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
 import com.example.william.reconnect.model.Reminder;
@@ -92,13 +93,14 @@ public class ReminderAlarmService extends IntentService {
         // TODO: Configure mantra and music accordingly
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
             intent = new Intent(this,PlayingChakraActivity.class);
-            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+           intent.putExtra("music_type", reminder.getMusicPlaybackType());
             intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
         }
         // intent to Mantra Activity
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
-            intent = new Intent(this,PlayingChakraActivity.class);
-
+            intent = new Intent(this,MantraPlayingActivity.class);
+           intent.putExtra("mantra_type",reminder.getMantraPlaybackType());
+           intent.putExtra("music_type_mantra",reminder.getMusicPlaybackType());
         }
         // intent to Music Activity
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
@@ -126,6 +128,4 @@ public class ReminderAlarmService extends IntentService {
                 break;
         }
     }
-
-
 }
