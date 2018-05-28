@@ -60,6 +60,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     long musicTimeSpent;
     long startTime;
     long endTime;
+    public static final String TAG = PlayingMusicActivity.class.getSimpleName();
 
 
     @Override
@@ -73,6 +74,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             musicType = bundle.getString("music_type");
+            Log.d(TAG, "onCreate: " + musicType);
+
         }
 
         Random random = new Random();

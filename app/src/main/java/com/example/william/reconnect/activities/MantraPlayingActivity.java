@@ -51,6 +51,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
     private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
+    public static final String TAG = MantraPlayingActivity.class.getSimpleName();
 
 
     @Override
@@ -74,6 +75,10 @@ public class MantraPlayingActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             musicType = bundle.getString("music_type");
+            mantraType = bundle.getString("mantra_type");
+            Log.d(TAG, "onCreate: " + musicType);
+            Log.d(TAG, "onCreate: " + mantraType);
+
         }
 
         Random random = new Random();

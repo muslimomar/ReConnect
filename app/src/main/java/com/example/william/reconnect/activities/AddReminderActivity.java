@@ -325,6 +325,12 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 mReminderHasChanged = true;
+
+                //default value
+                if(chakraListSpinner.getSelectedItem().toString()!=null) {
+                    selectedChakraType = chakraListSpinner.getSelectedItem().toString();
+                }
+
                 if (i == chakraSpecificRb.getId()) {
                     chakraListSpinner.setEnabled(true);
                     chakraListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -458,6 +464,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             return;
         }
 
+        if(selectedMusicType.isEmpty()) {
+            Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // Add Mantra Day
         if (meditationType == Reminder.TYPE_MANTRA) {
@@ -469,10 +479,21 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 Toast.makeText(this, "Please write your custom Mantra!", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            if(selectedMantraType.isEmpty()) {
+                Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Add Chakra Day
         } else if (meditationType == Reminder.TYPE_CHAKRA) {
             // chakra add
             if (chakraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+                Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(selectedChakraType.isEmpty()) {
                 Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -571,8 +592,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 .equalTo("pickedHours", pickedHours)
                 .equalTo("pickedMinutes", pickedMinutes)
                 .findFirst();
-
-
 
         if(reminder == null) {
             return false;
