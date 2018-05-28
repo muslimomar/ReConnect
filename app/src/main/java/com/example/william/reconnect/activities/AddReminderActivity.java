@@ -297,12 +297,15 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     customMantraEt.setEnabled(false);
                     mantraFirstSpinner.setEnabled(true);
                     mantraSecondSpinner.setEnabled(true);
+
+                    if(selectedMantraType!=null) {
+                        selectedMantraType = mantraSecondSpinner.getSelectedItem().toString();
+                    }
+
                     mantraSecondSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            if (receivedReminder != null) {
-                                mantraSecondSpinner.setSelection(receivedReminder.getMantraSecondSpinner());
-                            }
+
                             selectedMantraType = mantraSecondSpinner.getItemAtPosition(i).toString();
                         }
 
@@ -327,12 +330,14 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 mReminderHasChanged = true;
 
                 //default value
-                if(chakraListSpinner.getSelectedItem().toString()!=null) {
-                    selectedChakraType = chakraListSpinner.getSelectedItem().toString();
-                }
+
 
                 if (i == chakraSpecificRb.getId()) {
+
                     chakraListSpinner.setEnabled(true);
+                    if(chakraListSpinner.getSelectedItem().toString()!=null) {
+                        selectedChakraType = chakraListSpinner.getSelectedItem().toString();
+                    }
                     chakraListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -634,8 +639,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                long arg3) {
 
+
         String sp1 = String.valueOf(mantraFirstSpinner.getSelectedItem());
         selectedChakraType = sp1;
+
 
         switch (sp1) {
             case "Crown":
@@ -661,6 +668,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 break;
         }
 
+
+        if (receivedReminder != null) {
+            mantraSecondSpinner.setSelection(receivedReminder.getMantraSecondSpinner());
+        }
 
     }
 
