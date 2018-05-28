@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -179,7 +178,7 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         int seconds = (int) (timeSpend / 1000) % 60;
         int minutes = (int) ((timeSpend / (1000 * 60)) % 60);
         int hours = (int) ((timeSpend / (1000 * 60 * 60)) % 24);
-        silenceSpentTime = timeSpend / 1000 + 1;
+        silenceSpentTime = timeSpend / 1000;
         // Write timespent to Database
         writeToDB();
         silenceTimeSpentTxt.setText(String.valueOf((silenceSpentTime) + " Seconds"));
@@ -194,15 +193,15 @@ public class PlayingSilenceActivity extends AppCompatActivity {
     private void writeToDB() {
         realm.beginTransaction();
         SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
-        if(silenceModel !=null) {
+        if (silenceModel != null) {
             // exists
             long time = silenceModel.getSilenceTimeSpent();
             silenceModel.setSilenceTimeSpent(time + silenceSpentTime);
             realm.copyToRealmOrUpdate(silenceModel);
 
-        }else{
+        } else {
             // first  time
-            silenceModel = realm.createObject(SilenceModel.class,UUID.randomUUID().toString());
+            silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
             silenceModel.setSilenceTimeSpent(silenceSpentTime);
             realm.copyToRealm(silenceModel);
         }

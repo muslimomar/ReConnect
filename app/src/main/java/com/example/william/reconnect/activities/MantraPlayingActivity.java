@@ -35,16 +35,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.example.william.reconnect.util.Extras.RANDOM;
+
 
 public class MantraPlayingActivity extends AppCompatActivity {
 
 
+    Runnable r;
+    Handler handler;
+    int position = 0;
     long startTime;
     long endTime;
     long mantraTimeSpent;
     String musicType;
     MediaPlayer player;
     Realm realm;
+    String mantraType;
     int ONE_MIN_MS = 60000;
     @BindView(R.id.mantra_msg)
     TextView mantraMsg;
@@ -61,11 +67,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
         startTime = System.currentTimeMillis();
-
-        realm = Realm.getDefaultInstance();
-        startTime = System.currentTimeMillis();
         initializeImages();
-
 
         Intent intent = getIntent();
         String mantraType = intent.getExtras().getString("mantra_type");
@@ -153,8 +155,8 @@ public class MantraPlayingActivity extends AppCompatActivity {
 
         initializeImages();
 
-        Handler handler = new Handler();
-        Runnable r = new Runnable() {
+         handler = new Handler();
+         r = new Runnable() {
             @Override
             public void run() {
                 // TODO:  Stop music
@@ -231,7 +233,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
-                writeToDB();
+                handler.removeCallbacks(r);
                 player.stop();
                 player.release();
                 writeToDB();
@@ -241,36 +243,33 @@ public class MantraPlayingActivity extends AppCompatActivity {
     }
 
 
-    /* Set Music Time Spent Fully working 27-05-2018 */
-    private void writeToDB() {
+ /* Set Silence Time Spent Fully working 27-05-2018 */
 
+    private void writeToDB() {
         endTime = System.currentTimeMillis();
         mantraTimeSpent = endTime - startTime;
+
         int seconds = (int) (mantraTimeSpent / 1000) % 60;
         int minutes = (int) ((mantraTimeSpent / (1000 * 60)) % 60);
         int hours = (int) ((mantraTimeSpent / (1000 * 60 * 60)) % 24);
-        mantraTimeSpent = mantraTimeSpent / 1000 + 1;
+        mantraTimeSpent = mantraTimeSpent / 1000;
+
         realm.beginTransaction();
         SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
         if (silenceModel != null) {
             // exists
-            if (silenceModel.getMantraTimeSpent() != 0) {
-                long time = silenceModel.getMantraTimeSpent();
+            long time = silenceModel.getMantraTimeSpent();
                 silenceModel.setMantraTimeSpent(time + mantraTimeSpent);
                 realm.copyToRealmOrUpdate(silenceModel);
+            } else {
+                // first  time
+                silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                silenceModel.setMantraTimeSpent(mantraTimeSpent);
+                realm.copyToRealm(silenceModel);
             }
-        } else {
-            // first  time
-            silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
-            silenceModel.setMantraTimeSpent(mantraTimeSpent);
-            realm.copyToRealm(silenceModel);
+
+            realm.commitTransaction();
         }
-
-        Log.d("spenty","spenty is : "+ mantraTimeSpent);
-
-        realm.commitTransaction();
-
-    }
 
 
     @Override
@@ -280,4 +279,10 @@ public class MantraPlayingActivity extends AppCompatActivity {
         player.stop();
         player.release();
     }
+
+
+
+
+
+
 }

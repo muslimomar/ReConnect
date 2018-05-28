@@ -37,6 +37,9 @@ public class Balance extends Fragment {
     TextView mantraSpentIv;
     @BindView(R.id.crown_usage_tv)
     TextView crownUsageTv;
+    @BindView(R.id.chakra_spent_iv)
+    TextView chakraSpentIv;
+    SilenceModel person;
 
 
     @Override
@@ -46,9 +49,13 @@ public class Balance extends Fragment {
         View view = inflater.inflate(R.layout.fragment_balance, container, false);
         unbinder = ButterKnife.bind(this, view);
         realm = Realm.getDefaultInstance();
-        getSilenceTimeData();
+        realm.beginTransaction();
+        person = realm.where(SilenceModel.class).findFirst();
+        realm.commitTransaction();
         getMusicTimeData();
+        getSilenceTimeData();
         getMantraTimeSpent();
+        getAllChakraTimeSpent();
         getCrownTimeSpent();
         return view;
     }
@@ -62,10 +69,6 @@ public class Balance extends Fragment {
 
     // Get Silence Time Spent Fully working 27-05-2018
     public void getSilenceTimeData() {
-        realm.beginTransaction();
-        SilenceModel person = realm.where(SilenceModel.class).findFirst();
-
-        realm.commitTransaction();
         if (person != null) {
             // Get the timespent on Silence Day.
             Long data = person.getSilenceTimeSpent();
@@ -75,19 +78,17 @@ public class Balance extends Fragment {
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
             silenceSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+
         }
     }
 
 
     // Get Silence Music Spent Fully working 27-05-2018
     public void getMusicTimeData() {
-        realm.beginTransaction();
-        SilenceModel person = realm.where(SilenceModel.class).findFirst();
-
-        realm.commitTransaction();
         if (person != null) {
             // Get the timespent on Silence Day.
             Long data = person.getMusicTimeSpent();
+
 
             // Convert from seconds to time format
             long hours = data / 3600;
@@ -102,28 +103,43 @@ public class Balance extends Fragment {
 
     // Get Mantra TimeSpent Fully working 27-05-2018
     public void getMantraTimeSpent() {
-        realm.beginTransaction();
-        SilenceModel person = realm.where(SilenceModel.class).findFirst();
-
-        realm.commitTransaction();
         if (person != null) {
             // Get the timespent on Silence Day.
-            Long data = person.getMantraTimeSpent();
+            long data = person.getMantraTimeSpent();
 
             // Convert from seconds to time format
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
+
+
             mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+
         }
+    }
+
+    public void getAllChakraTimeSpent() {
+        if (person != null) {
+            long crownTimeSpent = person.getCrownChakraTimeSpent();
+            long thirdEyeTimeSpent = person.getThirdEyeChakraTimeSpent();
+            long throatTimeSpent = person.getThroatChakraTimeSpent();
+            long heartTimeSpent = person.getHeartChakraTimeSpent();
+            long solarPlexusTimeSpent = person.getSolarPlexusChakraTimeSpent();
+            long sacralTimeSpent = person.getSacralChakraTimespent();
+            long rootTimeSpent = person.getRootChakraTimeSpent();
+            long fullTimeSpent = crownTimeSpent + thirdEyeTimeSpent + throatTimeSpent + heartTimeSpent + solarPlexusTimeSpent + sacralTimeSpent + rootTimeSpent;
+
+            long hours = fullTimeSpent / 3600;
+            long minutes = (fullTimeSpent % 3600) / 60;
+            long seconds = fullTimeSpent % 60;
+            chakraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+
+        }
+
     }
 
 
     public void getCrownTimeSpent() {
-        realm.beginTransaction();
-        SilenceModel person = realm.where(SilenceModel.class).findFirst();
-
-        realm.commitTransaction();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
             Long data = person.getCrownChakraTimeSpent();
@@ -133,7 +149,9 @@ public class Balance extends Fragment {
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
             crownUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+
         }
+
     }
 
     @Override

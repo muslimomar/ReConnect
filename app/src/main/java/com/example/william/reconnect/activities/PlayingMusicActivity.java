@@ -55,6 +55,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     String musicType = "";
     int ONE_MIN_MS = 60000;
+    Handler handler;
+    Runnable r;
     private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
     Realm realm;
     long musicTimeSpent;
@@ -75,7 +77,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
         if (bundle != null) {
             musicType = bundle.getString("music_type");
             Log.d(TAG, "onCreate: " + musicType);
-
         }
 
         Random random = new Random();
@@ -85,6 +86,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
             case "Jason Shaw Acoustuc Meditation":
                 player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
                 player.start();
+                break;
             case "Kevin MacLeod - Sovereign Quarter":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
                 player.start();
@@ -153,13 +155,18 @@ public class PlayingMusicActivity extends AppCompatActivity {
         initializeImages();
         setImageOpacity();
         rotateChakra();
-        Handler handler = new Handler();
-        Runnable r = new Runnable() {
+         handler = new Handler();
+         r = new Runnable() {
             @Override
             public void run() {
                 // TODO:  Stop music
                 endTime = System.currentTimeMillis();
                 musicTimeSpent = startTime - endTime;
+                int seconds = (int) (musicTimeSpent / 1000) % 60;
+                int minutes = (int) ((musicTimeSpent / (1000 * 60)) % 60);
+                int hours = (int) ((musicTimeSpent / (1000 * 60 * 60)) % 24);
+                musicTimeSpent = musicTimeSpent / 1000;
+
                 //player.release();
                 player = null;
                 playingIcon.clearAnimation();
@@ -225,6 +232,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
+                handler.removeCallbacks(r);
                 player.stop();
                 player.release();
                 writeToDB();
@@ -269,7 +277,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
         int seconds = (int) (musicTimeSpent / 1000) % 60;
         int minutes = (int) ((musicTimeSpent / (1000 * 60)) % 60);
         int hours = (int) ((musicTimeSpent / (1000 * 60 * 60)) % 24);
-        musicTimeSpent = musicTimeSpent / 1000 + 1;
+        musicTimeSpent = musicTimeSpent / 1000;
         realm.beginTransaction();
         SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
         if (silenceModel != null) {
