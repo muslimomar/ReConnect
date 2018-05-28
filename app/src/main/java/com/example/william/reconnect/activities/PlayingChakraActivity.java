@@ -46,6 +46,10 @@ import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class PlayingChakraActivity extends AppCompatActivity {
 
+
+    SilenceModel silenceModel;
+    Handler handler;
+    Runnable r;
     long startTime;
     long endTime;
     long chakraTimeSpent;
@@ -76,6 +80,9 @@ public class PlayingChakraActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         startTime = System.currentTimeMillis();
         realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        silenceModel = realm.where(SilenceModel.class).findFirst();
+
         prepareChakraList();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -87,8 +94,8 @@ public class PlayingChakraActivity extends AppCompatActivity {
         initializeImages();
         rotateChakra();
 
-        Handler handler = new Handler();
-        Runnable r = new Runnable() {
+        handler = new Handler();
+        r = new Runnable() {
             @Override
             public void run() {
                 // TODO:  Stop music
@@ -184,6 +191,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
+        handler.removeCallbacks(r);
         NavUtils.navigateUpFromSameTask(this);
         writeToDB();
     }
@@ -264,44 +272,46 @@ public class PlayingChakraActivity extends AppCompatActivity {
         int seconds = (int) (chakraTimeSpent / 1000) % 60;
         int minutes = (int) ((chakraTimeSpent / (1000 * 60)) % 60);
         int hours = (int) ((chakraTimeSpent / (1000 * 60 * 60)) % 24);
-        chakraTimeSpent = chakraTimeSpent / 1000 + 1;
+        chakraTimeSpent = chakraTimeSpent / 1000;
 
 
-        realm.beginTransaction();
-        SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
+        if (silenceModel != null) {
 
-        switch (chakraType) {
-            case "Crown":
-                if (silenceModel != null) {
+
+            switch (chakraType) {
+                case "Crown":
                     // exists
                     if (silenceModel.getCrownChakraTimeSpent() != 0) {
                         long time = silenceModel.getCrownChakraTimeSpent();
                         silenceModel.setCrownChakraTimeSpent(time + chakraTimeSpent);
                         realm.copyToRealmOrUpdate(silenceModel);
+                    } else {
+                        // first  time
+                        silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                        silenceModel.setCrownChakraTimeSpent(chakraTimeSpent);
+                        realm.copyToRealm(silenceModel);
                     }
-                } else {
-                    // first  time
-                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
-                    silenceModel.setCrownChakraTimeSpent(chakraTimeSpent);
-                    realm.copyToRealm(silenceModel);
-                }
 
 
-            case "Third Eye":
+                case "Third Eye":
 
-            case "Throat":
+                case "Throat":
 
-            case "Heart":
+                case "Heart":
 
-            case "Sacral":
+                case "Sacral":
 
-            case "Solar Plexus":
+                case "Solar Plexus":
 
-            case "Root":
+                case "Root":
+
+
+            }
+
 
         }
-
         realm.commitTransaction();
+
 
     }
 
