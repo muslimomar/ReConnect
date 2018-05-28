@@ -271,7 +271,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
         SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
         if (silenceModel != null) {
             // exists
-            if (silenceModel.getMusicTimeSpent() != null) {
+            if (silenceModel.getMusicTimeSpent() != 0) {
                 long time = silenceModel.getMusicTimeSpent();
                 silenceModel.setMusicTimeSpent(time + musicTimeSpent);
                 realm.copyToRealmOrUpdate(silenceModel);
