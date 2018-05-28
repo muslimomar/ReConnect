@@ -70,10 +70,10 @@ public class MantraPlayingActivity extends AppCompatActivity {
         String mantraType = intent.getExtras().getString("mantra_type");
         mantraMsg.setText(mantraType);
 
-      /*
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            musicType = bundle.getString("music_type_mantra");
+            musicType = bundle.getString("music_type");
         }
 
         Random random = new Random();
@@ -131,9 +131,6 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
                 player.start();
                 break;
-           /* case "Random":player = MediaPlayer.create(this,rawRef[random.nextInt(rawRef.length)]);
-            player.start();
-            break;
 
 
         }
@@ -148,7 +145,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
             }
         }
 
-        */
+
         initializeImages();
 
         Handler handler = new Handler();
@@ -230,9 +227,8 @@ public class MantraPlayingActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
                 writeToDB();
-
-                //player.stop();
-                //player.release();
+                player.stop();
+                player.release();
                 writeToDB();
                 NavUtils.navigateUpFromSameTask(this);
                 break;
@@ -253,7 +249,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
         SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
         if (silenceModel != null) {
             // exists
-            if (silenceModel.getMantraTimeSpent() != null) {
+            if (silenceModel.getMantraTimeSpent() != 0) {
                 long time = silenceModel.getMantraTimeSpent();
                 silenceModel.setMantraTimeSpent(time + mantraTimeSpent);
                 realm.copyToRealmOrUpdate(silenceModel);
@@ -276,7 +272,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         writeToDB();
-        //player.stop();
-        //player.release();
+        player.stop();
+        player.release();
     }
 }

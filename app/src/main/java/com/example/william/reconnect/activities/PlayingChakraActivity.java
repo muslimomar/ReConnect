@@ -30,22 +30,29 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Chakra;
+import com.example.william.reconnect.model.SilenceModel;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class PlayingChakraActivity extends AppCompatActivity {
 
+    long startTime;
+    long endTime;
+    long chakraTimeSpent;
+    Realm realm;
     public static final String TAG = PlayingChakraActivity.class.getSimpleName();
     int position = 0;
-    String chakraType = "";
-    String musicType = "";
+    String chakraType;
+    String musicType;
     ArrayList<Chakra> chakras = new ArrayList<>();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -66,16 +73,14 @@ public class PlayingChakraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chakra_playing);
         ButterKnife.bind(this);
-
+        startTime = System.currentTimeMillis();
+        realm = Realm.getDefaultInstance();
         prepareChakraList();
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             chakraType = bundle.getString("chakra_type");
             musicType = bundle.getString("music_type");
         }
-        if (chakraType=="")
-
         initializeImages();
         rotateChakra();
 
@@ -84,6 +89,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // TODO:  Stop music
+                writeToDB();
                 playingIconIv.clearAnimation();
 
                 if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
@@ -176,6 +182,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
         NavUtils.navigateUpFromSameTask(this);
+        writeToDB();
     }
 
     private void backgroundGradient(View v) {
@@ -244,4 +251,56 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    /* Set Music Time Spent Fully working 27-05-2018 */
+    private void writeToDB() {
+
+        endTime = System.currentTimeMillis();
+        chakraTimeSpent = endTime - startTime;
+        int seconds = (int) (chakraTimeSpent / 1000) % 60;
+        int minutes = (int) ((chakraTimeSpent / (1000 * 60)) % 60);
+        int hours = (int) ((chakraTimeSpent / (1000 * 60 * 60)) % 24);
+        chakraTimeSpent = chakraTimeSpent / 1000 + 1;
+
+
+        realm.beginTransaction();
+        SilenceModel silenceModel = realm.where(SilenceModel.class).findFirst();
+
+        switch (chakraType) {
+            case "Crown":
+                if (silenceModel != null) {
+                    // exists
+                    if (silenceModel.getCrownChakraTimeSpent() != 0) {
+                        long time = silenceModel.getCrownChakraTimeSpent();
+                        silenceModel.setCrownChakraTimeSpent(time + chakraTimeSpent);
+                        realm.copyToRealmOrUpdate(silenceModel);
+                    }
+                } else {
+                    // first  time
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setCrownChakraTimeSpent(chakraTimeSpent);
+                    realm.copyToRealm(silenceModel);
+                }
+
+
+            case "Third Eye":
+
+            case "Throat":
+
+            case "Heart":
+
+            case "Sacral":
+
+            case "Solar Plexus":
+
+            case "Root":
+
+        }
+
+        realm.commitTransaction();
+
+    }
+
+
 }

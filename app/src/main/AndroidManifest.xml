@@ -19,6 +19,9 @@
         <activity
             android:name=".activities.PlayingChakraActivity"
             android:theme="@style/TransparentStatusBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
 
         </activity>
 

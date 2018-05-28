@@ -177,6 +177,8 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
             intent = new Intent(getContext(), MantraPlayingActivity.class);
             intent.putExtra("mantra_type",reminder.getMantraPlaybackType());
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+
 
         }
         // intent to Music Activity

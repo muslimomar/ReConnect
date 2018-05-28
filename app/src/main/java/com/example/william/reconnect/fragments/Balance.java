@@ -35,6 +35,8 @@ public class Balance extends Fragment {
     TextView mantraTimeSpentIv;
     @BindView(R.id.mantra_spent_iv)
     TextView mantraSpentIv;
+    @BindView(R.id.crown_usage_tv)
+    TextView crownUsageTv;
 
 
     @Override
@@ -47,6 +49,7 @@ public class Balance extends Fragment {
         getSilenceTimeData();
         getMusicTimeData();
         getMantraTimeSpent();
+        getCrownTimeSpent();
         return view;
     }
 
@@ -112,6 +115,24 @@ public class Balance extends Fragment {
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
             mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+        }
+    }
+
+
+    public void getCrownTimeSpent() {
+        realm.beginTransaction();
+        SilenceModel person = realm.where(SilenceModel.class).findFirst();
+
+        realm.commitTransaction();
+        if (person != null) {
+            // Get the timespent on crown Chakra Day.
+            Long data = person.getCrownChakraTimeSpent();
+
+            // Convert from seconds to time format
+            long hours = data / 3600;
+            long minutes = (data % 3600) / 60;
+            long seconds = data % 60;
+            crownUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
     }
 
