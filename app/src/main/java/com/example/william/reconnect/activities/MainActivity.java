@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 
-import com.example.william.reconnect.LoginActivity;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.fragments.Balance;
 import com.example.william.reconnect.fragments.Home;
@@ -70,14 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.instructions:
                 fragmentClass = Instructions.class;
-                break;
-            case R.id.logout:
-                editor.putBoolean("IS_LOGIN", false);
-                editor.commit();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-
                 break;
         }
 

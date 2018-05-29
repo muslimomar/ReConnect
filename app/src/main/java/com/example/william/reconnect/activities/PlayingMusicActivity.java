@@ -43,14 +43,10 @@ public class PlayingMusicActivity extends AppCompatActivity {
     MediaPlayer player;
     @BindView(R.id.back_arrow_btn)
     ImageView backArrowBtn;
-    @BindView(R.id.info_btn)
-    ImageView infoBtn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.playing_icon)
+    @BindView(R.id.playing_icon_music)
     ImageView playingIcon;
-    @BindView(R.id.music_btn)
-    ImageView musicBtn;
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
     String musicType = "";
@@ -153,7 +149,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
         }
 
         initializeImages();
-        setImageOpacity();
         rotateChakra();
          handler = new Handler();
          r = new Runnable() {
@@ -166,9 +161,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 int minutes = (int) ((musicTimeSpent / (1000 * 60)) % 60);
                 int hours = (int) ((musicTimeSpent / (1000 * 60 * 60)) % 24);
                 musicTimeSpent = musicTimeSpent / 1000;
-
-                //player.release();
-                player = null;
+                player.stop();
+                player.release();
                 playingIcon.clearAnimation();
                 writeToDB();
 
@@ -187,11 +181,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
         playingIcon.setImageResource(R.drawable.re_connect_logo);
         backgroundGradient(relativeLayout);
 
-    }
-
-    private void setImageOpacity() {
-        Drawable background3 = musicBtn.getBackground();
-        background3.setAlpha(40);
     }
 
     private void rotateChakra() {
@@ -228,7 +217,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.back_arrow_btn, R.id.info_btn, R.id.music_btn})
+    @OnClick({R.id.back_arrow_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
@@ -239,9 +228,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 Log.d("TimeSpent", "musictime : " + musicTimeSpent);
                 NavUtils.navigateUpFromSameTask(this);
                 break;
-            case R.id.info_btn:
-                break;
-            case R.id.music_btn:
         }
 
     }

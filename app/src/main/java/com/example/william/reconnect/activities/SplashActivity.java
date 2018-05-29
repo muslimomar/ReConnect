@@ -2,13 +2,10 @@ package com.example.william.reconnect.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 
-import com.example.william.reconnect.LoginActivity;
 import com.example.william.reconnect.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -34,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }
             }
