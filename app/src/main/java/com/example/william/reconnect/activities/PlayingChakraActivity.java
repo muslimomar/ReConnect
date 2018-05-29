@@ -11,6 +11,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Chakra;
+import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
 
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
     SilenceModel silenceModel;
     Handler handler;
     Runnable r;
+    MediaPlayer player;
     long startTime;
     long endTime;
     long chakraTimeSpent;
@@ -63,8 +66,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.playing_icon)
     ImageView playingIconIv;
-    @BindView(R.id.music_iv)
-    ImageView musicIv;
     @BindView(R.id.back_arrow_iv)
     ImageView backArrowIv;
     @BindView(R.id.info_iv)
@@ -72,6 +73,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
     @BindView(R.id.relative_layout)
     RelativeLayout relativeLayout;
     int ONE_MIN_MS = 60000;
+    private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,82 @@ public class PlayingChakraActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: " + chakraType);
             Log.d(TAG, "onCreate: " + musicType);
         }
+
+
+        Random random = new Random();
+
+
+        switch (musicType) {
+            case "Jason Shaw Acoustuc Meditation":
+                player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
+                player.start();
+                break;
+            case "Kevin MacLeod - Sovereign Quarter":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
+                player.start();
+                break;
+            case "Kevin MacLeod Dream Culture":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
+                player.start();
+                break;
+            case "Kevin Macleod Bathed in The Light[Good for Chakra]":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
+                player.start();
+                break;
+            case "Kevin Macleod Windswept":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_windswept);
+                player.start();
+                break;
+            case "Kevin MacLeod Enchanted Journey":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_enchanted_journey);
+                player.start();
+                break;
+            case "Kevin MacLeod Smoother Move":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_smoother_move);
+                player.start();
+                break;
+            case "Kevin MacLeod Meditation Impromptu":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_meditation_impromptu);
+                player.start();
+                break;
+            case "Lee Rosevere Everywhere":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_everywhere);
+                player.start();
+                break;
+            case "Lee Rosevere Betrayal":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_betrayal);
+                player.start();
+                break;
+            case "Ryan Andersen Day to Night":
+                player = MediaPlayer.create(this, R.raw.ryan_andersen_day_to_night);
+                player.start();
+                break;
+            case "Lee Rosevere We’ll figure it out together":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_well_figure_it_out_together);
+                player.start();
+                break;
+            case "Lee Rosevere Not My Problem":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
+                player.start();
+                break;
+           /* case "Random":player = MediaPlayer.create(this,rawRef[random.nextInt(rawRef.length)]);
+            player.start();
+            break;
+*/
+
+        }
+
+        Reminder reminder = realm.where(Reminder.class).findFirst();
+        if (reminder != null) {
+            // Get the Music Playback Type.
+            String musicType = reminder.getMusicPlaybackType();
+            if (musicType.equals("Random")) {
+                player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
+                player.start();
+            }
+        }
+
+
         initializeImages();
         rotateChakra();
 
@@ -177,8 +255,8 @@ public class PlayingChakraActivity extends AppCompatActivity {
         backgroundGradient(relativeLayout);
 
         // set Opacity
-        Drawable background3 = musicIv.getBackground();
-        background3.setAlpha(40);
+        //Drawable background3 = musicIv.getBackground();
+        //background3.setAlpha(40);
 
     }
 
@@ -192,6 +270,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
         handler.removeCallbacks(r);
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
         NavUtils.navigateUpFromSameTask(this);
         writeToDB();
     }

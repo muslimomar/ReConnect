@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="220dp"
         android:textColor="#099db8"
         android:textSize="20sp"
         android:text="Counter" />

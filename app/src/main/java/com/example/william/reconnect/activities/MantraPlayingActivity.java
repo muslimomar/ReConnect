@@ -35,8 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-import static com.example.william.reconnect.util.Extras.RANDOM;
-
 
 public class MantraPlayingActivity extends AppCompatActivity {
 
@@ -155,8 +153,8 @@ public class MantraPlayingActivity extends AppCompatActivity {
 
         initializeImages();
 
-         handler = new Handler();
-         r = new Runnable() {
+        handler = new Handler();
+        r = new Runnable() {
             @Override
             public void run() {
                 // TODO:  Stop music
@@ -211,7 +209,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(MantraPlayingActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(MantraPlayingActivity.this, android.R.style.Theme_Material_Light_Dialog);
         } else {
             builder = new AlertDialog.Builder(MantraPlayingActivity.this);
         }
@@ -234,13 +232,18 @@ public class MantraPlayingActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
                 handler.removeCallbacks(r);
-                player.stop();
-                player.release();
+                if (player != null) {
+                    player.stop();
+                    player.release();
+                    player = null;
+                }
                 writeToDB();
                 NavUtils.navigateUpFromSameTask(this);
-                break;
-        }
+
+        break;
     }
+
+}
 
 
  /* Set Silence Time Spent Fully working 27-05-2018 */
@@ -259,30 +262,28 @@ public class MantraPlayingActivity extends AppCompatActivity {
         if (silenceModel != null) {
             // exists
             long time = silenceModel.getMantraTimeSpent();
-                silenceModel.setMantraTimeSpent(time + mantraTimeSpent);
-                realm.copyToRealmOrUpdate(silenceModel);
-            } else {
-                // first  time
-                silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
-                silenceModel.setMantraTimeSpent(mantraTimeSpent);
-                realm.copyToRealm(silenceModel);
-            }
-
-            realm.commitTransaction();
+            silenceModel.setMantraTimeSpent(time + mantraTimeSpent);
+            realm.copyToRealmOrUpdate(silenceModel);
+        } else {
+            // first  time
+            silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+            silenceModel.setMantraTimeSpent(mantraTimeSpent);
+            realm.copyToRealm(silenceModel);
         }
+
+        realm.commitTransaction();
+    }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         writeToDB();
-        player.stop();
-        player.release();
+        if (player.isPlaying()) {
+            player.stop(); // or mp.pause();
+            player.release();
+        }
+
+
     }
-
-
-
-
-
-
 }

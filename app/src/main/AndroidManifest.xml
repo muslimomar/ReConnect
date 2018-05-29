@@ -30,7 +30,6 @@
             android:theme="@style/SplashTheme">
 
         </activity>
-        <activity android:name=".LoginActivity" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
