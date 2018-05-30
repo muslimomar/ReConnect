@@ -2,6 +2,7 @@ package com.example.william.reconnect.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,15 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/gotham_medium.ttf");
+
+        welcomeTv.setTypeface(custom_font);
+        beginBtn.setTypeface(custom_font);
+        wantToSilenceTv.setTypeface(custom_font);
+        silenceDay.setTypeface(custom_font);
+
 
         return view;
     }
