@@ -1,13 +1,10 @@
 package com.example.william.reconnect.reminder;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -16,8 +13,8 @@ import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.MantraPlayingActivity;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
+import com.example.william.reconnect.activities.PlayingSilenceActivity;
 import com.example.william.reconnect.model.Reminder;
-import com.example.william.reconnect.util.Extras;
 
 import io.realm.Realm;
 
@@ -51,7 +48,7 @@ public class ReminderAlarmService extends IntentService {
         realm.commitTransaction();
 
         //Display a notification to view the task details
-        Intent action = setIntent();
+        Intent action = setReminderIntent();
         action.putExtra(EXTRA_ID, id);
 
         PendingIntent operation = TaskStackBuilder.create(this)
@@ -87,10 +84,9 @@ public class ReminderAlarmService extends IntentService {
 
     }
 
-    private Intent setIntent() {
+    private Intent setReminderIntent() {
         Intent intent = null;
         // intent to Chakra Activity
-        // TODO: Configure mantra and music accordingly
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
             intent = new Intent(this,PlayingChakraActivity.class);
            intent.putExtra("music_type", reminder.getMusicPlaybackType());
@@ -107,7 +103,13 @@ public class ReminderAlarmService extends IntentService {
             intent = new Intent(this,PlayingMusicActivity.class);
             intent.putExtra("music_type",reminder.getMusicPlaybackType());
         }
-        return intent;
+        if(reminder.getReminderType() == Reminder.TYPE_SILENCE) {
+            intent = new Intent(this, PlayingSilenceActivity.class);
+            intent.putExtra("silence_message", reminder.getPickedMinutes());
+
+        }
+
+            return intent;
 
     }
 
@@ -129,4 +131,6 @@ public class ReminderAlarmService extends IntentService {
                 break;
         }
     }
+
+
 }

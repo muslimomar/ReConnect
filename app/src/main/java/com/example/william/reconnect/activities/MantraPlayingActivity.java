@@ -173,7 +173,6 @@ public class MantraPlayingActivity extends AppCompatActivity {
         r = new Runnable() {
             @Override
             public void run() {
-                // TODO:  Stop music
                 writeToDB();
 
                 if (!((Activity) MantraPlayingActivity.this).isFinishing()) {
