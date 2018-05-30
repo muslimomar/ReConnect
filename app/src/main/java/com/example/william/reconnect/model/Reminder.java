@@ -197,8 +197,8 @@ public class Reminder extends RealmObject {
         this.repeatType = repeatType;
     }
 
-    public Reminder(String id, int reminderType, String silenceMessage, int pickedHours, int pickedMinutes, long alarmTimestamp, int requestCode) {
-        this.id = id;
+    public Reminder( int reminderType, String silenceMessage, int pickedHours, int pickedMinutes, long alarmTimestamp, int requestCode) {
+        this.id = UUID.randomUUID().toString();
         this.reminderType = reminderType;
         this.silenceMessage = silenceMessage;
         this.pickedHours = pickedHours;

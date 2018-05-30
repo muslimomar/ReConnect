@@ -18,7 +18,11 @@ import com.example.william.reconnect.model.Reminder;
 
 import io.realm.Realm;
 
-import static com.example.william.reconnect.util.Extras.*;
+import static com.example.william.reconnect.util.Extras.CHAKRA;
+import static com.example.william.reconnect.util.Extras.EXTRA_ID;
+import static com.example.william.reconnect.util.Extras.MANTRA;
+import static com.example.william.reconnect.util.Extras.MUSIC;
+import static com.example.william.reconnect.util.Extras.SILENCE;
 
 
 /**
@@ -70,7 +74,7 @@ public class ReminderAlarmService extends IntentService {
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setAutoCancel(true);
 
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
             NotificationChannel channel = new NotificationChannel("channel_01", "Reminders",
                     NotificationManager.IMPORTANCE_DEFAULT);
@@ -88,28 +92,28 @@ public class ReminderAlarmService extends IntentService {
         Intent intent = null;
         // intent to Chakra Activity
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
-            intent = new Intent(this,PlayingChakraActivity.class);
-           intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent = new Intent(this, PlayingChakraActivity.class);
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
             intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
         }
         // intent to Mantra Activity
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
-            intent = new Intent(this,MantraPlayingActivity.class);
-           intent.putExtra("mantra_type",reminder.getMantraPlaybackType());
-           intent.putExtra("music_type",reminder.getMusicPlaybackType());
+            intent = new Intent(this, MantraPlayingActivity.class);
+            intent.putExtra("mantra_type", reminder.getMantraPlaybackType());
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
         }
         // intent to Music Activity
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
-            intent = new Intent(this,PlayingMusicActivity.class);
-            intent.putExtra("music_type",reminder.getMusicPlaybackType());
+            intent = new Intent(this, PlayingMusicActivity.class);
+            intent.putExtra("music_type", reminder.getMusicPlaybackType());
         }
-        if(reminder.getReminderType() == Reminder.TYPE_SILENCE) {
+        // intent to Silence Activity
+        if (reminder.getReminderType() == Reminder.TYPE_SILENCE) {
             intent = new Intent(this, PlayingSilenceActivity.class);
-            intent.putExtra("silence_message", reminder.getPickedMinutes());
-
+            intent.putExtra("sign", reminder.getSilenceMessage());
         }
 
-            return intent;
+        return intent;
 
     }
 
@@ -128,6 +132,10 @@ public class ReminderAlarmService extends IntentService {
             case Reminder.TYPE_MUSIC:
                 reminderType = MUSIC;
                 chakraIcon = R.drawable.ic_music_notification;
+                break;
+            case Reminder.TYPE_SILENCE:
+                reminderType = SILENCE;
+                chakraIcon = R.drawable.ic_mute;
                 break;
         }
     }

@@ -66,15 +66,12 @@ public class PlayingSilenceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String text = intent.getExtras().getString("sign", "sendSign");
-        String text2 = intent.getExtras().getString("silence", "typedtext");
-
 
         /* Check the particular sent value and setText according to it */
         if (intent.hasExtra("sign")) {
             silenceSignText.setText(text);
-        } else {
-            silenceSignText.setText(text2);
         }
+
     }
 
 

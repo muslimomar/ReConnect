@@ -5,8 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,7 +19,7 @@ import com.example.william.reconnect.model.Reminder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,20 +63,31 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_silence_day);
         ButterKnife.bind(this);
 
+        realm = Realm.getDefaultInstance();
 
         Time today = new Time(Time.getCurrentTimezone());
         today.setToNow();
-
-
-        pickedTimeTv.setText(today.hour + ":" + today.minute);
-        String formattedDate = String.format("%02d/%02d", today.monthDay, today.month , today.year);
-        pickedDateTv.setText(today.monthDay + "/" + today.month + "/" + today.year);
-
-
+        Date mTime = new Date();
+        String formattedTime = String.format("%02d:%02d", today.hour, today.minute);
+        String formattedDate = new SimpleDateFormat("dd/MM/yyyy").format(mTime);
+        pickedTimeTv.setText(formattedTime);
+        pickedDateTv.setText(formattedDate);
 
         calNow = Calendar.getInstance();
         calSet = (Calendar) calNow.clone();
 
+        realm.beginTransaction();
+        Reminder reminder = realm.where(Reminder.class).equalTo("reminderType", Reminder.TYPE_SILENCE).findFirst();
+        realm.commitTransaction();
+
+        if (reminder != null) {
+            long timestamp = reminder.getAlarmTimestamp();
+
+            pickedTime = getTime(timestamp);
+            pickedDate = getDate(timestamp);
+            pickedDateTv.setText(pickedDate);
+            pickedTimeTv.setText(pickedTime);
+        }
     }
 
 
@@ -101,19 +112,18 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
                 int year = newCalendar.get(Calendar.YEAR);
 
                 DatePickerDialog mDatePicker;
-
                 mDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                        pickedDate = dayOfMonth + ":" + month + ":" + year;
-                        pickedDateTv.setText(pickedDate);
+                        calSet.set(year, month, dayOfMonth);
 
-                        calNow.set(Calendar.YEAR, year);
-                        calNow.set(Calendar.MONTH, month);
-                        calNow.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String formattedDate = new SimpleDateFormat("dd/MM/yyyy").format(calSet.getTime());
+                        pickedDate = formattedDate;
+                        pickedDateTv.setText(pickedDate);
                     }
                 }, year, month, day);
+                mDatePicker.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
                 mDatePicker.show();
                 break;
             case R.id.silence_pick_time:
@@ -146,7 +156,6 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
     public void onViewClicked() {
 
         SaveSilence();
-
     }
 
     private void SaveSilence() {
@@ -155,7 +164,6 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
             return;
         }
 
-        realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         Reminder reminder = realm.where(Reminder.class)
                 .equalTo("pickedHours", pickedHours)
@@ -184,9 +192,22 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
         intent.putExtra("mins", pickedMins);
         startActivity(intent);
         finish();
-        Log.d(TAG, "goToNextActivity:timestamp " + calSet.getTimeInMillis());
-        Log.d(TAG, "goToNextActivity:hours " + pickedHours);
-        Log.d(TAG, "goToNextActivity:mins " + pickedMins);
 
     }
+
+    private String getDate(long timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format("dd/MM/yyyy", cal).toString();
+        return date;
+    }
+
+    private String getTime(long timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format("hh:mm", cal).toString();
+        return date;
+    }
+
+
 }

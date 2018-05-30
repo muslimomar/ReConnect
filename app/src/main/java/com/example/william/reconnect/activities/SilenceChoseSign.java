@@ -8,18 +8,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.william.reconnect.R;
+import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.reminder.AlarmScheduler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 public class SilenceChoseSign extends AppCompatActivity {
 
@@ -45,13 +48,26 @@ public class SilenceChoseSign extends AppCompatActivity {
     Button btnCreateSign;
     @BindView(R.id.btn_silence_info)
     Button btnSilenceInfo;
-
+    Realm realm;
+    String selectedMsg = "";
+    long selectedTimeStamp;
+    int selectedHours;
+    int selectedMins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_silence_chose_sign);
         ButterKnife.bind(this);
+
+        realm = Realm.getDefaultInstance();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            selectedTimeStamp = bundle.getLong("timestamp", 0);
+            selectedHours = bundle.getInt("hours", 0);
+            selectedMins = bundle.getInt("mins", 0);
+        }
 
 
     }
@@ -77,69 +93,70 @@ public class SilenceChoseSign extends AppCompatActivity {
 
 
         switch (view.getId()) {
+
             case R.id.silence_btn_1:
                 sendSign = shoppingItems[0];
-                Intent intent = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent.putExtra("sign", sendSign);
-                startActivity(intent);
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
                 break;
             case R.id.silence_btn_2:
                 sendSign = shoppingItems[1];
-                Intent intent1 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent1.putExtra("sign", sendSign);
-                startActivity(intent1);
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
+
                 break;
             case R.id.silence_btn_3:
                 sendSign = shoppingItems[2];
-                Intent intent2 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent2.putExtra("sign", sendSign);
-                startActivity(intent2);
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
                 break;
             case R.id.silence_btn_4:
                 sendSign = shoppingItems[3];
-                Intent intent3 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent3.putExtra("sign", sendSign);
-                startActivity(intent3);
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
+
                 break;
             case R.id.silence_btn_5:
                 sendSign = shoppingItems[4];
-                Intent intent4 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent4.putExtra("sign", sendSign);
-                startActivity(intent4);
+
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
                 break;
             case R.id.silence_btn_6:
                 sendSign = shoppingItems[5];
-                Intent intent5 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent5.putExtra("sign", sendSign);
-                startActivity(intent5);
+                selectedMsg = sendSign;
+
+                mainActivityRedirecter();
                 break;
             case R.id.silence_btn_7:
                 sendSign = shoppingItems[6];
-                Intent intent6 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent6.putExtra("sign", sendSign);
-                startActivity(intent6);
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
+
                 break;
             case R.id.silence_btn_8:
                 sendSign = shoppingItems[7];
-                Intent intent7 = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent7.putExtra("sign", sendSign);
-                startActivity(intent7);
+                selectedMsg = sendSign;
+                mainActivityRedirecter();
+
                 break;
 
 
         }
+
+        saveSilenceDay(selectedMsg);
+
         btnSilenceInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                silenceWhy(SilenceChoseSign.this,getString(R.string.whychoos));
+                silenceWhy(SilenceChoseSign.this, getString(R.string.whychoos));
             }
         });
 
     }
 
 
-
-        public void showDialog(Activity activity, String msg) {
+    public void showDialog(Activity activity, String msg) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -190,11 +207,8 @@ public class SilenceChoseSign extends AppCompatActivity {
 
                 dialog.dismiss();
                 final String typedText = editCustomSign.getText().toString();
-                Intent intent = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
-                intent.putExtra("silence", typedText);
-                Log.d("hooooooooo", "onCreate: " + typedText);
-                startActivity(intent);
-
+                saveSilenceDay(typedText);
+                mainActivityRedirecter();
                 /* Sending typedText to PlayingSilenceActivity Activity */
 
 
@@ -233,6 +247,42 @@ public class SilenceChoseSign extends AppCompatActivity {
     @OnClick(R.id.btn_create_sign)
     public void onViewClicked() {
         showDialog(this, "Create Custom Sign");
+    }
+
+
+    public void saveSilenceDay(String selectedMsg) {
+        realm.beginTransaction();
+        Reminder reminder = realm.where(Reminder.class).equalTo("reminderType", Reminder.TYPE_SILENCE).findFirst();
+        if (reminder != null) {
+            // EDIT existing
+            reminder.setSilenceMessage(selectedMsg);
+            reminder.setPickedHours(selectedHours);
+            reminder.setPickedMinutes(selectedMins);
+            reminder.setAlarmTimestamp(selectedTimeStamp);
+
+            setAlarm(selectedTimeStamp, reminder.getId(), reminder.getRequestCode());
+
+        } else {
+            // New
+            int requestCode = (int) System.currentTimeMillis();
+            reminder = new Reminder(Reminder.TYPE_SILENCE, selectedMsg, selectedHours, selectedMins, selectedTimeStamp, requestCode);
+            setAlarm(selectedTimeStamp, reminder.getId(), requestCode);
+        }
+
+        realm.copyToRealmOrUpdate(reminder);
+        realm.commitTransaction();
+    }
+
+    private void setAlarm(long selectedTimeStamp, String id, int requestCode) {
+        new AlarmScheduler().setAlarm(this, selectedTimeStamp, id, requestCode);
+
+    }
+
+    public void mainActivityRedirecter() {
+        Toast.makeText(this, "Silence day set!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(SilenceChoseSign.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
