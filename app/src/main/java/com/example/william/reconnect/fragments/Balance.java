@@ -112,8 +112,8 @@ public class Balance extends Fragment {
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
 
+            mantraSpentIv.setText(hours + " Hours " + minutes + " Min " + seconds + " Sec");
 
-            mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
 
         }
     }
@@ -133,7 +133,6 @@ public class Balance extends Fragment {
             long minutes = (fullTimeSpent % 3600) / 60;
             long seconds = fullTimeSpent % 60;
             chakraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
-
         }
 
     }

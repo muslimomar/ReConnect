@@ -16,6 +16,7 @@ public class Reminder extends RealmObject {
     public static final int TYPE_CHAKRA = 0;
     public static final int TYPE_MANTRA = 1;
     public static final int TYPE_MUSIC = 2;
+    public static final int TYPE_SILENCE = 3;
 
 
     @PrimaryKey
@@ -24,11 +25,13 @@ public class Reminder extends RealmObject {
     private String musicPlaybackType;
     private String mantraPlaybackType;
     private String chakraPlaybackTYpe;
+    private String silenceMessage;
     private int pickedHours;
     private int pickedMinutes;
     private long alarmTimestamp;
     private int requestCode;
     private long repeatType;
+
 
     // preferences
     private int musicPlaybackRb;
@@ -42,7 +45,13 @@ public class Reminder extends RealmObject {
 
     public Reminder() {
     }
+    public String getSilenceMessage() {
+        return silenceMessage;
+    }
 
+    public void setSilenceMessage(String silenceMessage) {
+        this.silenceMessage = silenceMessage;
+    }
     public String getId() {
         return id;
     }
@@ -188,8 +197,18 @@ public class Reminder extends RealmObject {
         this.repeatType = repeatType;
     }
 
+    public Reminder(String id, int reminderType, String silenceMessage, int pickedHours, int pickedMinutes, long alarmTimestamp, int requestCode) {
+        this.id = id;
+        this.reminderType = reminderType;
+        this.silenceMessage = silenceMessage;
+        this.pickedHours = pickedHours;
+        this.pickedMinutes = pickedMinutes;
+        this.alarmTimestamp = alarmTimestamp;
+        this.requestCode = requestCode;
+    }
+
     public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe,
-                    int pickedHours,int pickedMinutes,long alarmTimestamp,long repeatType ,int musicPlaybackRb,
+                    int pickedHours, int pickedMinutes, long alarmTimestamp, long repeatType , int musicPlaybackRb,
                     int musicPlaybackSpinner, int mantraPlaybackRb,
                     int mantraFirstSpinner, int mantraSecondSpinner, int chakraPlaybackRb, int chakraSpinner
                     , int requestCode, int repeatRb) {
@@ -212,6 +231,8 @@ public class Reminder extends RealmObject {
         this.requestCode = requestCode;
         this.repeatType = repeatType;
     }
+
+
 }
 
 

@@ -13,6 +13,7 @@ import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.MantraPlayingActivity;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
+import com.example.william.reconnect.activities.PlayingSilenceActivity;
 import com.example.william.reconnect.model.Reminder;
 
 import io.realm.Realm;
@@ -101,7 +102,13 @@ public class ReminderAlarmService extends IntentService {
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
             intent = new Intent(this,PlayingMusicActivity.class);
         }
-        return intent;
+        if(reminder.getReminderType() == Reminder.TYPE_SILENCE) {
+            intent = new Intent(this, PlayingSilenceActivity.class);
+            intent.putExtra("silence_message", reminder.getPickedMinutes());
+
+        }
+
+            return intent;
 
     }
 
@@ -123,4 +130,6 @@ public class ReminderAlarmService extends IntentService {
                 break;
         }
     }
+
+
 }

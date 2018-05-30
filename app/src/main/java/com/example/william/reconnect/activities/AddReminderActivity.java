@@ -27,7 +27,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.model.Chakra;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
 
@@ -67,7 +66,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     RadioGroup mantraPlaybackRadioGroup;
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
-    String[] songs = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],","Kevin Macleod Windswept","Kevin MacLeod Enchanted Journey","Kevin MacLeod Smoother Moves","Kevin MacLeod Meditation Impromptu","Lee Rosevere Everywhere","Lee Rosevere Betrayal","Lee Rosevere We’ll figure it out together","Lee Rosevere Not My Problem","Ryan Andersen Day to Night",};
+    String[] songs = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
     @BindView(R.id.pick_a_time_layout)
     LinearLayout pickATimeLayout;
     @BindView(R.id.days_layout)
@@ -298,7 +297,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     mantraFirstSpinner.setEnabled(true);
                     mantraSecondSpinner.setEnabled(true);
 
-                    if(selectedMantraType!=null) {
+                    if (selectedMantraType != null) {
                         selectedMantraType = mantraSecondSpinner.getSelectedItem().toString();
                     }
 
@@ -335,7 +334,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 if (i == chakraSpecificRb.getId()) {
 
                     chakraListSpinner.setEnabled(true);
-                    if(chakraListSpinner.getSelectedItem().toString()!=null) {
+                    if (chakraListSpinner.getSelectedItem().toString() != null) {
                         selectedChakraType = chakraListSpinner.getSelectedItem().toString();
                     }
                     chakraListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -469,7 +468,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             return;
         }
 
-        if(selectedMusicType.isEmpty()) {
+        if (selectedMusicType.isEmpty()) {
             Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -485,7 +484,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 return;
             }
 
-            if(selectedMantraType.isEmpty()) {
+            if (selectedMantraType.isEmpty()) {
                 Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -498,7 +497,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 return;
             }
 
-            if(selectedChakraType.isEmpty()) {
+            if (selectedChakraType.isEmpty()) {
                 Toast.makeText(this, "Please select a Chakra type!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -519,14 +518,9 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             }
         }
 
-
-
-
         realm.beginTransaction();
 
-
-        if(isAlarmAlreadySet()) {
-
+        if (isAlarmAlreadySet()) {
 
             realm.commitTransaction();
             return;
@@ -598,18 +592,18 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 .equalTo("pickedMinutes", pickedMinutes)
                 .findFirst();
 
-        if(reminder == null) {
+        if (reminder == null) {
             return false;
-        }else{
+        } else {
 
             // make sure we're not comparing @pickedhours with the edited item from realm's time
-            if(receivedId != null) {
-                if(receivedReminder.getPickedHours() == pickedHours && receivedReminder.getPickedMinutes() == pickedMinutes) {
+            if (receivedId != null) {
+                if (receivedReminder.getPickedHours() == pickedHours && receivedReminder.getPickedMinutes() == pickedMinutes) {
                     return false;
                 }
             }
 
-            Toast.makeText(this, "Another reminder with the same time exists!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.another_reminder_stirng, Toast.LENGTH_SHORT).show();
             return true;
         }
     }
