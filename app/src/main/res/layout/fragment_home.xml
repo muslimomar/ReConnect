@@ -27,6 +27,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:text="Welcome to ReConnect!"
+            android:fontFamily="@font/gotham_medium"
             android:textColor="#5a6771"
             android:textSize="20sp" />
 
@@ -40,6 +41,7 @@
             android:layout_marginTop="70dp"
             android:background="@drawable/red_button_radius"
             android:text="BEGIN"
+            android:fontFamily="@font/gotham_medium"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -62,6 +64,7 @@
             android:layout_weight="1"
             android:alpha="0.6"
             android:gravity="bottom"
+            android:fontFamily="@font/gotham_medium"
             android:text="Want to practice silence today?"
             android:textColor="#ffffff" />
 
@@ -73,6 +76,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="2"
             android:clickable="true"
+            android:fontFamily="@font/gotham_medium"
             android:drawableRight="@drawable/ic_right_arrow_24dp"
             android:focusable="true"
             android:gravity="center_vertical"

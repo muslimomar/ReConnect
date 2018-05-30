@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
@@ -19,6 +20,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -86,6 +89,15 @@ public class MantraPlayingActivity extends AppCompatActivity {
         String index = name_list.get(new Random().nextInt(name_list.size()));
         if (mantraType != null) {
             if (mantraType.equals("Random")) {
+
+                Animation anim = new AlphaAnimation(0.0f, 1.0f);
+                anim.setDuration(2000); //You can manage the time of the blink with this parameter
+                anim.setStartOffset(900);
+                anim.setRepeatMode(Animation.REVERSE);
+                anim.setRepeatCount(Animation.INFINITE);
+                mantraMsg.startAnimation(anim);
+
+
                 mantraMsg.setText(index);
             }
         }
@@ -173,8 +185,6 @@ public class MantraPlayingActivity extends AppCompatActivity {
         r = new Runnable() {
             @Override
             public void run() {
-                writeToDB();
-
                 if (!((Activity) MantraPlayingActivity.this).isFinishing()) {
                     showFinishDialog();
                 }
