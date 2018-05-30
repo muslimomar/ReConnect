@@ -21,14 +21,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.SilenceModel;
-
 import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -183,11 +180,8 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         writeToDB();
         silenceTimeSpentTxt.setText(String.valueOf((silenceSpentTime) + " Seconds"));
         Toast.makeText(this, "You stopped being silence!", Toast.LENGTH_SHORT).show();
-
-
         dialog.show();
     }
-
     /* Set Silence Time Spent Fully working 27-05-2018 */
 
     private void writeToDB() {
@@ -198,14 +192,12 @@ public class PlayingSilenceActivity extends AppCompatActivity {
             long time = silenceModel.getSilenceTimeSpent();
             silenceModel.setSilenceTimeSpent(time + silenceSpentTime);
             realm.copyToRealmOrUpdate(silenceModel);
-
         } else {
             // first  time
             silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
             silenceModel.setSilenceTimeSpent(silenceSpentTime);
             realm.copyToRealm(silenceModel);
         }
-
         realm.commitTransaction();
     }
 

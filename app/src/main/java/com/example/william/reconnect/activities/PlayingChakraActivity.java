@@ -15,7 +15,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +47,17 @@ import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class PlayingChakraActivity extends AppCompatActivity {
 
+/*
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String allchakraTimeSpent = "chakraTimeSpent";
+    public static final String crownChakraTime = "crownChakraTime";
+    public static final String thirdEyeChakraTime = "thirdEyeChakraTime";
+    public static final String throatChakraTime = "throatChakraTime";
+    public static final String heartChakraTime = "heartChakraTime";
+    public static final String sacralChakraTime = "sacralChakraTime";
+    public static final String solarPLexusChakraTime = "solarPLexusChakraTime";
+    SharedPreferences sharedpreferences;
+*/
 
     public static final String TAG = PlayingChakraActivity.class.getSimpleName();
     SilenceModel silenceModel;
@@ -266,14 +276,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
-        handler.removeCallbacks(r);
-        if (player != null) {
-            player.stop();
-            player.release();
-            player = null;
-        }
-        NavUtils.navigateUpFromSameTask(this);
-        writeToDB();
+        showExitDialog();
     }
 
     private void backgroundGradient(View v) {
@@ -438,5 +441,38 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     }
 
+    public void showExitDialog() {
 
+
+        final AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Exit Meditation")
+                .setMessage("Are you sure you want to exit meditation session?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with exit
+                        handler.removeCallbacks(r);
+                        if (player != null) {
+                            player.stop();
+                            player.release();
+                            player = null;
+                        }
+                        writeToDB();
+                        Intent intent = new Intent(PlayingChakraActivity.this, MeditationsActivity.class);
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 }
