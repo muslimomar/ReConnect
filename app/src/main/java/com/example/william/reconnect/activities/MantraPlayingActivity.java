@@ -26,6 +26,9 @@ import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -68,7 +71,24 @@ public class MantraPlayingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String mantraType = intent.getExtras().getString("mantra_type");
-        mantraMsg.setText(mantraType);
+
+        List<String> name_list = new ArrayList<>();
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.root_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.crown_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.heart_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.sacral_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.solar_plexus_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.third_eye_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.throat_mantras_array)));
+
+
+        Random random = new Random();
+        String index = name_list.get(new Random().nextInt(name_list.size()));
+        if (mantraType != null) {
+            if (mantraType.equals("Random")) {
+                mantraMsg.setText(index);
+            }
+        }
 
 
         Bundle bundle = getIntent().getExtras();
@@ -79,9 +99,6 @@ public class MantraPlayingActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: " + mantraType);
 
         }
-
-        Random random = new Random();
-
 
         switch (musicType) {
             case "Jason Shaw Acoustuc Meditation":
@@ -304,6 +321,4 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
-
 }
