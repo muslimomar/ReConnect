@@ -105,6 +105,7 @@ public class ReminderAlarmService extends IntentService {
         // intent to Music Activity
         if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
             intent = new Intent(this,PlayingMusicActivity.class);
+            intent.putExtra("music_type",reminder.getMusicPlaybackType());
         }
         return intent;
 

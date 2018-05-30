@@ -15,7 +15,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -231,20 +230,10 @@ public class MantraPlayingActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
-                handler.removeCallbacks(r);
-                if (player != null) {
-                    player.stop();
-                    player.release();
-                    player = null;
-                }
-                writeToDB();
-                NavUtils.navigateUpFromSameTask(this);
-
-        break;
+                showExitDialog();
+                break;
+        }
     }
-
-}
-
 
  /* Set Silence Time Spent Fully working 27-05-2018 */
 
@@ -278,12 +267,44 @@ public class MantraPlayingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        writeToDB();
-        if (player.isPlaying()) {
-            player.stop(); // or mp.pause();
-            player.release();
-        }
-
-
+        showExitDialog();
     }
+
+    public void showExitDialog() {
+
+
+        final AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Exit Meditation")
+                .setMessage("Are you sure you want to exit meditation session?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+
+                        handler.removeCallbacks(r);
+                        if (player != null) {
+                            player.stop();
+                            player.release();
+                            player = null;
+                        }
+                        writeToDB();
+                        Intent intent = new Intent(MantraPlayingActivity.this, MeditationsActivity.class);
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
 }

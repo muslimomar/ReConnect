@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/crown_usage_pb"
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/third_eye_usage_pb"
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/throat_usage_pb"
@@ -200,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/heart_usage_pb"
@@ -250,7 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/solar_plexus_usage_pb"
@@ -300,7 +300,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/sacral_usage_pb"
@@ -349,7 +349,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1 hr 10 min" />
+                android:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/root_usage_pb"

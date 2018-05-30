@@ -1,11 +1,14 @@
 package com.example.william.reconnect.fragments;
 
 import android.app.Fragment;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.william.reconnect.R;
@@ -23,7 +26,6 @@ public class Balance extends Fragment {
     @BindView(R.id.silence_time_spent_iv)
     TextView silenceTimeSpentIv;
     Unbinder unbinder;
-    Cursor mCursor;
     @BindView(R.id.silence_spent_iv)
     TextView silenceSpentIv;
     Realm realm;
@@ -40,6 +42,14 @@ public class Balance extends Fragment {
     @BindView(R.id.chakra_spent_iv)
     TextView chakraSpentIv;
     SilenceModel person;
+    @BindView(R.id.good_job)
+    LinearLayout goodJob;
+    @BindView(R.id.laugh_tv)
+    ImageView laughTv;
+    @BindView(R.id.good_job_rv)
+    RelativeLayout goodJobRv;
+    @BindView(R.id.compliment_card_view)
+    CardView complimentCardView;
 
 
     @Override
@@ -51,6 +61,7 @@ public class Balance extends Fragment {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         person = realm.where(SilenceModel.class).findFirst();
+        goodJobCheck();
         realm.commitTransaction();
         getMusicTimeData();
         getSilenceTimeData();
@@ -66,6 +77,13 @@ public class Balance extends Fragment {
         unbinder.unbind();
     }
 
+
+    public void goodJobCheck() {
+        if (person == null) {
+            complimentCardView.setVisibility(View.GONE);
+        } else
+            complimentCardView.setVisibility(View.VISIBLE);
+    }
 
     // Get Silence Time Spent Fully working 27-05-2018
     public void getSilenceTimeData() {
