@@ -19,15 +19,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.SilenceModel;
+
 import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,6 +55,29 @@ public class PlayingSilenceActivity extends AppCompatActivity {
     long silenceSpentTime;
     long startTime2;
     long endTime2;
+    long totalSeconds = 86400;
+    long intervalSeconds = 1;
+    long startTime;
+    long elapsedSeconds;
+    CountDownTimer timer = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
+
+        public void onTick(long millisUntilFinished) {
+
+            startTime = SystemClock.elapsedRealtime();
+            String text = String.format(Locale.getDefault(), "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millisUntilFinished), TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
+                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
+            countUp.setText(text);
+        }
+
+        public void onFinish() {
+            //TODO code onFinish Silence countdown
+            Toast.makeText(PlayingSilenceActivity.this, "Silence Day Finished!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PlayingSilenceActivity.this, MainActivity.class);
+            startActivity(intent);
+            showTimeSpentDialog(PlayingSilenceActivity.this, "hello");
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +98,26 @@ public class PlayingSilenceActivity extends AppCompatActivity {
             silenceSignText.setText(text);
         }
 
-    }
+        btnStartSilence.setOnClickListener(new View.OnClickListener() {
+            boolean isTimerStarted = false;
 
+            @Override
+            public void onClick(View view) {
+                if(!isTimerStarted) {
+                    btnStopSilence.setEnabled(true);
+                    startTime2 = System.currentTimeMillis();
+                    timer.start();
+                    Toast.makeText(PlayingSilenceActivity.this, "Silence Day Started!", Toast.LENGTH_SHORT).show();
+                    isTimerStarted = true;
+                }else{
+                    Toast.makeText(PlayingSilenceActivity.this, "Silence Day is already running!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+    }
 
     /* Gradient for background */
     private void backgroundGradient(View v) {
@@ -109,41 +151,7 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         //    timer.cancel();
 
         showTimeSpentDialog(PlayingSilenceActivity.this, "Hello");
-
     }
-
-    @OnClick(R.id.btn_start_silence)
-    public void onBtnStartSilenceClicked() {
-        btnStopSilence.setEnabled(true);
-        startTime2 = System.currentTimeMillis();
-        timer.start();
-        Toast.makeText(this, "Silence Day Started!", Toast.LENGTH_SHORT).show();
-    }
-
-    long totalSeconds = 86400;
-    long intervalSeconds = 1;
-    long startTime;
-    long elapsedSeconds;
-
-    CountDownTimer timer = new CountDownTimer(totalSeconds * 1000, intervalSeconds * 1000) {
-
-        public void onTick(long millisUntilFinished) {
-
-            startTime = SystemClock.elapsedRealtime();
-            String text = String.format(Locale.getDefault(), "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millisUntilFinished), TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
-                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
-            countUp.setText(text);
-        }
-
-        public void onFinish() {
-            //TODO code onFinish Silence countdown
-            Toast.makeText(PlayingSilenceActivity.this, "Silence Day Finished!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(PlayingSilenceActivity.this, MainActivity.class);
-            startActivity(intent);
-            showTimeSpentDialog(PlayingSilenceActivity.this, "hello");
-        }
-
-    };
 
     public void showTimeSpentDialog(Activity activity, String msg) {
         final Dialog dialog = new Dialog(activity);

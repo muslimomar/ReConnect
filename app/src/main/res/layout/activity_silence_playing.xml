@@ -9,12 +9,12 @@
 
 
     <TextView
-        android:fontFamily="@font/gotham_medium"
         android:id="@+id/silence_day_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/gotham_medium"
         android:text="Silence Day"
         android:textColor="#099db8"
         android:textSize="41.7sp" />
@@ -30,7 +30,6 @@
         android:textSize="24.7sp"
         tools:text="@string/ipractis" />
 
-
     <TextView
         android:id="@+id/counter"
         android:layout_width="wrap_content"
@@ -41,10 +40,10 @@
         android:textSize="20sp" />
 
     <TextView
-        android:layout_gravity="center"
         android:id="@+id/countUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:textSize="40sp"
 
@@ -59,8 +58,8 @@
         android:layout_marginRight="80dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_rect"
-        android:text="stop"
         android:fontFamily="@font/gotham_medium"
+        android:text="stop"
         android:textColor="@color/white"
         android:textSize="20sp"
 
@@ -72,9 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
-        android:fontFamily="@font/gotham_medium"
         android:layout_marginTop="20dp"
         android:background="@drawable/silence_btn_rect"
+        android:fontFamily="@font/gotham_medium"
         android:text="start"
         android:textColor="@color/black"
         android:textSize="20sp"
