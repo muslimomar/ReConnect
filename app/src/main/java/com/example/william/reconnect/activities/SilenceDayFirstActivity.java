@@ -7,11 +7,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
 import android.text.format.DateFormat;
-=======
 import android.text.Html;
->>>>>>> 23700d391cf2a3eda4a4eaf9a0c5c68f5a1594df
 import android.text.format.Time;
 import android.view.View;
 import android.view.Window;
@@ -26,10 +23,7 @@ import com.example.william.reconnect.model.Reminder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-<<<<<<< HEAD
 import java.util.Date;
-=======
->>>>>>> 23700d391cf2a3eda4a4eaf9a0c5c68f5a1594df
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -217,6 +211,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
         cal.setTimeInMillis(timestamp);
         String date = DateFormat.format("hh:mm", cal).toString();
         return date;
+    }
 
     public void showGuideLines(Activity activity, String msg) {
         final Dialog dialog = new Dialog(activity);
