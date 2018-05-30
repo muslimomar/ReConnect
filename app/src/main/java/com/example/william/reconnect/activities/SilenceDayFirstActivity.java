@@ -209,7 +209,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
     private String getTime(long timestamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timestamp);
-        String date = DateFormat.format("hh:mm", cal).toString();
+        String date = DateFormat.format("kk:mm", cal).toString();
         return date;
     }
 

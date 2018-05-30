@@ -209,4 +209,5 @@ public class ReminderAdapter extends ArrayAdapter<Reminder> {
         }
     }
 
+
 }

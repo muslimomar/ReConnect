@@ -159,7 +159,7 @@ public class PlayingSilenceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PlayingSilenceActivity.this, MainActivity.class);
                 startActivity(intent);
-
+                finish();
 
             }
         });

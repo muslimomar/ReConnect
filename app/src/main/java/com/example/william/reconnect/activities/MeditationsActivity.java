@@ -117,7 +117,7 @@ public class MeditationsActivity extends AppCompatActivity {
         super.onResume();
 
         Realm realm = Realm.getDefaultInstance();
-        mAdapter.updateReminders(realm.where(Reminder.class).findAll());
+        mAdapter.updateReminders(realm.where(Reminder.class).notEqualTo("reminderType",  Reminder.TYPE_SILENCE).findAll());
 
     }
 
