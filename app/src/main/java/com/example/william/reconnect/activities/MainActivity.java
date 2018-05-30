@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(navigationView);
 
         // start drawer when first starts
-        mDrawerLayout.openDrawer(Gravity.LEFT);
+//        mDrawerLayout.openDrawer(Gravity.LEFT);
         pref = MainActivity.this.getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        // when logout is selected it will be null
+
         if (myFragment != null) {
             fragmentManager.beginTransaction().replace(R.id.fragment, myFragment).commit();
             item.setChecked(true);

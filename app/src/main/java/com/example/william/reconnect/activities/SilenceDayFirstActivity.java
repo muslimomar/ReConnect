@@ -41,7 +41,6 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        // ...
     }
 
 
@@ -72,6 +71,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         //TODO implement Time into Reminder class;
+
                     }
                 }, year, month, day);
                 mDatePicker.show();

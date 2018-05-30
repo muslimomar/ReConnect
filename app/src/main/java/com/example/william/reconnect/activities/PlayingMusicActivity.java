@@ -154,7 +154,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
          r = new Runnable() {
             @Override
             public void run() {
-                // TODO:  Stop music
                 endTime = System.currentTimeMillis();
                 musicTimeSpent = startTime - endTime;
                 int seconds = (int) (musicTimeSpent / 1000) % 60;

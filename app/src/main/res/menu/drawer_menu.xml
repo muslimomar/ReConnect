@@ -16,11 +16,5 @@
         android:title="Instructions"
         android:icon="@drawable/ic_info"
         />
-    <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_log_out"
-        />
-
 
 </menu>
