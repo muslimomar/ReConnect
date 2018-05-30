@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;

@@ -43,14 +43,16 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:fontFamily="@font/gotham_medium"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:paddingEnd="10dp"
         android:paddingLeft="10dp"
         android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:paddingTop="30dp"
         android:src="@drawable/re_connect_logo"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:gravity="center"
         android:visibility="visible" />
 
 

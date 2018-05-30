@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
@@ -19,6 +20,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +29,9 @@ import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -68,7 +74,33 @@ public class MantraPlayingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String mantraType = intent.getExtras().getString("mantra_type");
-        mantraMsg.setText(mantraType);
+
+        List<String> name_list = new ArrayList<>();
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.root_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.crown_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.heart_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.sacral_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.solar_plexus_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.third_eye_mantras_array)));
+        name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.throat_mantras_array)));
+
+
+        Random random = new Random();
+        String index = name_list.get(new Random().nextInt(name_list.size()));
+        if (mantraType != null) {
+            if (mantraType.equals("Random")) {
+
+                Animation anim = new AlphaAnimation(0.0f, 1.0f);
+                anim.setDuration(2000); //You can manage the time of the blink with this parameter
+                anim.setStartOffset(900);
+                anim.setRepeatMode(Animation.REVERSE);
+                anim.setRepeatCount(Animation.INFINITE);
+                mantraMsg.startAnimation(anim);
+
+
+                mantraMsg.setText(index);
+            }
+        }
 
 
         Bundle bundle = getIntent().getExtras();
@@ -79,9 +111,6 @@ public class MantraPlayingActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: " + mantraType);
 
         }
-
-        Random random = new Random();
-
 
         switch (musicType) {
             case "Jason Shaw Acoustuc Meditation":
@@ -156,8 +185,6 @@ public class MantraPlayingActivity extends AppCompatActivity {
         r = new Runnable() {
             @Override
             public void run() {
-                writeToDB();
-
                 if (!((Activity) MantraPlayingActivity.this).isFinishing()) {
                     showFinishDialog();
                 }
@@ -304,6 +331,4 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
-
 }

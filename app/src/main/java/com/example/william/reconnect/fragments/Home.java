@@ -2,6 +2,7 @@ package com.example.william.reconnect.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+
 
         return view;
     }
