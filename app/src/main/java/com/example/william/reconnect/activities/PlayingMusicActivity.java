@@ -1,6 +1,7 @@
 package com.example.william.reconnect.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -220,12 +221,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_arrow_btn:
-                handler.removeCallbacks(r);
-                player.stop();
-                player.release();
-                writeToDB();
-                Log.d("TimeSpent", "musictime : " + musicTimeSpent);
-                NavUtils.navigateUpFromSameTask(this);
+                showExitDialog();
                 break;
         }
 
@@ -290,6 +286,39 @@ public class PlayingMusicActivity extends AppCompatActivity {
         writeToDB();
         player.stop();
         player.release();
+    }
+
+    public void showExitDialog(){
+
+
+        final AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Exit Meditation")
+                .setMessage("Are you sure you want to exit meditation session?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+
+                        handler.removeCallbacks(r);
+                        player.stop();
+                        player.release();
+                        writeToDB();
+                        Intent intent = new Intent(PlayingMusicActivity.this,MeditationsActivity.class);
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 }
