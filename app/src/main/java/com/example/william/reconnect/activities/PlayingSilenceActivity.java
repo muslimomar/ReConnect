@@ -18,9 +18,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.SilenceModel;
 import java.util.Locale;
@@ -34,7 +36,7 @@ import io.realm.Realm;
 public class PlayingSilenceActivity extends AppCompatActivity {
 
     @BindView(R.id.silence_playing_screen)
-    RelativeLayout silencePlayingScreen;
+    LinearLayout silencePlayingScreen;
     @BindView(R.id.silence_day_sign)
     TextView silenceDaySign;
     @BindView(R.id.counter)

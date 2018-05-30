@@ -186,6 +186,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
             @Override
             public void run() {
                 playingIconIv.clearAnimation();
+                showFinishDialog();
 
                 if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
                     showFinishDialog();

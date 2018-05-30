@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:padding="16dp"
+            android:lineSpacingExtra="3dp"
             android:text="Click on the button below to create a meditation session!"
             android:gravity="center"
             />

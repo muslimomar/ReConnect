@@ -42,14 +42,6 @@ public class Home extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
 
-        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/gotham_medium.ttf");
-
-        welcomeTv.setTypeface(custom_font);
-        beginBtn.setTypeface(custom_font);
-        wantToSilenceTv.setTypeface(custom_font);
-        silenceDay.setTypeface(custom_font);
-
-
         return view;
     }
 

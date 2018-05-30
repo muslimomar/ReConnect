@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pick a time"
-                    android:fontFamily="@font/gotham_light"
+                    android:fontFamily="@assts/fonts/gotham_medium"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -93,7 +93,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Repeat"
-                    android:fontFamily="@font/gotham_light"
                     android:textColor="@color/black" />
 
                 <RadioGroup
@@ -168,7 +167,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Music Playback"
-                    android:fontFamily="@font/gotham_light"
                     android:textColor="@color/black" />
 
                 <RadioGroup
@@ -250,7 +248,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Chakra"
-                    android:fontFamily="@font/gotham_light"
                     android:textColor="@color/black" />
 
                 <RadioGroup
@@ -323,7 +320,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mantra"
-                    android:fontFamily="@font/gotham_light"
                     android:textColor="@color/black"
 
                     />

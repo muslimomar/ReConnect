@@ -1,7 +1,6 @@
 package com.example.william.reconnect.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -151,8 +149,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
         initializeImages();
         rotateChakra();
-         handler = new Handler();
-         r = new Runnable() {
+        handler = new Handler();
+        r = new Runnable() {
             @Override
             public void run() {
                 endTime = System.currentTimeMillis();
@@ -161,10 +159,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 int minutes = (int) ((musicTimeSpent / (1000 * 60)) % 60);
                 int hours = (int) ((musicTimeSpent / (1000 * 60 * 60)) % 24);
                 musicTimeSpent = musicTimeSpent / 1000;
-                player.stop();
-                player.release();
+                showFinishDialog();
                 playingIcon.clearAnimation();
-                writeToDB();
 
                 if (!((Activity) PlayingMusicActivity.this).isFinishing()) {
                     showFinishDialog();
@@ -288,7 +284,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
         player.release();
     }
 
-    public void showExitDialog(){
+    public void showExitDialog() {
 
 
         final AlertDialog.Builder builder;
@@ -304,10 +300,13 @@ public class PlayingMusicActivity extends AppCompatActivity {
                         // continue with delete
 
                         handler.removeCallbacks(r);
-                        player.stop();
-                        player.release();
+                        if (player != null) {
+                            player.stop();
+                            player.release();
+                            player = null;
+                        }
                         writeToDB();
-                        Intent intent = new Intent(PlayingMusicActivity.this,MeditationsActivity.class);
+                        Intent intent = new Intent(PlayingMusicActivity.this, MeditationsActivity.class);
                         startActivity(intent);
 
                     }

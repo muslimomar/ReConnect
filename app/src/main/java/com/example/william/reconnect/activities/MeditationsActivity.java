@@ -2,6 +2,7 @@ package com.example.william.reconnect.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -12,13 +13,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.adapter.ReminderAdapter;
 import com.example.william.reconnect.model.Reminder;
-import com.example.william.reconnect.util.Extras;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,13 +34,18 @@ public class MeditationsActivity extends AppCompatActivity {
     ReminderAdapter mAdapter;
     @BindView(R.id.list_view)
     ListView listView;
-    @BindView(R.id.empty_view) RelativeLayout emptyView;
+    @BindView(R.id.empty_view)
+    RelativeLayout emptyView;
+    @BindView(R.id.no_reminder_text)
+    TextView noReminderText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditations);
         ButterKnife.bind(this);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/gotham_medium.ttf");
+        noReminderText.setTypeface(custom_font);
 
         configureActionbar();
 
@@ -72,7 +76,6 @@ public class MeditationsActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
 
     }
-
 
 
     @Override
