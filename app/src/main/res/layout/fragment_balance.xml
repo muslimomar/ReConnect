@@ -231,6 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:text="00 hour 00 min 00 sec"
+
                         android:textColor="#727272" />
 
                 </RelativeLayout>

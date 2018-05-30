@@ -59,6 +59,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
 */
 
+    public static final String TAG = PlayingChakraActivity.class.getSimpleName();
     SilenceModel silenceModel;
     Handler handler;
     Runnable r;
@@ -67,7 +68,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
     long endTime;
     long chakraTimeSpent;
     Realm realm;
-    public static final String TAG = PlayingChakraActivity.class.getSimpleName();
     int position = 0;
     String chakraType;
     String musicType;
@@ -94,6 +94,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         silenceModel = realm.where(SilenceModel.class).findFirst();
+        realm.commitTransaction();
 
         prepareChakraList();
         Bundle bundle = getIntent().getExtras();
@@ -104,9 +105,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: " + musicType);
         }
 
-
         Random random = new Random();
-
 
         switch (musicType) {
             case "Jason Shaw Acoustuc Meditation":
@@ -186,8 +185,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         r = new Runnable() {
             @Override
             public void run() {
-                // TODO:  Stop music
-                writeToDB();
                 playingIconIv.clearAnimation();
 
                 if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
@@ -341,7 +338,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, MeditationsActivity.class);
                 startActivity(intent);
                 finish();
         }
@@ -360,40 +357,83 @@ public class PlayingChakraActivity extends AppCompatActivity {
         int hours = (int) ((chakraTimeSpent / (1000 * 60 * 60)) % 24);
         chakraTimeSpent = chakraTimeSpent / 1000;
 
+        realm.beginTransaction();
 
         if (silenceModel != null) {
-
+            long time;
 
             switch (chakraType) {
                 case "Crown":
-                    // exists
-                    if (silenceModel.getCrownChakraTimeSpent() != 0) {
-                        long time = silenceModel.getCrownChakraTimeSpent();
-                        silenceModel.setCrownChakraTimeSpent(time + chakraTimeSpent);
-                        realm.copyToRealmOrUpdate(silenceModel);
-                    } else {
-                        // first  time
-                        silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
-                        silenceModel.setCrownChakraTimeSpent(chakraTimeSpent);
-                        realm.copyToRealm(silenceModel);
-                    }
-
-
+                    time = silenceModel.getCrownChakraTimeSpent();
+                    silenceModel.setCrownChakraTimeSpent(time + chakraTimeSpent);
+                    break;
                 case "Third Eye":
+                    time = silenceModel.getThirdEyeChakraTimeSpent();
+                    silenceModel.setThirdEyeChakraTimeSpent(time + chakraTimeSpent);
+                    break;
 
                 case "Throat":
+                    time = silenceModel.getThroatChakraTimeSpent();
+                    silenceModel.setThroatChakraTimeSpent(time + chakraTimeSpent);
+                    break;
 
                 case "Heart":
+                    time = silenceModel.getHeartChakraTimeSpent();
+                    silenceModel.setHeartChakraTimeSpent(time + chakraTimeSpent);
+                    break;
 
                 case "Sacral":
+                    time = silenceModel.getSacralChakraTimespent();
+                    silenceModel.setSacralChakraTimespent(time + chakraTimeSpent);
+                    break;
 
                 case "Solar Plexus":
+                    time = silenceModel.getSolarPlexusChakraTimeSpent();
+                    silenceModel.setSolarPlexusChakraTimeSpent(time + chakraTimeSpent);
+                    break;
 
                 case "Root":
-
+                    time = silenceModel.getRootChakraTimeSpent();
+                    silenceModel.setRootChakraTimeSpent(time + chakraTimeSpent);
+                    break;
 
             }
+            realm.copyToRealmOrUpdate(silenceModel);
 
+        } else {
+            // first  time
+            switch (chakraType) {
+                case "Crown":
+                    // first
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setCrownChakraTimeSpent(chakraTimeSpent);
+
+                case "Third Eye":
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setThirdEyeChakraTimeSpent(chakraTimeSpent);
+
+                case "Throat":
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setThroatChakraTimeSpent(chakraTimeSpent);
+
+                case "Heart":
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setHeartChakraTimeSpent(chakraTimeSpent);
+
+                case "Sacral":
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setSacralChakraTimespent(chakraTimeSpent);
+
+                case "Solar Plexus":
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setSolarPlexusChakraTimeSpent(chakraTimeSpent);
+
+                case "Root":
+                    silenceModel = realm.createObject(SilenceModel.class, UUID.randomUUID().toString());
+                    silenceModel.setRootChakraTimeSpent(chakraTimeSpent);
+
+            }
+            realm.copyToRealm(silenceModel);
 
         }
         realm.commitTransaction();

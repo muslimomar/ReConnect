@@ -28,6 +28,26 @@ public class AlarmScheduler {
 
         Log.d("AlarmScheduler", "setRepeatAlarm: " + id + "\n" + requestCode + "\n" + repeatTime + "\n" + alarmTimestamp);
 
+    }
+
+
+    public void setAlarm(Context context, long alarmTimestamp, String id, int requestCode) {
+        AlarmManager manager = AlarmManagerProvider.getAlarmManager(context);
+
+        Intent action = new Intent(context, ReminderAlarmService.class);
+        action.putExtra(EXTRA_ID, id);
+
+        PendingIntent operation = PendingIntent.getService(context, requestCode, action, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTimestamp, operation);
+
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            manager.setExact(AlarmManager.RTC_WAKEUP, alarmTimestamp, operation);
+
+        } else {
+            manager.set(AlarmManager.RTC_WAKEUP, alarmTimestamp, operation);
+        }
 
     }
 
@@ -49,4 +69,8 @@ public class AlarmScheduler {
         }
 
     }
+
+
+
+
 }

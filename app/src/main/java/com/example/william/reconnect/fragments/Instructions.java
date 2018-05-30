@@ -29,11 +29,11 @@ public class Instructions extends Fragment {
         View view = inflater.inflate(R.layout.fragment_instructions, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        secondTv.setText(Html.fromHtml("1.\t<b>Music/Notification</b>: automatic music will ic_music_play every hour - selected or random. When you hear the music, close your eyes and focus within. Or, you can choose a sound to notify you of the start and end of each minute.<br/>\n" +
-                "<br/>2.\t<b>Chakra/Body</b> : focus on the ic_chakra_small colour and it’s placement within your body. You can imagine it pulsating and can make a sound on breathing out. Note: they are centrally positioned within the body, along the spine.<br/>\n" +
-                "•\t<b>Beginner</b>: imagine the ic_chakra_small colour within you and surrounding you, or simply bring your attention to this area of your body.<br/>\n" +
-                "•\t<b>Intermediate</b>: see the colour and placement of the ic_chakra_small and imagine it pulsating, vibrating or gently spinning within you.<br/>\n" +
-                "•\t<b>Advanced</b>: imagine the spinning ic_chakra_small as part of your whole spine, linking to other chakras; as you breathe out, make a longish sound that resonates with this ic_chakra_small.<br/>\n" +
+        secondTv.setText(Html.fromHtml("1.\t<b>Music/Notification</b>: automatic music will play every hour - selected or random. When you hear the music, close your eyes and focus within. Or, you can choose a sound to notify you of the start and end of each minute.<br/>\n" +
+                "<br/>2.\t<b>Chakra/Body</b> : focus on the chakra colour and it’s placement within your body. You can imagine it pulsating and can make a sound on breathing out. Note: they are centrally positioned within the body, along the spine.<br/>\n" +
+                "•\t<b>Beginner</b>: imagine the chakra colour within you and surrounding you, or simply bring your attention to this area of your body.<br/>\n" +
+                "•\t<b>Intermediate</b>: see the colour and placement of the chakra and imagine it pulsating, vibrating or gently spinning within you.<br/>\n" +
+                "•\t<b>Advanced</b>: imagine the spinning chakra as part of your whole spine, linking to other chakras; as you breathe out, make a longish sound that resonates with this chakra.<br/>\n" +
                 "<br/>3.\t<b>Mantra/Affirmation</b>: \n" +
                 "Mantras and affirmations are used to re-programme the brain and affect the unconscious. Here are four ways to work with these: <br/>\n" +
                 "•\t<b>Contemplate it</b>: reflect on the meaning and tune in to particular words to absorb them.<br/>\n" +
@@ -41,7 +41,7 @@ public class Instructions extends Fragment {
                 "•\t<b>Visualise it</b>: see it actually happening. Create a movie - add all sorts of detail and embellishment, make it big, over exaggerate.<br/>\n" +
                 "•\t<b>Breath it</b>: inhale the words on every ‘in-breath’, and exhale with</b> happiness on the out-breath releasing any natural sounds.<br/>\n" +
                 "<b>Create Your Own</b>\n" +
-                "You can create your own ic_mantra_small/affirmation to strengthen or manifest anything in you and your life, make sure your words are in the ‘here and now’ as if already happening; Or you can input one that you already know. <br/>\n" +
+                "You can create your own mantra/affirmation to strengthen or manifest anything in you and your life, make sure your words are in the ‘here and now’ as if already happening; Or you can input one that you already know. <br/>\n" +
                 "<br/>4.\t<b>Silence/Non-talking Day</b>\n" +
                 "Talking burns energy and takes us away from ourselves, whilst being silent collects energy and is a step towards quietening the mind. \n" +
                 "<br/>Choose a less busy day to practice Silence/Non-Talking. You can still do the usual things but without added talking. Let people know in advance: ask them not to start conversations and only communicate if necessary. You can show people your ‘Silence’ sign.\n" +
