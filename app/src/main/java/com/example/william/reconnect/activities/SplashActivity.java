@@ -11,7 +11,6 @@ import com.example.william.reconnect.R;
 public class SplashActivity extends AppCompatActivity {
 
 
-
     SharedPreferences pref;
 
     @Override
@@ -35,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             }
-        }, 2000);
+        }, 2200);
 
     }
 }

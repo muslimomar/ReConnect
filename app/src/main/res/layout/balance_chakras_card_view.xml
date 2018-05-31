@@ -1,13 +1,13 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chakra_usage_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_marginLeft="@dimen/activity_vertical_margin"
     android:layout_marginRight="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
-    app:cardCornerRadius="6dp"
-    >
+    app:cardCornerRadius="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/crown_usage_pb"
@@ -54,7 +54,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/crown_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
 
         </RelativeLayout>
@@ -63,9 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/crown_usage_pb"
-            android:background="@color/black"
             android:alpha="0.1"
-            />
+            android:background="@color/black" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -75,8 +74,8 @@
             <ImageView
                 android:id="@+id/third_eye_usage_icon"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:src="@drawable/third_eye_icon" />
 
             <TextView
@@ -96,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/third_eye_usage_pb"
@@ -107,7 +106,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/third_eye_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
         </RelativeLayout>
 
@@ -115,9 +114,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/crown_usage_pb"
-            android:background="@color/black"
             android:alpha="0.1"
-            />
+            android:background="@color/black" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -127,8 +125,8 @@
             <ImageView
                 android:id="@+id/throat_usage_icon"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:src="@drawable/throat_icon" />
 
             <TextView
@@ -148,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/throat_usage_pb"
@@ -159,7 +157,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/throat_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
         </RelativeLayout>
 
@@ -167,9 +165,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/crown_usage_pb"
-            android:background="@color/black"
             android:alpha="0.1"
-            />
+            android:background="@color/black" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -200,7 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/heart_usage_pb"
@@ -211,16 +208,17 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/heart_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/crown_usage_pb"
-            android:background="@color/black"
             android:alpha="0.1"
-            />
+            android:background="@color/black" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -250,7 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/solar_plexus_usage_pb"
@@ -261,16 +259,17 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/solar_plexus_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/crown_usage_pb"
-            android:background="@color/black"
             android:alpha="0.1"
-            />
+            android:background="@color/black" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -279,8 +278,8 @@
             <ImageView
                 android:id="@+id/sacral_usage_icon"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:src="@drawable/sacral_icon" />
 
             <TextView
@@ -300,7 +299,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/sacral_usage_pb"
@@ -311,27 +310,27 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/sacral_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/crown_usage_pb"
-            android:background="@color/black"
             android:alpha="0.1"
-            />
+            android:background="@color/black" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            >
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/root_usage_icon"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:src="@drawable/root_ic" />
 
             <TextView
@@ -349,7 +348,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="00 hr 00 min" />
+                tools:text="00 hr 00 min" />
 
             <ProgressBar
                 android:id="@+id/root_usage_pb"
@@ -360,7 +359,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/root_usage_icon"
-                android:progress="80" />
+                android:progress="0" />
 
         </RelativeLayout>
 

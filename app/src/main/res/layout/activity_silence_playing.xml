@@ -28,6 +28,7 @@
         android:letterSpacing="0.01"
         android:textColor="#2f2a30"
         android:textSize="24.7sp"
+        android:layout_gravity="center"
         tools:text="@string/ipractis" />
 
     <TextView
