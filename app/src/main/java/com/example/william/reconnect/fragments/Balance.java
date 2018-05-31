@@ -210,7 +210,7 @@ public class Balance extends Fragment {
                 long seconds = data % 60;
                 crownUsageTv.setText(format.format(finalRWt) + "%");
                 crownUsagePb.setMax(100);
-                //crownUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+                crownUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
                 crownUsageTv.setText("0%");
 
@@ -237,7 +237,7 @@ public class Balance extends Fragment {
                 long seconds = data % 60;
                 thirdEyeUsageTv.setText(format.format(finalRWt) + "%");
                 thirdEyeUsagePb.setMax(100);
-                //thirdEyeUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+                thirdEyeUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
             } else
                 thirdEyeUsageTv.setText("0%");
@@ -264,7 +264,7 @@ public class Balance extends Fragment {
                 long seconds = data % 60;
                 throatUsageTv.setText(format.format(finalRWt) + "%");
                 throatUsagePb.setMax(100);
-                //throatUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+                throatUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else throatUsageTv.setText("0%");
 
         }
@@ -291,7 +291,7 @@ public class Balance extends Fragment {
                 long seconds = data % 60;
                 heartUsageTv.setText(format.format(finalRWt) + "%");
                 heartUsagePb.setMax(100);
-                //heartUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+                heartUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
             } else heartUsageTv.setText("0%");
 
@@ -318,7 +318,7 @@ public class Balance extends Fragment {
                 long seconds = data % 60;
                 solarPlexusUsageTv.setText(format.format(finalRWt) + "%");
                 solarPlexusUsagePb.setMax(100);
-                //solarPlexusUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+                solarPlexusUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
                 solarPlexusUsageTv.setText("0%");
 
@@ -345,7 +345,7 @@ public class Balance extends Fragment {
                 long seconds = data % 60;
                 sacralUsageTv.setText(format.format(finalRWt) + "%");
                 sacralUsagePb.setMax(100);
-                //sacralUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+                sacralUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
                 sacralUsageTv.setText("0%");
 
