@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PaintDrawable;
@@ -26,7 +25,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
 
 import java.util.ArrayList;
@@ -61,6 +59,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
     public static final String TAG = MantraPlayingActivity.class.getSimpleName();
+    Animation anim;
 
 
     @Override
@@ -84,22 +83,22 @@ public class MantraPlayingActivity extends AppCompatActivity {
         name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.third_eye_mantras_array)));
         name_list.addAll(Arrays.asList(getResources().getStringArray(R.array.throat_mantras_array)));
 
+        anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(2000); //You can manage the time of the blink with this parameter
+        anim.setStartOffset(900);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
 
         Random random = new Random();
         String index = name_list.get(new Random().nextInt(name_list.size()));
         if (mantraType != null) {
             if (mantraType.equals("Random")) {
-
-                Animation anim = new AlphaAnimation(0.0f, 1.0f);
-                anim.setDuration(2000); //You can manage the time of the blink with this parameter
-                anim.setStartOffset(900);
-                anim.setRepeatMode(Animation.REVERSE);
-                anim.setRepeatCount(Animation.INFINITE);
                 mantraMsg.startAnimation(anim);
-
-
                 mantraMsg.setText(index);
-            }
+            } else
+                mantraMsg.setAnimation(anim);
+            mantraMsg.setText(mantraType);
+
         }
 
 
@@ -164,18 +163,11 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
                 player.start();
                 break;
-
-
-        }
-
-        Reminder reminder = realm.where(Reminder.class).findFirst();
-        if (reminder != null) {
-            // Get the Music Playback Type.
-            String musicType = reminder.getMusicPlaybackType();
-            if (musicType.equals("Random")) {
+            case "Random":
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
-            }
+
+
         }
 
 
@@ -293,7 +285,13 @@ public class MantraPlayingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        showExitDialog();
+        writeToDB();
+        handler.removeCallbacks(r);
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
     }
 
     public void showExitDialog() {

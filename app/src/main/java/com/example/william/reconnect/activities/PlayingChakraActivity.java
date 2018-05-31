@@ -160,22 +160,12 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
                 player.start();
                 break;
-           /* case "Random":player = MediaPlayer.create(this,rawRef[random.nextInt(rawRef.length)]);
-            player.start();
-            break;
-*/
-
-        }
-
-        Reminder reminder = realm.where(Reminder.class).findFirst();
-        if (reminder != null) {
-            // Get the Music Playback Type.
-            String musicType = reminder.getMusicPlaybackType();
-            if (musicType.equals("Random")) {
+            case "Random":
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
-            }
         }
+
+
 
 
         initializeImages();
@@ -475,5 +465,16 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+
+        }
     }
 }

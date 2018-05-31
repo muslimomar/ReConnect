@@ -279,9 +279,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        writeToDB();
-        player.stop();
-        player.release();
+       showExitDialog();
     }
 
     public void showExitDialog() {
