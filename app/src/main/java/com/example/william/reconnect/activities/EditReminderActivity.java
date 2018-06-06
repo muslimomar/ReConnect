@@ -2,60 +2,81 @@ package com.example.william.reconnect.activities;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.TimePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
 import static android.widget.AdapterView.OnItemSelectedListener;
-import static com.example.william.reconnect.util.Extras.EXTRA_ID;
-import static com.example.william.reconnect.util.Extras.NO_MUSIC;
+import static com.example.william.reconnect.util.Extras.CHAKRA_REMINDER_OBJECT;
+import static com.example.william.reconnect.util.Extras.MANTRA_REMINDER_OBJECT;
+import static com.example.william.reconnect.util.Extras.PREFS_NAME;
 import static com.example.william.reconnect.util.Extras.RANDOM;
 
-public class AddReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
-    public static String TAG = AddReminderActivity.class.getSimpleName();
+public class EditReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
+    public static String TAG = EditReminderActivity.class.getSimpleName();
     public static int meditationType = 0;
     long pickedTimeStamp;
-    String pickedHoursMins = "";
-    int pickedHours;
-    int pickedMinutes;
-    String selectedMusicType = "";
+
+    String selectedSoundType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
+
+    int startHour = -1;
+    int endHour = -1;
+
+    String soundPlaybackRb;
+
+    Reminder receivedReminder;
+
     @BindView(R.id.music_playback_radio_group)
     RadioGroup musicPlaybackRadioGroup;
     @BindView(R.id.music_list_spinner)
     Spinner musicListSpinner;
+    @BindView(R.id.notification_spinner)
+    Spinner notifSpinner;
+    @BindView(R.id.sound_music_rb)
+    RadioButton soundMusicRb;
+    @BindView(R.id.start_time_btn)
+    Button startTimeBtn;
+    @BindView(R.id.end_time_btn)
+    Button endTimeBtn;
+    //
     @BindView(R.id.chakra_playback_radio_group)
     RadioGroup chakraPlaybackRadioGroup;
     @BindView(R.id.chakra_list_spinner)
@@ -66,19 +87,16 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     RadioGroup mantraPlaybackRadioGroup;
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
-    String[] songs = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
-    @BindView(R.id.pick_a_time_layout)
-    LinearLayout pickATimeLayout;
-    @BindView(R.id.days_layout)
-    LinearLayout daysLayout;
-    @BindView(R.id.music_no_music_rb)
-    RadioButton musicNoMusicRb;
+    String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
+    String[] notifSongsList = new String[]{"1", "2", "3"};
+    //
     @BindView(R.id.music_random_rb)
     RadioButton musicRandomRb;
     @BindView(R.id.music_specific_rb)
     RadioButton musicSpecificRb;
-    @BindView(R.id.music_layout)
-    LinearLayout musicLayout;
+    @BindView(R.id.sound_notification_rb)
+    RadioButton soundNotifRb;
+    //
     @BindView(R.id.chakra_random_rb)
     RadioButton chakraRandomRb;
     @BindView(R.id.chakra_specific_rb)
@@ -101,22 +119,12 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     View chakraLayoutView;
     @BindView(R.id.mantra_layout_view)
     View mantraLayoutView;
-    @BindView(R.id.time_tv)
-    TextView timeTv;
-    Realm realm;
-    String receivedId;
-    long alarmInterval;
-    Reminder receivedReminder;
-    int requestCode;
-    @BindView(R.id.every_hour_rb)
-    RadioButton everyHourRb;
-    @BindView(R.id.every_day_rb)
-    RadioButton everyDayRb;
-    @BindView(R.id.every_week_rb)
-    RadioButton everyWeekRb;
-    @BindView(R.id.repeat_radio_group)
-    RadioGroup repeatRadioGroup;
+    @BindView(R.id.pick_a_time_layout)
+    LinearLayout pickaTimeLayout;
+
     boolean isTimePickerClicked = false;
+    SharedPreferences sharedPrefs;
+    SharedPreferences.Editor sharedPrefsEditor;
     private boolean mReminderHasChanged = false;
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -129,65 +137,63 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_reminder);
+        setContentView(R.layout.activity_edit_reminder);
         ButterKnife.bind(this);
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        realm = Realm.getDefaultInstance();
+        sharedPrefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        sharedPrefsEditor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
 
         prepareSpinners();
         adjustRadiosSpinners();
         mantraFirstSpinner.setOnItemSelectedListener(this);
 
         Intent intent = getIntent();
-        receivedId = intent.getExtras().getString(EXTRA_ID);
-
-        if (receivedId != null) {
-            setTitle("Edit Reminder");
-            setupViewWithData();
-        }
-
         setMeditationType(intent);
         adjustReminderLayout();
 
-        pickATimeLayout.setOnTouchListener(mTouchListener);
+        if (receivedReminder != null) {
+            setupViewWithData();
+        }
+
+        pickaTimeLayout.setOnTouchListener(mTouchListener);
         musicListSpinner.setOnTouchListener(mTouchListener);
         mantraFirstSpinner.setOnTouchListener(mTouchListener);
         mantraSecondSpinner.setOnTouchListener(mTouchListener);
         chakraListSpinner.setOnTouchListener(mTouchListener);
         customMantraEt.setOnTouchListener(mTouchListener);
 
-
     }
 
     private void setupViewWithData() {
 
-        realm.beginTransaction();
-        receivedReminder = realm.where(Reminder.class).equalTo("id", receivedId).findFirst();
-        realm.commitTransaction();
+        startTimeBtn.setText(String.valueOf(receivedReminder.getPickedStartHours()));
+        endTimeBtn.setText(String.valueOf(receivedReminder.getPickedEndHours()));
 
-        String formattedTime = String.format("%02d:%02d", receivedReminder.getPickedHours(), receivedReminder.getPickedMinutes());
-        timeTv.setText(formattedTime);
-        pickedHours = receivedReminder.getPickedHours();
-        pickedMinutes = receivedReminder.getPickedMinutes();
-        pickedTimeStamp = receivedReminder.getAlarmTimestamp();
-
-        pickedHoursMins = formattedTime;
-
-        int musicPlaybackRb = receivedReminder.getMusicPlaybackRb();
+        String soundPlaybackRb = receivedReminder.getSoundPlaybackRb();
         int chakraPlaybackRb = receivedReminder.getChakraPlaybackRb();
         int mantraPlaybackRb = receivedReminder.getMantraPlaybackRb();
 
-        musicPlaybackRadioGroup.check(musicPlaybackRb);
+        startHour = receivedReminder.getPickedStartHours();
+        endHour = receivedReminder.getPickedEndHours();
+
         chakraPlaybackRadioGroup.check(chakraPlaybackRb);
         mantraPlaybackRadioGroup.check(mantraPlaybackRb);
-        repeatRadioGroup.check(receivedReminder.getRepeatRb());
 
-        if (musicPlaybackRb == musicSpecificRb.getId()) {
-            musicListSpinner.setSelection(receivedReminder.getMusicPlaybackSpinner());
+        if (soundPlaybackRb.equalsIgnoreCase(soundMusicRb.getText().toString().trim())) {
+            soundMusicRb.setChecked(true);
+
+            if (selectedSoundType.equalsIgnoreCase(RANDOM)) {
+                musicPlaybackRadioGroup.check(musicRandomRb.getId());
+            } else {
+                musicPlaybackRadioGroup.check(musicSpecificRb.getId());
+                musicListSpinner.setSelection(receivedReminder.getMusicPlaybackSpinner());
+            }
+        } else if (soundPlaybackRb.equalsIgnoreCase(soundNotifRb.getText().toString().trim())) {
+            soundNotifRb.setChecked(true);
+            notifSpinner.setSelection(receivedReminder.getNotifPlaybackSpinner());
         }
 
         if (chakraPlaybackRb == chakraSpecificRb.getId()) {
@@ -207,49 +213,53 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
     private void setMeditationType(Intent intent) {
         meditationType = intent.getIntExtra("meditationType", -1);
 
-        if (meditationType == -1) {
-            meditationType = receivedReminder.getReminderType();
-        }
-
         switch (meditationType) {
             case Reminder.TYPE_CHAKRA:
-                setTitle("Add Chakra");
+                setTitle("Edit Chakra");
+                receivedReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+                if (receivedReminder == null) {
+                    setTitle("Setup Chakra");
+                }
                 break;
             case Reminder.TYPE_MANTRA:
-                setTitle("Add Mantra");
+                setTitle("Edit Mantra");
+                receivedReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+                if (receivedReminder == null) {
+                    setTitle("Setup Mantra");
+                }
                 break;
-            case Reminder.TYPE_MUSIC:
-                setTitle("Add Music");
-                break;
+
         }
-
-
     }
-
 
     private void adjustRadiosSpinners() {
         // it's disabled by default
+        notifSpinner.setEnabled(false);
         musicListSpinner.setEnabled(false);
         customMantraEt.setEnabled(false);
         mantraFirstSpinner.setEnabled(false);
         mantraSecondSpinner.setEnabled(false);
         chakraListSpinner.setEnabled(false);
+        musicRandomRb.setEnabled(false);
+        musicSpecificRb.setEnabled(false);
 
-        musicPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        soundNotifRb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                mReminderHasChanged = true;
-                if (i == musicRandomRb.getId()) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    soundPlaybackRb = soundNotifRb.getText().toString().trim();
+                    selectedSoundType = musicListSpinner.getItemAtPosition(0).toString();
+                    notifSpinner.setEnabled(true);
+                    musicRandomRb.setEnabled(false);
+                    musicSpecificRb.setEnabled(false);
+                    musicPlaybackRadioGroup.setEnabled(false);
+                    musicPlaybackRadioGroup.clearCheck();
                     musicListSpinner.setEnabled(false);
-                    selectedMusicType = RANDOM;
-
-                } else if (i == musicSpecificRb.getId()) {
-                    musicListSpinner.setEnabled(true);
-                    selectedMusicType = musicListSpinner.getSelectedItem().toString();
-                    musicListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                    soundMusicRb.setChecked(false);
+                    notifSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectedMusicType = musicListSpinner.getItemAtPosition(i).toString();
+                            selectedSoundType = notifSpinner.getItemAtPosition(i).toString();
                         }
 
                         @Override
@@ -257,13 +267,54 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
                         }
                     });
-                } else if (i == musicNoMusicRb.getId()) {
-                    musicListSpinner.setEnabled(false);
-                    selectedMusicType = NO_MUSIC;
                 }
-
             }
         });
+
+        soundMusicRb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    soundPlaybackRb = soundMusicRb.getText().toString().trim();
+
+                    notifSpinner.setEnabled(false);
+                    musicRandomRb.setEnabled(true);
+                    musicSpecificRb.setEnabled(true);
+                    musicPlaybackRadioGroup.setEnabled(false);
+                    musicListSpinner.setEnabled(false);
+                    soundNotifRb.setChecked(false);
+                }
+            }
+        });
+
+
+        musicPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                mReminderHasChanged = true;
+                if (i == musicRandomRb.getId()) {
+                    musicListSpinner.setEnabled(false);
+                    selectedSoundType = RANDOM;
+
+                } else if (i == musicSpecificRb.getId()) {
+                    selectedSoundType = musicListSpinner.getItemAtPosition(0).toString();
+                    musicListSpinner.setEnabled(true);
+                    selectedSoundType = musicListSpinner.getSelectedItem().toString();
+                    musicListSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectedSoundType = musicListSpinner.getItemAtPosition(i).toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+            }
+        });
+
 
         mantraPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -329,8 +380,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                 mReminderHasChanged = true;
 
                 //default value
-
-
                 if (i == chakraSpecificRb.getId()) {
 
                     chakraListSpinner.setEnabled(true);
@@ -351,55 +400,40 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
                 } else if (i == chakraRandomRb.getId()) {
                     chakraListSpinner.setEnabled(false);
-                    selectedChakraType = "random";
+                    selectedChakraType = RANDOM;
                 }
             }
         });
 
-        repeatRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == everyHourRb.getId()) {
-                    alarmInterval = AlarmManager.INTERVAL_HOUR;
-                } else if (i == everyDayRb.getId()) {
-                    alarmInterval = AlarmManager.INTERVAL_DAY;
-                } else if (i == everyWeekRb.getId()) {
-                    alarmInterval = AlarmManager.INTERVAL_DAY * 7;
-                }
-            }
-        });
 
     }
 
     private void adjustReminderLayout() {
         switch (meditationType) {
             case Reminder.TYPE_CHAKRA:
+
                 mantraLayout.setVisibility(View.GONE);
                 chakraLayout.setVisibility(View.VISIBLE);
                 mantraLayoutView.setVisibility(View.GONE);
-                musicNoMusicRb.setVisibility(View.VISIBLE);
                 break;
+
             case Reminder.TYPE_MANTRA:
                 mantraLayout.setVisibility(View.VISIBLE);
                 chakraLayout.setVisibility(View.GONE);
-                musicNoMusicRb.setVisibility(View.VISIBLE);
                 chakraLayoutView.setVisibility(View.GONE);
+                break;
 
-                break;
-            case Reminder.TYPE_MUSIC:
-                mantraLayout.setVisibility(View.GONE);
-                chakraLayout.setVisibility(View.GONE);
-                musicNoMusicRb.setVisibility(View.GONE);
-                chakraLayoutView.setVisibility(View.GONE);
-                mantraLayoutView.setVisibility(View.GONE);
-                break;
         }
     }
 
     private void prepareSpinners() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, songs);
+                android.R.layout.simple_spinner_dropdown_item, musicSongsList);
         musicListSpinner.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter9 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, notifSongsList);
+        notifSpinner.setAdapter(adapter9);
 
         adapter.getCount();
 
@@ -439,7 +473,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            NavUtils.navigateUpFromSameTask(AddReminderActivity.this);
+                            NavUtils.navigateUpFromSameTask(EditReminderActivity.this);
                         }
                     };
 
@@ -448,32 +482,40 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
     private void saveReminder() {
 
-        if (pickedHoursMins.isEmpty()) {
-            Toast.makeText(this, "Please pick a time!", Toast.LENGTH_SHORT).show();
+        if (startHour == -1) {
+            Toast.makeText(this, "Please pick a starting time!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (repeatRadioGroup.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Please select repeat type", Toast.LENGTH_SHORT).show();
+        if (endHour == -1) {
+            Toast.makeText(this, "Please pick an ending time!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (musicPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
+        if (startHour == endHour) {
+            Toast.makeText(this, "Invalid time period!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (soundMusicRb.isChecked()) {
+            if (!musicRandomRb.isChecked() && !musicSpecificRb.isChecked()) {
+                Toast.makeText(this, "Please select a sound playback type!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+
+        if (selectedSoundType.isEmpty()) {
             Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (selectedMusicType.isEmpty()) {
-            Toast.makeText(this, "Please select music playback type!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Add Mantra Day
         if (meditationType == Reminder.TYPE_MANTRA) {
             if (mantraPlaybackRadioGroup.getCheckedRadioButtonId() == -1) {
                 Toast.makeText(this, "Please select a Mantra type!", Toast.LENGTH_SHORT).show();
@@ -503,130 +545,158 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
             }
         }
 
-        // if in edit mode get requestCode from Realm
-        if (receivedId != null) {
-            requestCode = receivedReminder.getRequestCode();
-        } else {
-            requestCode = (int) System.currentTimeMillis();
-        }
-
         // if in edit mode, and no time is selected (previous time will be selected which will
         // cause the alarm to trigger immediately if selected time was in past)
-        if (receivedId != null) {
-            if (!isTimePickerClicked) {
-                isSelectedTimeInPast();
-            }
-        }
 
-        realm.beginTransaction();
+        ArrayList<Long> timeStamps = getAlarmTimestamps();
+        ArrayList<Integer> requestCodes = generateRequestCodes(timeStamps);
+
 
         if (isAlarmAlreadySet()) {
-
-            realm.commitTransaction();
+            Toast.makeText(this, R.string.another_reminder_stirng, Toast.LENGTH_SHORT).show();
             return;
         }
 
 
-        if (receivedId != null) {
-            // edit mode
-            // Add to Realm
-            Reminder toEditReminder = realm.where(Reminder.class).equalTo("id", receivedId).findFirst();
-            toEditReminder.setReminderType(meditationType);
-            toEditReminder.setMusicPlaybackType(selectedMusicType);
-            toEditReminder.setMantraPlaybackType(selectedMantraType);
-            toEditReminder.setChakraPlaybackTYpe(selectedChakraType);
-            toEditReminder.setPickedHours(pickedHours);
-            toEditReminder.setPickedMinutes(pickedMinutes);
-            toEditReminder.setAlarmTimestamp(pickedTimeStamp);
-            toEditReminder.setRepeatType(alarmInterval);
-            // preferences
-            toEditReminder.setMusicPlaybackRb(musicPlaybackRadioGroup.getCheckedRadioButtonId());
-            toEditReminder.setMusicPlaybackSpinner(musicListSpinner.getSelectedItemPosition());
-            toEditReminder.setMantraPlaybackRb(mantraPlaybackRadioGroup.getCheckedRadioButtonId());
-            toEditReminder.setMantraFirstSpinner(mantraFirstSpinner.getSelectedItemPosition());
-            toEditReminder.setMantraSecondSpinner(mantraSecondSpinner.getSelectedItemPosition());
-            toEditReminder.setChakraPlaybackRb(chakraPlaybackRadioGroup.getCheckedRadioButtonId());
-            toEditReminder.setChakraSpinner(chakraListSpinner.getSelectedItemPosition());
-            toEditReminder.setRepeatRb(repeatRadioGroup.getCheckedRadioButtonId());
-            realm.copyToRealmOrUpdate(toEditReminder);
+        if (receivedReminder != null) {
+            new AlarmScheduler().cancelAlarms(this, receivedReminder.getRequestCode(), receivedReminder.getReminderType());
+        }
 
-            setAlarm(toEditReminder.getId());
+        if (meditationType == Reminder.TYPE_CHAKRA) {
 
-        } else {
-            // add mode
-            // Add to Realm
-            Reminder reminder = new Reminder(
-                    meditationType,
-                    selectedMusicType,
+            Reminder chakraReminder = new Reminder(
+                    Reminder.TYPE_CHAKRA,
+                    selectedSoundType,
                     selectedMantraType,
                     selectedChakraType,
-                    pickedHours,
-                    pickedMinutes,
-                    pickedTimeStamp,
-                    alarmInterval,
-                    // preferences
-                    musicPlaybackRadioGroup.getCheckedRadioButtonId(),
+                    startHour,
+                    endHour,
+                    requestCodes,
+                    soundPlaybackRb,
                     musicListSpinner.getSelectedItemPosition(),
+                    notifSpinner.getSelectedItemPosition(),
                     mantraPlaybackRadioGroup.getCheckedRadioButtonId(),
                     mantraFirstSpinner.getSelectedItemPosition(),
                     mantraSecondSpinner.getSelectedItemPosition(),
                     chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
-                    chakraListSpinner.getSelectedItemPosition(),
-                    requestCode,
-                    repeatRadioGroup.getCheckedRadioButtonId()
+                    chakraListSpinner.getSelectedItemPosition()
             );
-            realm.copyToRealm(reminder);
 
-            setAlarm(reminder.getId());
+            saveToSharedPrefs(chakraReminder, CHAKRA_REMINDER_OBJECT);
+
+        } else if (meditationType == Reminder.TYPE_MANTRA) {
+            Reminder mantraReminder = new Reminder(
+                    Reminder.TYPE_MANTRA,
+                    selectedSoundType,
+                    selectedMantraType,
+                    selectedChakraType,
+                    startHour,
+                    endHour,
+                    requestCodes,
+                    soundPlaybackRb,
+                    musicListSpinner.getSelectedItemPosition(),
+                    notifSpinner.getSelectedItemPosition(),
+                    mantraPlaybackRadioGroup.getCheckedRadioButtonId(),
+                    mantraFirstSpinner.getSelectedItemPosition(),
+                    mantraSecondSpinner.getSelectedItemPosition(),
+                    chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
+                    chakraListSpinner.getSelectedItemPosition()
+            );
+
+            saveToSharedPrefs(mantraReminder, MANTRA_REMINDER_OBJECT);
         }
-        realm.commitTransaction();
+
+        setAlarm(meditationType, requestCodes, timeStamps);
+
+        Log.d("EditReminder", "saveReminder: request codes: " + requestCodes);
+        Log.d("EditReminder", "saveReminder: time stamps: " + timeStamps);
+        Log.d("EditReminder", "saveReminder: Reminder Type: " + meditationType);
+
 
         finish();
+    }
+
+    private ArrayList<Long> getAlarmTimestamps() {
+        ArrayList<Integer> hours = getTimePeriodHours(startHour, endHour);
+        ArrayList<Long> timeStamps = new ArrayList<>();
+        for (int i = 0; i < hours.size(); i++) {
+            timeStamps.add(setupCalendar(hours.get(i)));
+        }
+        return timeStamps;
+    }
+
+    private void saveToSharedPrefs(Reminder reminder, String objectKey) {
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(reminder);
+        sharedPrefsEditor.putString(objectKey, jsonObject);
+        sharedPrefsEditor.commit();
+    }
+
+    private Reminder getFromSharedPrefs(String objectKey) {
+        String jsonObject = sharedPrefs.getString(objectKey, "");
+        Gson gson = new Gson();
+        return gson.fromJson(jsonObject, Reminder.class);
     }
 
     private boolean isAlarmAlreadySet() {
         // check if such an alarm already exists
 
-        Reminder reminder = realm.where(Reminder.class)
-                .equalTo("pickedHours", pickedHours)
-                .equalTo("pickedMinutes", pickedMinutes)
-                .findFirst();
+        ArrayList<Integer> hours = getTimePeriodHours(startHour, endHour);
 
-        if (reminder == null) {
-            return false;
-        } else {
-
-            // make sure we're not comparing @pickedhours with the edited item from realm's time
-            if (receivedId != null) {
-                if (receivedReminder.getPickedHours() == pickedHours && receivedReminder.getPickedMinutes() == pickedMinutes) {
-                    return false;
+        if (receivedReminder != null) {
+            if (receivedReminder.getReminderType() == Reminder.TYPE_MANTRA) {
+                Reminder chakraReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+                ArrayList<Integer> chakraHours = getTimePeriodHours(chakraReminder.getPickedStartHours(), chakraReminder.getPickedEndHours());
+                if (checkSameHour(hours, chakraHours).size() > 0) {
+                    return true;
+                }
+            } else if (receivedReminder.getReminderType() == Reminder.TYPE_CHAKRA) {
+                Reminder mantraReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+                ArrayList<Integer> mantraHours = getTimePeriodHours(mantraReminder.getPickedStartHours(), mantraReminder.getPickedEndHours());
+                if (checkSameHour(hours, mantraHours).size() > 0) {
+                    return true;
                 }
             }
-
-            Toast.makeText(this, R.string.another_reminder_stirng, Toast.LENGTH_SHORT).show();
-            return true;
-        }
-    }
-
-    private void isSelectedTimeInPast() {
-        Calendar calNow = Calendar.getInstance();
-        Calendar calSet = (Calendar) calNow.clone();
-
-        calSet.set(Calendar.HOUR_OF_DAY, receivedReminder.getPickedHours());
-        calSet.set(Calendar.MINUTE, receivedReminder.getPickedMinutes());
-        calSet.set(Calendar.SECOND, 0);
-        calSet.set(Calendar.MILLISECOND, 0);
-
-        // if in past increment one day
-        if (calSet.compareTo(calNow) <= 0) {
-            calSet.add(Calendar.DATE, 1);
         }
 
-        pickedTimeStamp = calSet.getTimeInMillis();
+        return false;
     }
 
-    private void setAlarm(String id) {
-        new AlarmScheduler().setRepeatAlarm(getApplicationContext(), pickedTimeStamp, id, alarmInterval, requestCode);
+    private void setAlarm(int reminderType, ArrayList<Integer> requestCodes, ArrayList<Long> timeStamps) {
+
+        new AlarmScheduler().setRepeatAlarms(getApplicationContext(),
+                timeStamps, AlarmManager.INTERVAL_DAY, requestCodes, reminderType);
+    }
+
+    private ArrayList<Integer> generateRequestCodes(ArrayList<Long> timeStamps) {
+
+        ArrayList<Integer> requestCodes = new ArrayList<>();
+        for (int i = 0; i < timeStamps.size(); i++) {
+            int uniqueId = (int) System.currentTimeMillis();
+            requestCodes.add(uniqueId + i);
+        }
+        return requestCodes;
+    }
+
+    private ArrayList<Integer> getTimePeriodHours(int sHour, int eHour) {
+
+        ArrayList<Integer> hours = new ArrayList<>();
+
+        if (eHour > sHour) {
+            while (eHour >= sHour) {
+                hours.add(sHour);
+                sHour++;
+            }
+        } else if (sHour > eHour) {
+            while (sHour >= eHour) {
+                hours.add(eHour);
+                eHour++;
+            }
+        } else if (sHour == eHour) {
+            Toast.makeText(this, "please choose a valid time period!", Toast.LENGTH_SHORT).show();
+        }
+
+        return hours;
     }
 
     @Override
@@ -636,7 +706,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
         String sp1 = String.valueOf(mantraFirstSpinner.getSelectedItem());
         selectedChakraType = sp1;
-
 
         switch (sp1) {
             case "Crown":
@@ -687,50 +756,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
 
     }
 
-    @OnClick(R.id.pick_a_time_layout)
-    public void pickTimeBtn(View view) {
-        final Calendar mCalendar = Calendar.getInstance();
-        final int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
-        int minute = mCalendar.get(Calendar.MINUTE);
-
-        TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(AddReminderActivity.this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        isTimePickerClicked = true;
-
-                        String formattedTime = String.format("%02d:%02d", i, i1);
-                        timeTv.setText(formattedTime);
-                        pickedHoursMins = formattedTime;
-                        pickedHours = i;
-                        pickedMinutes = i1;
-
-                        Calendar calNow = Calendar.getInstance();
-                        Calendar calSet = (Calendar) calNow.clone();
-
-                        calSet.set(Calendar.HOUR_OF_DAY, i);
-                        calSet.set(Calendar.MINUTE, i1);
-                        calSet.set(Calendar.SECOND, 0);
-                        calSet.set(Calendar.MILLISECOND, 0);
-
-                        // make sure we're not in past (cause the alarm to trigger immediately)
-                        if (calSet.compareTo(calNow) <= 0) {
-                            calSet.add(Calendar.DATE, 1);
-                        }
-
-
-                        pickedTimeStamp = calSet.getTimeInMillis();
-                    }
-
-                }, hour, minute, true); // 24 hour time
-        mTimePicker.setTitle("Select a time");
-        mTimePicker.show();
-
-
-    }
-
-
     private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -765,6 +790,136 @@ public class AddReminderActivity extends AppCompatActivity implements OnItemSele
         super.onBackPressed();
     }
 
+    @OnClick(R.id.start_time_btn)
+    public void startTimeBtn(View view) {
+        setupStartHourDialog();
+    }
+
+
+    private long setupCalendar(int hour) {
+        Calendar calNow = Calendar.getInstance();
+        Calendar calSet = (Calendar) calNow.clone();
+
+        calSet.set(Calendar.HOUR_OF_DAY, hour);
+        calSet.set(Calendar.MINUTE, 0);
+        calSet.set(Calendar.SECOND, 0);
+        calSet.set(Calendar.MILLISECOND, 0);
+
+        // check if selected time isn't in past (which causes alarm to trigger immediately)
+        if (calSet.compareTo(calNow) <= 0) {
+            calSet.add(Calendar.DATE, 1);
+        }
+
+        return calSet.getTimeInMillis();
+    }
+
+    private void setupStartHourDialog() {
+        final Dialog d = new Dialog(this);
+        d.setTitle("Hour Picker");
+        d.setContentView(R.layout.hour_picker_custom_dialog);
+        Button b1 = (Button) d.findViewById(R.id.button1);
+        Button b2 = (Button) d.findViewById(R.id.button2);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        np.setMaxValue(23);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
+            }
+        });
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startHour = np.getValue();
+                startTimeBtn.setText(getHourWithZero(startHour));
+                d.dismiss();
+
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        d.show();
+    }
+
+    private void setupEndHourDialog() {
+        final Dialog d = new Dialog(this);
+        d.setTitle("Hour Picker");
+        d.setContentView(R.layout.hour_picker_custom_dialog);
+        Button b1 = (Button) d.findViewById(R.id.button1);
+        Button b2 = (Button) d.findViewById(R.id.button2);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        np.setMaxValue(23);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
+            }
+        });
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endHour = np.getValue();
+                endTimeBtn.setText(getHourWithZero(endHour));
+                d.dismiss();
+
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        d.show();
+    }
+
+    @OnClick(R.id.end_time_btn)
+    public void endTimeBtn(View view) {
+        setupEndHourDialog();
+    }
+
+    private String getHourWithZero(int hour) {
+        return String.format("%02d", hour);
+    }
+
+
+    public ArrayList<Integer> checkSameHour(ArrayList<Integer> list1, ArrayList<Integer> list2) {
+        int same = 0;
+        for (int i = 0; i <= list1.size() - 1; i++) {
+            for (int j = 0; j <= list2.size() - 1; j++) {
+                if (list1.get(i).equals(list2.get(j))) {
+                    same++;
+                    break;
+                }
+            }
+        }
+
+        ArrayList<Integer> array = new ArrayList<>();
+        int p = 0;
+        for (int i = 0; i <= list1.size() - 1; i++) {
+            for (int j = 0; j <= list2.size() - 1; j++) {
+                if (list1.get(i).equals(list2.get(j))) {
+                    array.add(list1.get(i));
+                    Log.d("TAGGGGGG", "array[p] => " + array.get(p));
+                    p++;
+                    break;
+                }
+            }
+        }
+        return array;
+    }
 
 }
 

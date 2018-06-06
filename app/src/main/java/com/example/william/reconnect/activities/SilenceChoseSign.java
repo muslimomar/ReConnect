@@ -48,11 +48,7 @@ public class SilenceChoseSign extends AppCompatActivity {
     Button btnCreateSign;
     @BindView(R.id.btn_silence_info)
     Button btnSilenceInfo;
-    Realm realm;
     String selectedMsg = "";
-    long selectedTimeStamp;
-    int selectedHours;
-    int selectedMins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +56,6 @@ public class SilenceChoseSign extends AppCompatActivity {
         setContentView(R.layout.activity_silence_chose_sign);
         ButterKnife.bind(this);
 
-        realm = Realm.getDefaultInstance();
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            selectedTimeStamp = bundle.getLong("timestamp", 0);
-            selectedHours = bundle.getInt("hours", 0);
-            selectedMins = bundle.getInt("mins", 0);
-        }
 
 
     }
@@ -140,8 +128,6 @@ public class SilenceChoseSign extends AppCompatActivity {
                 mainActivityRedirecter();
 
                 break;
-
-
         }
 
         saveSilenceDay(selectedMsg);
@@ -152,6 +138,10 @@ public class SilenceChoseSign extends AppCompatActivity {
                 silenceWhy(SilenceChoseSign.this, getString(R.string.whychoos));
             }
         });
+
+    }
+
+    private void mainActivityRedirecter() {
 
     }
 
@@ -208,10 +198,7 @@ public class SilenceChoseSign extends AppCompatActivity {
                 dialog.dismiss();
                 final String typedText = editCustomSign.getText().toString();
                 saveSilenceDay(typedText);
-                mainActivityRedirecter();
                 /* Sending typedText to PlayingSilenceActivity Activity */
-
-
             }
 
         });
@@ -251,39 +238,8 @@ public class SilenceChoseSign extends AppCompatActivity {
 
 
     public void saveSilenceDay(String selectedMsg) {
-        realm.beginTransaction();
-        Reminder reminder = realm.where(Reminder.class).equalTo("reminderType", Reminder.TYPE_SILENCE).findFirst();
-        if (reminder != null) {
-            // EDIT existing
-            reminder.setSilenceMessage(selectedMsg);
-            reminder.setPickedHours(selectedHours);
-            reminder.setPickedMinutes(selectedMins);
-            reminder.setAlarmTimestamp(selectedTimeStamp);
-
-            setAlarm(selectedTimeStamp, reminder.getId(), reminder.getRequestCode());
-
-        } else {
-            // New
-            int requestCode = (int) System.currentTimeMillis();
-            reminder = new Reminder(Reminder.TYPE_SILENCE, selectedMsg, selectedHours, selectedMins, selectedTimeStamp, requestCode);
-            setAlarm(selectedTimeStamp, reminder.getId(), requestCode);
-        }
-
-        realm.copyToRealmOrUpdate(reminder);
-        realm.commitTransaction();
     }
 
-    private void setAlarm(long selectedTimeStamp, String id, int requestCode) {
-        new AlarmScheduler().setAlarm(this, selectedTimeStamp, id, requestCode);
-
-    }
-
-    public void mainActivityRedirecter() {
-        Toast.makeText(this, "Silence day set!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(SilenceChoseSign.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
 
 }

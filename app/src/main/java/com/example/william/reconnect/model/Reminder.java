@@ -1,63 +1,54 @@
-
-
 package com.example.william.reconnect.model;
 
-import java.util.UUID;
-
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import java.util.ArrayList;
 
 /**
  * Created by william on 5/15/2018.
  */
 
-public class Reminder extends RealmObject {
+public class Reminder {
     public static final int TYPE_CHAKRA = 0;
     public static final int TYPE_MANTRA = 1;
-    public static final int TYPE_MUSIC = 2;
-    public static final int TYPE_SILENCE = 3;
 
-
-    @PrimaryKey
-    private String id;
     private int reminderType;
-    private String musicPlaybackType;
+    private String soundPlaybackType;
     private String mantraPlaybackType;
     private String chakraPlaybackTYpe;
-    private String silenceMessage;
-    private int pickedHours;
-    private int pickedMinutes;
-    private long alarmTimestamp;
-    private int requestCode;
-    private long repeatType;
-
+    private int pickedStartHours;
+    private int pickedEndHours;
+    private ArrayList<Integer> requestCode;
 
     // preferences
-    private int musicPlaybackRb;
+    private String soundPlaybackRb;
     private int musicPlaybackSpinner;
+    private int notifPlaybackSpinner;
+    //mantra
     private int mantraPlaybackRb;
     private int mantraFirstSpinner;
     private int mantraSecondSpinner;
+    //chakra
     private int chakraPlaybackRb;
     private int chakraSpinner;
-    private int repeatRb;
 
-    public Reminder() {
-    }
-    public String getSilenceMessage() {
-        return silenceMessage;
-    }
-
-    public void setSilenceMessage(String silenceMessage) {
-        this.silenceMessage = silenceMessage;
-    }
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public Reminder(int reminderType, String soundPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe,
+                    int pickedStartHours, int pickedEndHours, ArrayList<Integer> requestCode, String soundPlaybackRb,
+                    int musicPlaybackSpinner, int notifPlaybackSpinner, int mantraPlaybackRb, int mantraFirstSpinner,
+                    int mantraSecondSpinner, int chakraPlaybackRb, int chakraSpinner) {
+        this.reminderType = reminderType;
+        this.soundPlaybackType = soundPlaybackType;
+        this.mantraPlaybackType = mantraPlaybackType;
+        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
+        this.pickedStartHours = pickedStartHours;
+        this.pickedEndHours = pickedEndHours;
+        this.requestCode = requestCode;
+        this.soundPlaybackRb = soundPlaybackRb;
+        this.musicPlaybackSpinner = musicPlaybackSpinner;
+        this.notifPlaybackSpinner = notifPlaybackSpinner;
+        this.mantraPlaybackRb = mantraPlaybackRb;
+        this.mantraFirstSpinner = mantraFirstSpinner;
+        this.mantraSecondSpinner = mantraSecondSpinner;
+        this.chakraPlaybackRb = chakraPlaybackRb;
+        this.chakraSpinner = chakraSpinner;
     }
 
     public int getReminderType() {
@@ -68,20 +59,12 @@ public class Reminder extends RealmObject {
         this.reminderType = reminderType;
     }
 
-    public String getMusicPlaybackType() {
-        return musicPlaybackType;
+    public String getSoundPlaybackType() {
+        return soundPlaybackType;
     }
 
-    public void setMusicPlaybackType(String musicPlaybackType) {
-        this.musicPlaybackType = musicPlaybackType;
-    }
-
-    public int getRepeatRb() {
-        return repeatRb;
-    }
-
-    public void setRepeatRb(int repeatRb) {
-        this.repeatRb = repeatRb;
+    public void setSoundPlaybackType(String soundPlaybackType) {
+        this.soundPlaybackType = soundPlaybackType;
     }
 
     public String getMantraPlaybackType() {
@@ -100,28 +83,36 @@ public class Reminder extends RealmObject {
         this.chakraPlaybackTYpe = chakraPlaybackTYpe;
     }
 
-    public int getPickedHours() {
-        return pickedHours;
+    public int getPickedStartHours() {
+        return pickedStartHours;
     }
 
-    public void setPickedHours(int pickedHours) {
-        this.pickedHours = pickedHours;
+    public void setPickedStartHours(int pickedStartHours) {
+        this.pickedStartHours = pickedStartHours;
     }
 
-    public int getPickedMinutes() {
-        return pickedMinutes;
+    public int getPickedEndHours() {
+        return pickedEndHours;
     }
 
-    public void setPickedMinutes(int pickedMinutes) {
-        this.pickedMinutes = pickedMinutes;
+    public void setPickedEndHours(int pickedEndHours) {
+        this.pickedEndHours = pickedEndHours;
     }
 
-    public int getMusicPlaybackRb() {
-        return musicPlaybackRb;
+    public ArrayList<Integer> getRequestCode() {
+        return requestCode;
     }
 
-    public void setMusicPlaybackRb(int musicPlaybackRb) {
-        this.musicPlaybackRb = musicPlaybackRb;
+    public void setRequestCode(ArrayList<Integer> requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public String getSoundPlaybackRb() {
+        return soundPlaybackRb;
+    }
+
+    public void setSoundPlaybackRb(String soundPlaybackRb) {
+        this.soundPlaybackRb = soundPlaybackRb;
     }
 
     public int getMusicPlaybackSpinner() {
@@ -130,6 +121,14 @@ public class Reminder extends RealmObject {
 
     public void setMusicPlaybackSpinner(int musicPlaybackSpinner) {
         this.musicPlaybackSpinner = musicPlaybackSpinner;
+    }
+
+    public int getNotifPlaybackSpinner() {
+        return notifPlaybackSpinner;
+    }
+
+    public void setNotifPlaybackSpinner(int notifPlaybackSpinner) {
+        this.notifPlaybackSpinner = notifPlaybackSpinner;
     }
 
     public int getMantraPlaybackRb() {
@@ -171,68 +170,7 @@ public class Reminder extends RealmObject {
     public void setChakraSpinner(int chakraSpinner) {
         this.chakraSpinner = chakraSpinner;
     }
-
-    public long getAlarmTimestamp() {
-        return alarmTimestamp;
-    }
-
-    public void setAlarmTimestamp(long alarmTimestamp) {
-        this.alarmTimestamp = alarmTimestamp;
-    }
-
-
-    public int getRequestCode() {
-        return requestCode;
-    }
-
-    public void setRequestCode(int requestCode) {
-        this.requestCode = requestCode;
-    }
-
-    public long getRepeatType() {
-        return repeatType;
-    }
-
-    public void setRepeatType(long repeatType) {
-        this.repeatType = repeatType;
-    }
-
-    public Reminder( int reminderType, String silenceMessage, int pickedHours, int pickedMinutes, long alarmTimestamp, int requestCode) {
-        this.id = UUID.randomUUID().toString();
-        this.reminderType = reminderType;
-        this.silenceMessage = silenceMessage;
-        this.pickedHours = pickedHours;
-        this.pickedMinutes = pickedMinutes;
-        this.alarmTimestamp = alarmTimestamp;
-        this.requestCode = requestCode;
-    }
-
-    public Reminder(int reminderType, String musicPlaybackType, String mantraPlaybackType, String chakraPlaybackTYpe,
-                    int pickedHours, int pickedMinutes, long alarmTimestamp, long repeatType , int musicPlaybackRb,
-                    int musicPlaybackSpinner, int mantraPlaybackRb,
-                    int mantraFirstSpinner, int mantraSecondSpinner, int chakraPlaybackRb, int chakraSpinner
-                    , int requestCode, int repeatRb) {
-        this.id = UUID.randomUUID().toString();
-        this.reminderType = reminderType;
-        this.musicPlaybackType = musicPlaybackType;
-        this.mantraPlaybackType = mantraPlaybackType;
-        this.chakraPlaybackTYpe = chakraPlaybackTYpe;
-        this.pickedHours = pickedHours;
-        this.pickedMinutes = pickedMinutes;
-        this.alarmTimestamp = alarmTimestamp;
-        this.repeatRb = repeatRb;
-        this.musicPlaybackRb = musicPlaybackRb;
-        this.musicPlaybackSpinner = musicPlaybackSpinner;
-        this.mantraPlaybackRb = mantraPlaybackRb;
-        this.mantraFirstSpinner = mantraFirstSpinner;
-        this.mantraSecondSpinner = mantraSecondSpinner;
-        this.chakraPlaybackRb = chakraPlaybackRb;
-        this.chakraSpinner = chakraSpinner;
-        this.requestCode = requestCode;
-        this.repeatType = repeatType;
-    }
-
-
 }
+
 
 

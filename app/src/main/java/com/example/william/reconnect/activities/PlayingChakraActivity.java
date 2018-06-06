@@ -160,7 +160,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
                 player.start();
                 break;
-            case "Random":
+            case RANDOM:
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
         }

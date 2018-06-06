@@ -4,7 +4,9 @@ import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -15,13 +17,18 @@ import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
 import com.example.william.reconnect.activities.PlayingSilenceActivity;
 import com.example.william.reconnect.model.Reminder;
+import com.google.gson.Gson;
 
 import io.realm.Realm;
 
 import static com.example.william.reconnect.util.Extras.CHAKRA;
+import static com.example.william.reconnect.util.Extras.CHAKRA_REMINDER_OBJECT;
 import static com.example.william.reconnect.util.Extras.EXTRA_ID;
 import static com.example.william.reconnect.util.Extras.MANTRA;
+import static com.example.william.reconnect.util.Extras.MANTRA_REMINDER_OBJECT;
 import static com.example.william.reconnect.util.Extras.MUSIC;
+import static com.example.william.reconnect.util.Extras.PREFS_NAME;
+import static com.example.william.reconnect.util.Extras.REMINDER_TYPE;
 import static com.example.william.reconnect.util.Extras.SILENCE;
 
 
@@ -44,24 +51,18 @@ public class ReminderAlarmService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        String id = intent.getExtras().getString(EXTRA_ID);
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        reminder = realm.where(Reminder.class).equalTo(EXTRA_ID, id).findFirst();
-        realm.commitTransaction();
+        int reminderTypeExtra = intent.getExtras().getInt(REMINDER_TYPE);
+        reminder = getFromSharedPrefs(reminderTypeExtra);
 
         //Display a notification to view the task details
         Intent action = setReminderIntent();
-        action.putExtra(EXTRA_ID, id);
 
         PendingIntent operation = TaskStackBuilder.create(this)
                 .addNextIntentWithParentStack(action)
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (reminder != null) {
             getReminderType(reminder);
-        }
+
 
         String reminderDescription = "You have a " + reminderType + " meditation session";
 
@@ -86,6 +87,8 @@ public class ReminderAlarmService extends IntentService {
 
         manager.notify(NOTIFICATION_ID, note.build());
 
+//        startActivity(action);
+
     }
 
     private Intent setReminderIntent() {
@@ -93,24 +96,14 @@ public class ReminderAlarmService extends IntentService {
         // intent to Chakra Activity
         if (reminder.getReminderType() == Reminder.TYPE_CHAKRA) {
             intent = new Intent(this, PlayingChakraActivity.class);
-            intent.putExtra("music_type", reminder.getMusicPlaybackType());
+            intent.putExtra("music_type", reminder.getSoundPlaybackType());
             intent.putExtra("chakra_type", reminder.getChakraPlaybackTYpe());
         }
         // intent to Mantra Activity
         if (reminder.getReminderType() == Reminder.TYPE_MANTRA) {
             intent = new Intent(this, MantraPlayingActivity.class);
             intent.putExtra("mantra_type", reminder.getMantraPlaybackType());
-            intent.putExtra("music_type", reminder.getMusicPlaybackType());
-        }
-        // intent to Music Activity
-        if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
-            intent = new Intent(this, PlayingMusicActivity.class);
-            intent.putExtra("music_type", reminder.getMusicPlaybackType());
-        }
-        // intent to Silence Activity
-        if (reminder.getReminderType() == Reminder.TYPE_SILENCE) {
-            intent = new Intent(this, PlayingSilenceActivity.class);
-            intent.putExtra("sign", reminder.getSilenceMessage());
+            intent.putExtra("music_type", reminder.getSoundPlaybackType());
         }
 
         return intent;
@@ -129,16 +122,20 @@ public class ReminderAlarmService extends IntentService {
                 reminderType = MANTRA;
                 chakraIcon = R.drawable.ic_mantra_notification;
                 break;
-            case Reminder.TYPE_MUSIC:
-                reminderType = MUSIC;
-                chakraIcon = R.drawable.ic_music_notification;
-                break;
-            case Reminder.TYPE_SILENCE:
-                reminderType = SILENCE;
-                chakraIcon = R.drawable.ic_mute;
-                break;
         }
     }
 
+    private Reminder getFromSharedPrefs(int objectKey) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String jsonObject = null;
+        if(objectKey == Reminder.TYPE_CHAKRA) {
+             jsonObject = sharedPreferences.getString(CHAKRA_REMINDER_OBJECT, "");
+        }else if (objectKey == Reminder.TYPE_MANTRA) {
+             jsonObject = sharedPreferences.getString(MANTRA_REMINDER_OBJECT, "");
+        }
+
+        Gson gson = new Gson();
+        return gson.fromJson(jsonObject, Reminder.class);
+    }
 
 }

@@ -2,9 +2,8 @@ package com.example.william.reconnect.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,19 +13,28 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.fragments.Balance;
 import com.example.william.reconnect.fragments.Home;
 import com.example.william.reconnect.fragments.Instructions;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.util.Extras;
+import com.google.gson.Gson;
+
+import static com.example.william.reconnect.util.Extras.CHAKRA_REMINDER_OBJECT;
+import static com.example.william.reconnect.util.Extras.MANTRA_REMINDER_OBJECT;
+import static com.example.william.reconnect.util.Extras.NOTIFICATION_RB;
+import static com.example.william.reconnect.util.Extras.PREFS_NAME;
+import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+
+    private static final String TAG = MainActivity.class.getSimpleName();
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
@@ -51,10 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         // start drawer when first starts
 //        mDrawerLayout.openDrawer(Gravity.LEFT);
-        pref = MainActivity.this.getSharedPreferences("MyPref", 0); // 0 - for private mode
-        editor = pref.edit();
 
     }
+
 
 
     public void selectItemDrawer(MenuItem item) {

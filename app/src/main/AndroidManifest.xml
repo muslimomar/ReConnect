@@ -41,14 +41,14 @@
         </activity>
         <activity
             android:name=".activities.MeditationsActivity"
-            android:theme="@style/BlackActionBar">
+         >
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.AddReminderActivity"
+            android:name=".activities.EditReminderActivity"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

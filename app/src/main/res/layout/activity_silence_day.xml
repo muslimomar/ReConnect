@@ -47,65 +47,6 @@
         android:textSize="17sp"
         android:textStyle="normal" />
 
-    <LinearLayout
-        android:id="@+id/date_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/what_silence"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/day_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="PICK A DATE"
-            android:layout_marginLeft="50dp"
-            />
-
-        <TextView
-            android:id="@+id/picked_date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/day_picker"
-            android:text="10/10/2018"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/time_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_below="@id/date_layout"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/silence_pick_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/date_layout"
-            android:text="Pick a Time"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/picked_time_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/day_picker"
-            android:text="00:00"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/more_info"
@@ -113,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/silence_day_txt"
         android:layout_alignStart="@+id/silence_day_txt"
-        android:layout_below="@+id/time_layout"
+        android:layout_below="@+id/what_silence"
         android:layout_marginTop="28dp"
         android:letterSpacing="0.01"
         android:lineSpacingExtra="-6sp"
@@ -151,5 +92,7 @@
         android:background="@drawable/btn_rect"
         android:text="next"
         android:textColor="#fff" />
+
+
 
 </RelativeLayout>

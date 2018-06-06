@@ -103,16 +103,15 @@ public class PlayingSilenceActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                if(!isTimerStarted) {
+                if (!isTimerStarted) {
                     btnStopSilence.setEnabled(true);
                     startTime2 = System.currentTimeMillis();
                     timer.start();
                     Toast.makeText(PlayingSilenceActivity.this, "Silence Day Started!", Toast.LENGTH_SHORT).show();
                     isTimerStarted = true;
-                }else{
+                } else {
                     Toast.makeText(PlayingSilenceActivity.this, "Silence Day is already running!", Toast.LENGTH_SHORT).show();
                 }
-
 
             }
         });

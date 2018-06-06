@@ -1,8 +1,10 @@
 package com.example.william.reconnect.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
@@ -28,6 +30,7 @@ import android.widget.RelativeLayout;
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
+import com.google.gson.Gson;
 
 import java.util.Random;
 import java.util.UUID;
@@ -37,8 +40,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
+import static com.example.william.reconnect.util.Extras.PREFS_NAME;
+
 public class PlayingMusicActivity extends AppCompatActivity {
 
+    public static final String TAG = PlayingMusicActivity.class.getSimpleName();
     MediaPlayer player;
     @BindView(R.id.back_arrow_btn)
     ImageView backArrowBtn;
@@ -52,13 +58,11 @@ public class PlayingMusicActivity extends AppCompatActivity {
     int ONE_MIN_MS = 60000;
     Handler handler;
     Runnable r;
-    private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
     Realm realm;
     long musicTimeSpent;
     long startTime;
     long endTime;
-    public static final String TAG = PlayingMusicActivity.class.getSimpleName();
-
+    private int[] rawRef = {R.raw.jason_shaw_acoustuc_meditation, R.raw.kevin_macleod_bathed_in_the_light, R.raw.kevin_macleod_dream_culture, R.raw.kevin_macleod_enchanted_journey, R.raw.kevin_macleod_meditation_impromptu, R.raw.kevin_macleod_smoother_move, R.raw.kevin_macleod_sovereign_quarter, R.raw.kevin_macleod_windswept, R.raw.lee_rosevere_betrayal, R.raw.lee_rosevere_everywhere, R.raw.lee_rosevere_not_my_problem, R.raw.ryan_andersen_day_to_night, R.raw.lee_rosevere_well_figure_it_out_together};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,19 +138,21 @@ public class PlayingMusicActivity extends AppCompatActivity {
             player.start();
             break;
 */
-
         }
 
-        Reminder reminder = realm.where(Reminder.class).findFirst();
+
+//        Reminder reminder = realm.where(Reminder.class).findFirst();
+
+/*
         if (reminder != null) {
             // Get the Music Playback Type.
-            String musicType = reminder.getMusicPlaybackType();
+            String musicType = reminder.getSoundPlaybackType();
             if (musicType.equals("Random")) {
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
             }
         }
-
+*/
         initializeImages();
         rotateChakra();
         handler = new Handler();
@@ -279,7 +285,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       showExitDialog();
+        showExitDialog();
     }
 
     public void showExitDialog() {

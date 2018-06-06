@@ -47,8 +47,6 @@ public class Balance extends Fragment {
     SilenceModel person;
     @BindView(R.id.good_job)
     LinearLayout goodJob;
-    @BindView(R.id.laugh_tv)
-    ImageView laughTv;
     @BindView(R.id.good_job_rv)
     RelativeLayout goodJobRv;
     @BindView(R.id.compliment_card_view)

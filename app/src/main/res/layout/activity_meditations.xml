@@ -1,104 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context="com.example.william.reconnect.activities.MeditationsActivity">
 
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="#2e2e2e"
-        android:layout_alignParentTop="true"
-
-        />
-
-        <ListView
-            android:id="@+id/list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
-            />
-
-
     <RelativeLayout
-        android:id="@+id/empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
-        <TextView
-            android:id="@+id/no_reminder_text"
+        <android.support.v7.widget.CardView
+            android:id="@+id/mantra_reminder_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="16dp"
-            android:lineSpacingExtra="3dp"
-            android:text="Click on the button below to create a meditation session!"
-            android:gravity="center"
-            />
-    </RelativeLayout>
-
-    <com.github.clans.fab.FloatingActionMenu
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            app:menu_colorNormal="#da4336"
-            app:menu_colorPressed="#da4336"
-            app:menu_colorRipple="@color/white"
-            android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
             >
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/chakra_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#da4336"
-                app:fab_colorPressed="#da4336"
-                app:fab_colorRipple="@color/white"
-                app:fab_size="mini"
-                android:src="@drawable/ic_chakra_large_24dp"
-                app:fab_label="Chakra"
-
+            <Button
+                android:id="@+id/setup_mantra_prefs_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/transparent"
+                android:lineSpacingExtra="8dp"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="Setup Your\nMantra Preferences"
+                android:textColor="@android:color/tab_indicator_text"
+                android:textSize="18sp"
+                android:visibility="visible"
                 />
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/mantra_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#da4336"
-                app:fab_colorPressed="#da4336"
-                app:fab_colorRipple="@color/white"
-                app:fab_size="mini"
-                android:src="@drawable/ic_mantra_large_24dp"
-                app:fab_label="Mantra"
+            <RelativeLayout
+                android:id="@+id/mantra_card_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:visibility="gone"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/mantra_top_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/mantra_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:drawableRight="@drawable/ic_music_18dp"
+                        android:text="Mantra"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/mantra_time_period_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/mantra_title_tv"
+                        android:layout_marginTop="8dp"
+                        android:text="12 - 20"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/mantra_text_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/mantra_time_period_tv"
+                        android:layout_marginTop="8dp"
+                        android:layout_toLeftOf="@id/mantra_icon_iv"
+                        android:textSize="16sp"
+                        tools:text="lorem ipsum dolor iset amet brend ist brend" />
+
+
+                    <ImageView
+                        android:id="@+id/mantra_icon_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="16dp"
+                        android:paddingLeft="5dp"
+                        android:src="@drawable/ic_mantra_63dp" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/divider_mantra"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/mantra_top_layout"
+                    android:layout_marginTop="16dp"
+                    android:alpha="0.1"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider_mantra"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <Button
+                        android:id="@+id/mantra_edit_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider_mantra"
+                        android:background="@android:color/transparent"
+                        android:elevation="0dp"
+                        android:text="EDIT" />
+
+                    <Button
+                        android:id="@+id/mantra_preview_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider_mantra"
+                        android:layout_toRightOf="@id/mantra_edit_btn"
+                        android:background="@android:color/transparent"
+                        android:text="PREVIEW" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/chakra_reminder_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mantra_reminder_card_view"
+            android:layout_marginTop="16dp"
+            >
+
+            <Button
+                android:id="@+id/setup_chakra_prefs_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/transparent"
+                android:lineSpacingExtra="8dp"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="Setup Your\nChakra Preferences"
+                android:textColor="@android:color/tab_indicator_text"
+                android:textSize="18sp"
                 />
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/music_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#da4336"
-                app:fab_colorPressed="#da4336"
-                app:fab_colorRipple="@color/white"
-                app:fab_size="mini"
-                android:src="@drawable/ic_music_large_24dp"
-                app:fab_label="Music Only"
-                />
+            <RelativeLayout
+                android:id="@+id/chakra_card_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:visibility="gone"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/chakra_top_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/chakra_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:drawableRight="@drawable/ic_music_18dp"
+                        android:text="Chakra"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/chakra_time_period_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/chakra_title_tv"
+                        android:layout_marginTop="8dp"
+                        android:text="12 - 20"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/chakra_text_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/chakra_time_period_tv"
+                        android:layout_marginTop="8dp"
+                        android:layout_toLeftOf="@id/chakra_icon_iv"
+                        android:textSize="16sp"
+                        tools:text="I have intimate connections with others" />
 
 
-        </com.github.clans.fab.FloatingActionMenu>
+                    <ImageView
+                        android:id="@+id/chakra_icon_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="16dp"
+                        android:src="@drawable/ic_chakra_63dp" />
 
 
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/divider_chakra"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/chakra_top_layout"
+                    android:layout_marginTop="16dp"
+                    android:alpha="0.1"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider_chakra"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <Button
+                        android:id="@+id/chakra_edit_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider_chakra"
+                        android:background="@android:color/transparent"
+                        android:elevation="0dp"
+
+                        android:text="EDIT" />
+
+                    <Button
+                        android:id="@+id/chakra_preview_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider_chakra"
+                        android:layout_toRightOf="@id/chakra_edit_btn"
+                        android:background="@android:color/transparent"
+                        android:elevation="0dp"
+                        android:text="PREVIEW" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

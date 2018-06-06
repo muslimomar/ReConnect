@@ -1,68 +1,125 @@
 package com.example.william.reconnect.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.william.reconnect.R;
-import com.example.william.reconnect.adapter.ReminderAdapter;
 import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.util.Extras;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
-import static com.example.william.reconnect.util.Extras.EXTRA_ID;
+import static com.example.william.reconnect.util.Extras.MUSIC_RB;
+import static com.example.william.reconnect.util.Extras.PREFS_NAME;
 
 public class MeditationsActivity extends AppCompatActivity {
 
     public static String TAG = MeditationsActivity.class.getSimpleName();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    ReminderAdapter mAdapter;
-    @BindView(R.id.list_view)
-    ListView listView;
-    @BindView(R.id.empty_view)
-    RelativeLayout emptyView;
-    @BindView(R.id.no_reminder_text)
-    TextView noReminderText;
+    @BindView(R.id.mantra_title_tv)
+    TextView mantraTitleTv;
+    @BindView(R.id.mantra_time_period_tv)
+    TextView mantraTimePeriodTv;
+    @BindView(R.id.mantra_text_tv)
+    TextView mantraTextTv;
+    @BindView(R.id.mantra_top_layout)
+    RelativeLayout mantraTopLayout;
+    @BindView(R.id.divider_mantra)
+    View dividerMantra;
+    @BindView(R.id.mantra_edit_btn)
+    Button mantraEditBtn;
+    @BindView(R.id.mantra_preview_btn)
+    Button mantraPreviewBtn;
+    @BindView(R.id.mantra_reminder_card_view)
+    CardView mantraReminderCardView;
+    @BindView(R.id.chakra_title_tv)
+    TextView chakraTitleTv;
+    @BindView(R.id.chakra_time_period_tv)
+    TextView chakraTimePeriodTv;
+    @BindView(R.id.chakra_text_tv)
+    TextView chakraTextTv;
+    @BindView(R.id.chakra_top_layout)
+    RelativeLayout chakraTopLayout;
+    @BindView(R.id.divider_chakra)
+    View dividerChakra;
+    @BindView(R.id.chakra_edit_btn)
+    Button chakraEditBtn;
+    @BindView(R.id.chakra_preview_btn)
+    Button chakraPreviewBtn;
+    @BindView(R.id.chakra_reminder_card_view)
+    CardView chakraReminderCardView;
+    @BindView(R.id.chakra_card_view_layout)
+    RelativeLayout chakraCdLayout;
+    @BindView(R.id.mantra_card_view_layout)
+    RelativeLayout mantraCdLayout;
+    @BindView(R.id.setup_chakra_prefs_btn)
+    Button setupChakraButton;
+    @BindView(R.id.setup_mantra_prefs_btn)
+    Button setupMantraButton;
+    private SharedPreferences sharedPrefs;
+    private Reminder mantraReminder;
+    private Reminder chakraReminder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditations);
         ButterKnife.bind(this);
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/gotham_medium.ttf");
-        noReminderText.setTypeface(custom_font);
 
         configureActionbar();
 
-        mAdapter = new ReminderAdapter(this);
-        listView.setAdapter(mAdapter);
-        listView.setEmptyView(emptyView);
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MeditationsActivity.this, AddReminderActivity.class);
-                String id = mAdapter.getItem(i).getId();
-                intent.putExtra(EXTRA_ID, id);
-                startActivity(intent);
+    private void setupViewsWithReminders() {
+        if (mantraReminder != null) {
+            if (mantraReminder.getSoundPlaybackRb().equalsIgnoreCase(MUSIC_RB)) {
+                mantraTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_music_18dp, 0);
+            } else {
+                mantraTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_notif_18dp, 0);
             }
-        });
+            mantraTimePeriodTv.setText(getHourWithZero(mantraReminder.getPickedStartHours()) + " - " + getHourWithZero(mantraReminder.getPickedEndHours()));
+            mantraTextTv.setText(mantraReminder.getMantraPlaybackType());
 
+        }
+
+        if (chakraReminder != null) {
+            if (chakraReminder.getSoundPlaybackRb().equalsIgnoreCase(MUSIC_RB)) {
+                chakraTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_music_18dp, 0);
+            } else {
+                chakraTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_notif_18dp, 0);
+            }
+            chakraTimePeriodTv.setText(getHourWithZero(chakraReminder.getPickedStartHours()) + " - " + getHourWithZero(chakraReminder.getPickedEndHours()));
+            chakraTextTv.setText(chakraReminder.getChakraPlaybackTYpe());
+
+        }
+
+
+    }
+
+    private String getHourWithZero(int hour) {
+        return String.format("%02d", hour);
+    }
+
+    private void getRemindersFromSharedPrefs() {
+        sharedPrefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String chakraObj = sharedPrefs.getString(Extras.CHAKRA_REMINDER_OBJECT, "");
+        String mantraObj = sharedPrefs.getString(Extras.MANTRA_REMINDER_OBJECT, "");
+        if (chakraObj != null && mantraObj != null) {
+            Gson gson = new Gson();
+            chakraReminder = gson.fromJson(chakraObj, Reminder.class);
+            mantraReminder = gson.fromJson(mantraObj, Reminder.class);
+        }
     }
 
     private void configureActionbar() {
@@ -70,44 +127,45 @@ public class MeditationsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
-            actionBar.setDisplayShowTitleEnabled(false);
         }
-        toolbar.setTitle("My Meditations");
-        toolbar.setTitleTextColor(Color.WHITE);
+        setTitle("Meditations");
 
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    @OnClick(R.id.mantra_edit_btn)
+    public void setMantraEditBtn(View view) {
+        goToAddReminder(Reminder.TYPE_MANTRA);
     }
 
-    @OnClick(R.id.chakra_fab)
-    public void chakraFab(View view) {
-        Intent intent = new Intent(this, AddReminderActivity.class);
-        intent.putExtra("meditationType", Reminder.TYPE_CHAKRA);
+    @OnClick(R.id.chakra_edit_btn)
+    public void setChakraEditBtn(View view) {
+        goToAddReminder(Reminder.TYPE_CHAKRA);
+    }
+
+    @OnClick(R.id.mantra_preview_btn)
+    public void setMantraPreviewBtn(View view) {
+        goToMantraPlaying();
+    }
+
+    @OnClick(R.id.chakra_preview_btn)
+    public void setChakraPreviewBtn(View view) {
+        goToChakraPlaying();
+    }
+
+    private void goToChakraPlaying() {
+        Intent intent = new Intent(this, PlayingChakraActivity.class);
         startActivity(intent);
     }
 
-    @OnClick(R.id.mantra_fab)
-    public void mantraFab(View view) {
-        Intent intent = new Intent(this, AddReminderActivity.class);
-        intent.putExtra("meditationType", Reminder.TYPE_MANTRA);
-        startActivity(intent);
 
+    private void goToMantraPlaying() {
+        Intent intent = new Intent(this, MantraPlayingActivity.class);
+        startActivity(intent);
     }
 
-    @OnClick(R.id.music_fab)
-    public void musicFab(View view) {
-        Intent intent = new Intent(this, AddReminderActivity.class);
-        intent.putExtra("meditationType", Reminder.TYPE_MUSIC);
+    private void goToAddReminder(int type) {
+        Intent intent = new Intent(this, EditReminderActivity.class);
+        intent.putExtra("meditationType", type);
         startActivity(intent);
     }
 
@@ -115,10 +173,39 @@ public class MeditationsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getRemindersFromSharedPrefs();
+        displayProperLayout();
 
-        Realm realm = Realm.getDefaultInstance();
-        mAdapter.updateReminders(realm.where(Reminder.class).notEqualTo("reminderType",  Reminder.TYPE_SILENCE).findAll());
+        setupViewsWithReminders();
 
+    }
+
+    private void displayProperLayout() {
+        if (chakraReminder == null) {
+            setupChakraButton.setVisibility(View.VISIBLE);
+            chakraCdLayout.setVisibility(View.GONE);
+        } else if (chakraReminder != null) {
+            setupChakraButton.setVisibility(View.GONE);
+            chakraCdLayout.setVisibility(View.VISIBLE);
+        }
+
+        if (mantraReminder == null) {
+            setupMantraButton.setVisibility(View.VISIBLE);
+            mantraCdLayout.setVisibility(View.GONE);
+        } else if (mantraReminder != null) {
+            setupMantraButton.setVisibility(View.GONE);
+            mantraCdLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick(R.id.setup_mantra_prefs_btn)
+    public void setSetupMantraButton(View view) {
+        goToAddReminder(Reminder.TYPE_MANTRA);
+    }
+
+    @OnClick(R.id.setup_chakra_prefs_btn)
+    public void setSetupChakraButton(View view) {
+        goToAddReminder(Reminder.TYPE_CHAKRA);
     }
 
 }
