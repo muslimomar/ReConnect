@@ -18,7 +18,6 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.model.Chakra;
-import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.model.SilenceModel;
 
 import java.util.ArrayList;
@@ -101,8 +99,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         if (bundle != null) {
             chakraType = bundle.getString("chakra_type");
             musicType = bundle.getString("music_type");
-            Log.d(TAG, "onCreate: " + chakraType);
-            Log.d(TAG, "onCreate: " + musicType);
         }
 
         Random random = new Random();
@@ -164,8 +160,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
         }
-
-
 
 
         initializeImages();
@@ -474,7 +468,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
             player.stop();
             player.release();
             player = null;
-
         }
     }
 }

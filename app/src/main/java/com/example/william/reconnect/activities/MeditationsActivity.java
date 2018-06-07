@@ -154,12 +154,19 @@ public class MeditationsActivity extends AppCompatActivity {
 
     private void goToChakraPlaying() {
         Intent intent = new Intent(this, PlayingChakraActivity.class);
+        if (chakraReminder != null) {
+            intent.putExtra("music_type", chakraReminder.getSoundPlaybackType());
+            intent.putExtra("chakra_type", chakraReminder.getChakraPlaybackTYpe());
+        }
         startActivity(intent);
     }
 
-
     private void goToMantraPlaying() {
         Intent intent = new Intent(this, MantraPlayingActivity.class);
+        if (mantraReminder != null) {
+            intent.putExtra("mantra_type", mantraReminder.getMantraPlaybackType());
+            intent.putExtra("music_type", mantraReminder.getSoundPlaybackType());
+        }
         startActivity(intent);
     }
 

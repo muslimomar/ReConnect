@@ -84,7 +84,6 @@ public class ReminderAlarmService extends IntentService {
             note.setChannelId("channel_01");
         }
 
-
         manager.notify(NOTIFICATION_ID, note.build());
 
 //        startActivity(action);
@@ -107,7 +106,6 @@ public class ReminderAlarmService extends IntentService {
         }
 
         return intent;
-
     }
 
 
