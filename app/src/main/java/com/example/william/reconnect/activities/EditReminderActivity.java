@@ -169,8 +169,8 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
 
     private void setupViewWithData() {
 
-        startTimeBtn.setText(String.valueOf(receivedReminder.getPickedStartHours()));
-        endTimeBtn.setText(String.valueOf(receivedReminder.getPickedEndHours()));
+        startTimeBtn.setText(getHourWithZero(receivedReminder.getPickedStartHours()));
+        endTimeBtn.setText(getHourWithZero(receivedReminder.getPickedEndHours()));
 
         String soundPlaybackRb = receivedReminder.getSoundPlaybackRb();
         int chakraPlaybackRb = receivedReminder.getChakraPlaybackRb();
@@ -553,7 +553,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
 
 
         if (isAlarmAlreadySet()) {
-            Toast.makeText(this, R.string.another_reminder_stirng, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -640,23 +639,35 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
 
     private boolean isAlarmAlreadySet() {
         // check if such an alarm already exists
-
         ArrayList<Integer> hours = getTimePeriodHours(startHour, endHour);
 
-        if (receivedReminder != null) {
-            if (receivedReminder.getReminderType() == Reminder.TYPE_MANTRA) {
-                Reminder chakraReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+        Reminder chakraReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+        Reminder mantraReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+        // if both alarms are set then we can compare the time periods.
+        if (
+                (mantraReminder != null && meditationType == Reminder.TYPE_CHAKRA) ||
+                        (chakraReminder != null && meditationType == Reminder.TYPE_MANTRA)
+                ) {
+
+            if (meditationType == Reminder.TYPE_MANTRA) {
                 ArrayList<Integer> chakraHours = getTimePeriodHours(chakraReminder.getPickedStartHours(), chakraReminder.getPickedEndHours());
                 if (checkSameHour(hours, chakraHours).size() > 0) {
+                    String start_end_hours_chakra = getHourWithZero(chakraReminder.getPickedStartHours()) + " - " + getHourWithZero(chakraReminder.getPickedEndHours());
+                    Toast.makeText(this, "Another reminder with the same time period exists! " + start_end_hours_chakra, Toast.LENGTH_SHORT).show();
                     return true;
                 }
-            } else if (receivedReminder.getReminderType() == Reminder.TYPE_CHAKRA) {
-                Reminder mantraReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+
+            } else if (meditationType == Reminder.TYPE_CHAKRA) {
                 ArrayList<Integer> mantraHours = getTimePeriodHours(mantraReminder.getPickedStartHours(), mantraReminder.getPickedEndHours());
                 if (checkSameHour(hours, mantraHours).size() > 0) {
+                    String start_end_hours_mantra = getHourWithZero(mantraReminder.getPickedStartHours()) + " - " + getHourWithZero(mantraReminder.getPickedEndHours());
+                    Toast.makeText(this, "Another reminder with the same time period exists! " + start_end_hours_mantra, Toast.LENGTH_SHORT).show();
                     return true;
                 }
+
+
             }
+
         }
 
         return false;

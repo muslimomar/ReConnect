@@ -88,7 +88,7 @@ public class MeditationsActivity extends AppCompatActivity {
             } else {
                 mantraTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_notif_18dp, 0);
             }
-            mantraTimePeriodTv.setText(getHourWithZero(mantraReminder.getPickedStartHours()) + " - " + getHourWithZero(mantraReminder.getPickedEndHours()));
+            mantraTimePeriodTv.setText(getHourWithZero(mantraReminder.getPickedStartHours()) + " - " + getHourWithZero(mantraReminder.getPickedEndHours()) + " H");
             mantraTextTv.setText(mantraReminder.getMantraPlaybackType());
 
         }
@@ -99,7 +99,7 @@ public class MeditationsActivity extends AppCompatActivity {
             } else {
                 chakraTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_notif_18dp, 0);
             }
-            chakraTimePeriodTv.setText(getHourWithZero(chakraReminder.getPickedStartHours()) + " - " + getHourWithZero(chakraReminder.getPickedEndHours()));
+            chakraTimePeriodTv.setText(getHourWithZero(chakraReminder.getPickedStartHours()) + " - " + getHourWithZero(chakraReminder.getPickedEndHours()) + " H");
             chakraTextTv.setText(chakraReminder.getChakraPlaybackTYpe());
 
         }
