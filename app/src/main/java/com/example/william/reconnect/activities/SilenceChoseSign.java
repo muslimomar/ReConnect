@@ -142,7 +142,9 @@ public class SilenceChoseSign extends AppCompatActivity {
     }
 
     private void mainActivityRedirecter() {
-
+        Intent intent = new Intent(SilenceChoseSign.this, PlayingSilenceActivity.class);
+        intent.putExtra("sign",selectedMsg);
+        startActivity(intent);
     }
 
 
