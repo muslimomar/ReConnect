@@ -6,7 +6,6 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -79,7 +78,6 @@ public class Balance extends Fragment {
     @BindView(R.id.root_usage_tv)
     TextView rootUsageTv;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,8 +100,6 @@ public class Balance extends Fragment {
         getSolarTimeSpent();
         getSacralTimeSpent();
         getRootTimeSpent();
-
-
         return view;
     }
 
@@ -125,49 +121,37 @@ public class Balance extends Fragment {
         if (person != null) {
             // Get the timespent on Silence Day.
             Long data = person.getSilenceTimeSpent();
-
             // Convert from seconds to time format
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
             silenceSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
-
         }
     }
-
 
     // Get Silence Music Spent Fully working 27-05-2018
     public void getMusicTimeData() {
         if (person != null) {
             // Get the timespent on Silence Day.
             Long data = person.getMusicTimeSpent();
-
-
             // Convert from seconds to time format
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
             musicTxt.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
-
-
         }
     }
-
 
     // Get Mantra TimeSpent Fully working 27-05-2018
     public void getMantraTimeSpent() {
         if (person != null) {
             // Get the timespent on Silence Day.
             long data = person.getMantraTimeSpent();
-
             // Convert from seconds to time format
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
-
-            mantraSpentIv.setText(hours + " Hours " + minutes + " Min " + seconds + " Sec");
-
-
+            mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
     }
 
@@ -187,17 +171,14 @@ public class Balance extends Fragment {
             long seconds = fullTimeSpent % 60;
             chakraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
-
     }
 
-
     public void getCrownTimeSpent() {
-        Long data = person.getCrownChakraTimeSpent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
+            Long data = person.getCrownChakraTimeSpent();
             if (person.getCrownChakraTimeSpent() != 0) {
-                 /* Calculate element percentage */
+                /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
@@ -209,20 +190,16 @@ public class Balance extends Fragment {
                 crownUsageTv.setText(format.format(finalRWt) + "%");
                 crownUsagePb.setMax(100);
                 crownUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
+
             } else
                 crownUsageTv.setText("0%");
-
-
         }
-
     }
 
     public void getThirdEyeTimeSpent() {
-        Long data = person.getThirdEyeChakraTimeSpent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
-
+            Long data = person.getThirdEyeChakraTimeSpent();
             if (person.getThirdEyeChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
@@ -239,17 +216,13 @@ public class Balance extends Fragment {
 
             } else
                 thirdEyeUsageTv.setText("0%");
-
         }
-
-
     }
 
     public void getThroatTimeSpent() {
-        Long data = person.getThroatChakraTimeSpent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
+            Long data = person.getThroatChakraTimeSpent();
             if (person.getThroatChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
@@ -266,17 +239,12 @@ public class Balance extends Fragment {
             } else throatUsageTv.setText("0%");
 
         }
-
-
     }
 
-
     public void getHeartTimeSpent() {
-        Long data = person.getHeartChakraTimeSpent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
-
+            Long data = person.getHeartChakraTimeSpent();
             if (person.getHeartChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
@@ -292,18 +260,13 @@ public class Balance extends Fragment {
                 heartUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
             } else heartUsageTv.setText("0%");
-
         }
-
-
     }
 
-
     public void getSolarTimeSpent() {
-        Long data = person.getSolarPlexusChakraTimeSpent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
+            Long data = person.getSolarPlexusChakraTimeSpent();
             if (person.getSolarPlexusChakraTimeSpent() != 0) {
                  /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
@@ -319,23 +282,17 @@ public class Balance extends Fragment {
                 solarPlexusUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
                 solarPlexusUsageTv.setText("0%");
-
-
         }
-
-
     }
 
     public void getSacralTimeSpent() {
-        Long data = person.getSacralChakraTimespent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
+            Long data = person.getSacralChakraTimespent();
             if (person.getSacralChakraTimespent() != 0) {
                    /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
-
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
                 // Convert from seconds to time format
                 long hours = data / 3600;
@@ -346,18 +303,13 @@ public class Balance extends Fragment {
                 sacralUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
                 sacralUsageTv.setText("0%");
-
         }
-
-
     }
 
     public void getRootTimeSpent() {
-        long data = person.getRootChakraTimeSpent();
         if (person != null) {
             // Get the timespent on crown Chakra Day.
-
-
+            long data = person.getRootChakraTimeSpent();
             if (person.getRootChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
@@ -376,11 +328,9 @@ public class Balance extends Fragment {
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         realm.close();
     }
-
 }

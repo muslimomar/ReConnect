@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -159,6 +160,27 @@ public class PlayingChakraActivity extends AppCompatActivity {
             case RANDOM:
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
+                break;
+            case "Bell Tree":
+                player = MediaPlayer.create(this, R.raw.bell_tree);
+                player.start();
+                break;
+            case "Chinese Flute #1":
+                player = MediaPlayer.create(this, R.raw.flute_1);
+                player.start();
+                break;
+            case "Chinese Flute #2":
+                player = MediaPlayer.create(this, R.raw.chinese_flute);
+                player.start();
+                break;
+            case "Harp Sound Effects":
+                player = MediaPlayer.create(this, R.raw.harp_sound_effects);
+                player.start();
+                break;
+            case "Mermaid Singing 2":
+                player = MediaPlayer.create(this, R.raw.mermaid_singing);
+                player.start();
+                break;
         }
 
 
@@ -418,7 +440,9 @@ public class PlayingChakraActivity extends AppCompatActivity {
                     silenceModel.setRootChakraTimeSpent(chakraTimeSpent);
 
             }
-            realm.copyToRealm(silenceModel);
+            if (silenceModel != null) {
+                realm.copyToRealm(silenceModel);
+            }
 
         }
         realm.commitTransaction();
@@ -444,7 +468,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
                         if (player != null) {
                             player.stop();
                             player.release();
-                            player = null;
                         }
                         writeToDB();
                         Intent intent = new Intent(PlayingChakraActivity.this, MeditationsActivity.class);
@@ -464,10 +487,16 @@ public class PlayingChakraActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (player != null) {
-            player.stop();
-            player.release();
-            player = null;
+        try {
+            if (player != null && player.isPlaying()) {
+                Log.d("TAG------->", "player is running");
+                player.stop();
+                Log.d("Tag------->", "player is stopped");
+                player.release();
+                Log.d("TAG------->", "player is released");
+            }
+        } catch (Exception e) {
+            Log.v("aa", "ff" + e.getMessage());
         }
     }
 }

@@ -2,8 +2,6 @@ package com.example.william.reconnect.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,22 +12,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioButton;
 
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.fragments.Balance;
+import com.example.william.reconnect.fragments.Credits;
 import com.example.william.reconnect.fragments.Home;
 import com.example.william.reconnect.fragments.Instructions;
-import com.example.william.reconnect.model.Reminder;
-import com.example.william.reconnect.util.Extras;
-import com.google.gson.Gson;
-
-import static com.example.william.reconnect.util.Extras.CHAKRA_REMINDER_OBJECT;
-import static com.example.william.reconnect.util.Extras.MANTRA_REMINDER_OBJECT;
-import static com.example.william.reconnect.util.Extras.NOTIFICATION_RB;
-import static com.example.william.reconnect.util.Extras.PREFS_NAME;
-import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void selectItemDrawer(MenuItem item) {
         Fragment myFragment = null;
         Class fragmentClass = null;
@@ -77,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.instructions:
                 fragmentClass = Instructions.class;
+                break;
+            case R.id.credits:
+                fragmentClass = Credits.class;
                 break;
         }
 
