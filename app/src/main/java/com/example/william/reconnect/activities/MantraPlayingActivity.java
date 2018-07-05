@@ -49,6 +49,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
     long endTime;
     long mantraTimeSpent;
     String musicType;
+    String notificationType;
     MediaPlayer player;
     Realm realm;
     String mantraType;
@@ -95,26 +96,22 @@ public class MantraPlayingActivity extends AppCompatActivity {
             if (mantraType.equals("Random")) {
                 mantraMsg.startAnimation(anim);
                 mantraMsg.setText(index);
-            } else
+            } else {
                 mantraMsg.setAnimation(anim);
-            mantraMsg.setText(mantraType);
-
+                mantraMsg.setText(mantraType);
+            }
         }
-
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             musicType = bundle.getString("music_type");
-            mantraType = bundle.getString("mantra_type");
-            Log.d(TAG, "onCreate: " + musicType);
-            Log.d(TAG, "onCreate: " + mantraType);
-
+            Log.d(TAG, "onCreate music type: " + musicType);
+            Log.d(TAG, "onCreate mantra type:  " + mantraType);
         }
-
         switch (musicType) {
             case "Jason Shaw Acoustuc Meditation":
                 player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
                 player.start();
+                break;
             case "Kevin MacLeod - Sovereign Quarter":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
                 player.start();
@@ -166,11 +163,28 @@ public class MantraPlayingActivity extends AppCompatActivity {
             case "Random":
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
-
-
+                break;
+            case "Bell Tree":
+                player = MediaPlayer.create(this, R.raw.bell_tree);
+                player.start();
+                break;
+            case "Chinese Flute #1":
+                player = MediaPlayer.create(this, R.raw.flute_1);
+                player.start();
+                break;
+            case "Chinese Flute #2":
+                player = MediaPlayer.create(this, R.raw.chinese_flute);
+                player.start();
+                break;
+            case "Harp Sound Effects":
+                player = MediaPlayer.create(this, R.raw.harp_sound_effects);
+                player.start();
+                break;
+            case "Mermaid Singing 2":
+                player = MediaPlayer.create(this, R.raw.mermaid_singing);
+                player.start();
+                break;
         }
-
-
         initializeImages();
 
         handler = new Handler();

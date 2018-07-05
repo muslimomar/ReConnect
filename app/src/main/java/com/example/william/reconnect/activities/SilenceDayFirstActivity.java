@@ -76,9 +76,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.silence_guidelines_dialog);
-
         TextView instructionsTxt = dialog.findViewById(R.id.second_textView);
-
         instructionsTxt.setText(Html.fromHtml(
                 "<br/><b>Silence/Non-talking Day</b>\n" +
                 "Talking burns energy and takes us away from ourselves, whilst being silent collects energy and is a step towards quietening the mind. \n" +
@@ -96,10 +94,7 @@ public class SilenceDayFirstActivity extends AppCompatActivity {
                 "•\tShines a light on one’s inner world\n" +
                 "\n" +
                 "\n"));
-
         instructionsTxt.setTextIsSelectable(true);
         dialog.show();
-
     }
-
 }

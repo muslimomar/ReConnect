@@ -3,18 +3,20 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
         android:icon="@drawable/ic_home"
-        />
+        android:title="Home" />
     <item
         android:id="@+id/summary"
-        android:title="Summary"
         android:icon="@drawable/ic_chart"
-        />
+        android:title="Summary" />
     <item
         android:id="@+id/instructions"
-        android:title="Instructions"
         android:icon="@drawable/ic_info"
-        />
+        android:title="Instructions" />
+
+    <item
+        android:id="@+id/credits"
+        android:icon="@drawable/copyright"
+        android:title="Sounds Credits" />
 
 </menu>

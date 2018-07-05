@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:letterSpacing="0.01"
         android:lineSpacingExtra="-39.3sp"
         android:text="Silence Day"
         android:textColor="#ff1816"
@@ -56,7 +55,6 @@
         android:layout_alignStart="@+id/silence_day_txt"
         android:layout_below="@+id/what_silence"
         android:layout_marginTop="28dp"
-        android:letterSpacing="0.01"
         android:lineSpacingExtra="-6sp"
         android:text="More Info?"
         android:textColor="#040404"
@@ -71,13 +69,11 @@
         android:layout_alignBottom="@+id/more_info"
         android:layout_below="@id/more_info"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="2dp"
         android:layout_toEndOf="@+id/more_info"
         android:layout_toRightOf="@+id/more_info"
-        android:clickable="true"
-        android:lineSpacingExtra="-6sp"
         android:text="See guidelines"
-        android:textColor="#547ff9"
+        android:padding="3dp"
+        android:textColor="#2a00ff"
         android:textSize="14sp" />
 
     <Button
