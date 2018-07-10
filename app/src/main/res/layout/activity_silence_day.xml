@@ -65,16 +65,16 @@
         android:id="@+id/see_guidelines"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/more_info"
-        android:layout_alignBottom="@+id/more_info"
-        android:layout_below="@id/more_info"
-        android:layout_centerInParent="true"
-        android:layout_toEndOf="@+id/more_info"
-        android:layout_toRightOf="@+id/more_info"
         android:text="See guidelines"
         android:padding="3dp"
         android:textColor="#2a00ff"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_toEndOf="@+id/more_info"
+        android:layout_toRightOf="@+id/more_info"
+        android:layout_centerInParent="true"
+        android:layout_alignBaseline="@+id/more_info"
+
+        />
 
     <Button
         android:id="@+id/pick_day_btn"
