@@ -50,7 +50,7 @@
         android:paddingLeft="10dp"
         android:paddingStart="10dp"
         android:paddingTop="30dp"
-        android:src="@drawable/re_connect_logo"
+        android:src="@drawable/new_logo"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:visibility="visible" />

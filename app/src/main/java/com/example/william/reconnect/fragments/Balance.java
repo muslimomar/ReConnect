@@ -23,25 +23,19 @@ import io.realm.Realm;
 
 
 public class Balance extends Fragment {
-    @BindView(R.id.chakra_time_spent_iv)
-    TextView chakraTimeSpentIv;
     @BindView(R.id.silence_time_spent_iv)
     TextView silenceTimeSpentIv;
     Unbinder unbinder;
     @BindView(R.id.silence_spent_iv)
     TextView silenceSpentIv;
     Realm realm;
-    @BindView(R.id.music_time_spent_iv)
-    TextView musicTimeSpentIv;
-    @BindView(R.id.music_spent_iv)
-    TextView musicTxt;
-    @BindView(R.id.mantra_time_spent_iv)
-    TextView mantraTimeSpentIv;
-    @BindView(R.id.mantra_spent_iv)
+    @BindView(R.id.total_meditate_time_tv)
+    TextView totalMeditationTime;
+    @BindView(R.id.total_time_values)
+    TextView totalTimeValues;
     TextView mantraSpentIv;
     @BindView(R.id.crown_usage_tv)
     TextView crownUsageTv;
-    @BindView(R.id.chakra_spent_iv)
     TextView chakraSpentIv;
     SilenceModel person;
     @BindView(R.id.good_job)
@@ -50,7 +44,6 @@ public class Balance extends Fragment {
     RelativeLayout goodJobRv;
     @BindView(R.id.compliment_card_view)
     CardView complimentCardView;
-    long fullTimeSpent;
     @BindView(R.id.crown_usage_pb)
     ProgressBar crownUsagePb;
     @BindView(R.id.third_eye_usage_pb)
@@ -77,6 +70,10 @@ public class Balance extends Fragment {
     TextView sacralUsageTv;
     @BindView(R.id.root_usage_tv)
     TextView rootUsageTv;
+    private long fullChakraTimeSpent;
+    private long mantraFullTimeSpent;
+    private long fullMusicTimeSpent;
+    private long allTimeSpent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,7 +97,19 @@ public class Balance extends Fragment {
         getSolarTimeSpent();
         getSacralTimeSpent();
         getRootTimeSpent();
+        allTimeSpent();
         return view;
+    }
+
+    private void allTimeSpent() {
+
+        if (person != null) {
+            allTimeSpent = fullChakraTimeSpent + fullMusicTimeSpent + mantraFullTimeSpent;
+            long hours = allTimeSpent / 3600;
+            long minutes = (allTimeSpent % 3600) / 60;
+            long seconds = allTimeSpent % 60;
+            totalTimeValues.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+        }
     }
 
     @Override
@@ -138,7 +147,8 @@ public class Balance extends Fragment {
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
-            musicTxt.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+            fullMusicTimeSpent = hours + minutes + seconds;
+            //musicTxt.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
     }
 
@@ -151,7 +161,9 @@ public class Balance extends Fragment {
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
-            mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+
+            mantraFullTimeSpent = hours + minutes + seconds;
+            //mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
     }
 
@@ -164,12 +176,12 @@ public class Balance extends Fragment {
             long solarPlexusTimeSpent = person.getSolarPlexusChakraTimeSpent();
             long sacralTimeSpent = person.getSacralChakraTimespent();
             long rootTimeSpent = person.getRootChakraTimeSpent();
-            fullTimeSpent = crownTimeSpent + thirdEyeTimeSpent + throatTimeSpent + heartTimeSpent + solarPlexusTimeSpent + sacralTimeSpent + rootTimeSpent;
+            fullChakraTimeSpent = crownTimeSpent + thirdEyeTimeSpent + throatTimeSpent + heartTimeSpent + solarPlexusTimeSpent + sacralTimeSpent + rootTimeSpent;
 
-            long hours = fullTimeSpent / 3600;
-            long minutes = (fullTimeSpent % 3600) / 60;
-            long seconds = fullTimeSpent % 60;
-            chakraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+            long hours = fullChakraTimeSpent / 3600;
+            long minutes = (fullChakraTimeSpent % 3600) / 60;
+            long seconds = fullChakraTimeSpent % 60;
+            //chakraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
     }
 
@@ -179,7 +191,7 @@ public class Balance extends Fragment {
             Long data = person.getCrownChakraTimeSpent();
             if (person.getCrownChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
@@ -202,7 +214,7 @@ public class Balance extends Fragment {
             Long data = person.getThirdEyeChakraTimeSpent();
             if (person.getThirdEyeChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
@@ -225,7 +237,7 @@ public class Balance extends Fragment {
             Long data = person.getThroatChakraTimeSpent();
             if (person.getThroatChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
@@ -247,7 +259,7 @@ public class Balance extends Fragment {
             Long data = person.getHeartChakraTimeSpent();
             if (person.getHeartChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
@@ -268,8 +280,8 @@ public class Balance extends Fragment {
             // Get the timespent on crown Chakra Day.
             Long data = person.getSolarPlexusChakraTimeSpent();
             if (person.getSolarPlexusChakraTimeSpent() != 0) {
-                 /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                /* Calculate element percentage */
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
@@ -290,8 +302,8 @@ public class Balance extends Fragment {
             // Get the timespent on crown Chakra Day.
             Long data = person.getSacralChakraTimespent();
             if (person.getSacralChakraTimespent() != 0) {
-                   /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                /* Calculate element percentage */
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
                 // Convert from seconds to time format
@@ -312,7 +324,7 @@ public class Balance extends Fragment {
             long data = person.getRootChakraTimeSpent();
             if (person.getRootChakraTimeSpent() != 0) {
                 /* Calculate element percentage */
-                double finalRWt = ((1.0f * data / fullTimeSpent) * 100);
+                double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
 
                 //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();

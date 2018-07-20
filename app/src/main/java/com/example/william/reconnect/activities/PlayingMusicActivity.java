@@ -180,7 +180,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
 
     private void initializeImages() {
-        playingIcon.setImageResource(R.drawable.re_connect_logo);
+        playingIcon.setImageResource(R.drawable.new_logo);
         backgroundGradient(relativeLayout);
 
     }

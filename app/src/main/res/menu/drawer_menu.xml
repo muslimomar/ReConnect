@@ -8,16 +8,16 @@
     <item
         android:id="@+id/summary"
         android:icon="@drawable/ic_chart"
-        android:title="Summary" />
+        android:title="Balance" />
     <item
         android:id="@+id/instructions"
         android:icon="@drawable/ic_info"
-        android:title="Instructions" />
+        android:title="Guidelines" />
 
     <item
         android:id="@+id/credits"
         android:icon="@drawable/copyright"
-        android:title="Sounds Credits" />
+        android:title="Sound Credits" />
 
     <item
         android:id="@+id/clear_prefs"
