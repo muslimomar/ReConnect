@@ -74,7 +74,7 @@ public class PlayingSilenceActivity extends AppCompatActivity {
             Toast.makeText(PlayingSilenceActivity.this, "Silence Day Finished!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(PlayingSilenceActivity.this, MainActivity.class);
             startActivity(intent);
-            showTimeSpentDialog(PlayingSilenceActivity.this, "hello");
+            showTimeSpentDialog(PlayingSilenceActivity.this, "Time Spent");
         }
 
     };
@@ -91,7 +91,7 @@ public class PlayingSilenceActivity extends AppCompatActivity {
         /* Getting silenceSignText value from Custom Sign Dialog */
 
         Intent intent = getIntent();
-        String text = intent.getExtras().getString("sign", "sendSign");
+        String text = intent.getExtras().getString("sign", "selectedMsg");
 
         /* Check the particular sent value and setText according to it */
         if (intent.hasExtra("sign")) {

@@ -89,7 +89,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
     String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
-    String[] notifSongsList = new String[]{"1", "2", "3"};
+    String[] notifSongsList = new String[]{"Bell Tree", "Chinese Flute #1", "Chinese Flute #2","Harp Sounds","Mermaid Singing 2"};
     //
     @BindView(R.id.music_random_rb)
     RadioButton musicRandomRb;
@@ -207,8 +207,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         } else {
             customMantraEt.setText(receivedReminder.getMantraPlaybackType());
         }
-
-
     }
 
     private void setMeditationType(Intent intent) {
@@ -254,7 +252,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     soundPlaybackRb = soundNotifRb.getText().toString().trim();
-                    selectedSoundType = musicListSpinner.getItemAtPosition(0).toString();
                     notifSpinner.setEnabled(true);
                     musicRandomRb.setEnabled(false);
                     musicSpecificRb.setEnabled(false);
@@ -262,6 +259,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                     musicPlaybackRadioGroup.clearCheck();
                     musicListSpinner.setEnabled(false);
                     soundMusicRb.setChecked(false);
+                    selectedSoundType = notifSpinner.getItemAtPosition(0).toString();
                     notifSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -635,7 +633,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         Log.d("EditReminder", "saveReminder: request codes: " + requestCodes);
         Log.d("EditReminder", "saveReminder: time stamps: " + timeStamps);
         Log.d("EditReminder", "saveReminder: Reminder Type: " + meditationType);
-
+        Log.d("DAMN selectedSoundType", selectedSoundType);
 
         finish();
     }
