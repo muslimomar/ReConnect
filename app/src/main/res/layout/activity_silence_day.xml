@@ -37,13 +37,13 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/gotham_medium"
         android:gravity="center_horizontal"
         android:letterSpacing="0.01"
         android:lineSpacingExtra="5sp"
         android:text="@string/silence_day_info"
         android:textColor="#de000000"
-        android:textSize="17sp"
+        android:textSize="30sp"
         android:textStyle="normal" />
 
 
