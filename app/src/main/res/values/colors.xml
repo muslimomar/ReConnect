@@ -20,5 +20,9 @@
     <color name="root">#ba0000</color>
 
     <color name="light_solar_plexus">#e2e217</color>
+    <color name="green">#4caf50</color>
+    <color name="blue">#2196f3</color>
+    <color name="purple">#9c27b0</color>
+    <color name="meditation_color">#ffffff</color>
 
 </resources>

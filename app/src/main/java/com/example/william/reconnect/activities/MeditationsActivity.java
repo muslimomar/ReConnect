@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -67,10 +68,32 @@ public class MeditationsActivity extends AppCompatActivity {
     Button setupChakraButton;
     @BindView(R.id.setup_mantra_prefs_btn)
     Button setupMantraButton;
+    @BindView(R.id.setup_sound_prefs_btn)
+    Button setupSoundPrefsBtn;
+    @BindView(R.id.music_title_tv)
+    TextView musicTitleTv;
+    @BindView(R.id.music_time_period_tv)
+    TextView musicTimePeriodTv;
+    @BindView(R.id.music_text_tv)
+    TextView musicTextTv;
+    @BindView(R.id.music_icon_iv)
+    ImageView musicIconIv;
+    @BindView(R.id.sound_top_layout)
+    RelativeLayout soundTopLayout;
+    @BindView(R.id.divider_music)
+    View dividerMusic;
+    @BindView(R.id.music_edit_btn)
+    Button musicEditBtn;
+    @BindView(R.id.music_preview_btn)
+    Button musicPreviewBtn;
+    @BindView(R.id.sound_card_view_layout)
+    RelativeLayout soundCardViewLayout;
+    @BindView(R.id.music_reminder_card_view)
+    CardView musicReminderCardView;
     private SharedPreferences sharedPrefs;
     private Reminder mantraReminder;
     private Reminder chakraReminder;
-
+    private Reminder musicReminder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +124,16 @@ public class MeditationsActivity extends AppCompatActivity {
             }
             chakraTimePeriodTv.setText(getHourWithZero(chakraReminder.getPickedStartHours()) + " - " + getHourWithZero(chakraReminder.getPickedEndHours()) + " H");
             chakraTextTv.setText(chakraReminder.getChakraPlaybackTYpe());
+        }
 
+        if (musicReminder != null) {
+            if (musicReminder.getSoundPlaybackRb().equalsIgnoreCase(MUSIC_RB)) {
+                musicTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_music_18dp, 0);
+            } else {
+                musicTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_notif_18dp, 0);
+            }
+            musicTimePeriodTv.setText(getHourWithZero(musicReminder.getPickedStartHours()) + " - " + getHourWithZero(musicReminder.getPickedEndHours()) + " H");
+            musicTextTv.setText(musicReminder.getChakraPlaybackTYpe());
         }
 
 
@@ -115,11 +147,11 @@ public class MeditationsActivity extends AppCompatActivity {
         sharedPrefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String chakraObj = sharedPrefs.getString(Extras.CHAKRA_REMINDER_OBJECT, "");
         String mantraObj = sharedPrefs.getString(Extras.MANTRA_REMINDER_OBJECT, "");
-        if (chakraObj != null && mantraObj != null) {
+        String musicObj = sharedPrefs.getString(Extras.MUSIC_REMINDER_OBJECT, "");
             Gson gson = new Gson();
             chakraReminder = gson.fromJson(chakraObj, Reminder.class);
             mantraReminder = gson.fromJson(mantraObj, Reminder.class);
-        }
+            musicReminder = gson.fromJson(musicObj, Reminder.class);
     }
 
     private void configureActionbar() {
@@ -142,6 +174,10 @@ public class MeditationsActivity extends AppCompatActivity {
         goToAddReminder(Reminder.TYPE_CHAKRA);
     }
 
+    @OnClick(R.id.music_edit_btn) public void setMusicEditBtn(View view) {
+        goToAddReminder(Reminder.TYPE_MUSIC);
+    }
+
     @OnClick(R.id.mantra_preview_btn)
     public void setMantraPreviewBtn(View view) {
         goToMantraPlaying();
@@ -150,6 +186,11 @@ public class MeditationsActivity extends AppCompatActivity {
     @OnClick(R.id.chakra_preview_btn)
     public void setChakraPreviewBtn(View view) {
         goToChakraPlaying();
+    }
+
+  @OnClick(R.id.music_preview_btn)
+    public void setMusicPreviewBtn(View view) {
+        goToMusicPlaying();
     }
 
     private void goToChakraPlaying() {
@@ -170,6 +211,14 @@ public class MeditationsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void goToMusicPlaying() {
+        Intent intent = new Intent(this, PlayingMusicActivity.class);
+        if (mantraReminder != null) {
+            intent.putExtra("music_type", mantraReminder.getSoundPlaybackType());
+        }
+        startActivity(intent);
+    }
+
     private void goToAddReminder(int type) {
         Intent intent = new Intent(this, EditReminderActivity.class);
         intent.putExtra("meditationType", type);
@@ -184,7 +233,6 @@ public class MeditationsActivity extends AppCompatActivity {
         displayProperLayout();
 
         setupViewsWithReminders();
-
     }
 
     private void displayProperLayout() {
@@ -203,6 +251,17 @@ public class MeditationsActivity extends AppCompatActivity {
             setupMantraButton.setVisibility(View.GONE);
             mantraCdLayout.setVisibility(View.VISIBLE);
         }
+
+
+        //TODO
+        if (mantraReminder == null) {
+            setupSoundPrefsBtn.setVisibility(View.VISIBLE);
+            soundCardViewLayout.setVisibility(View.GONE);
+        } else if (mantraReminder != null) {
+            setupSoundPrefsBtn.setVisibility(View.GONE);
+            soundCardViewLayout.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @OnClick(R.id.setup_mantra_prefs_btn)

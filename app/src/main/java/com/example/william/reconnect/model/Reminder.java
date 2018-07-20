@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Reminder {
     public static final int TYPE_CHAKRA = 0;
     public static final int TYPE_MANTRA = 1;
+    public static final int TYPE_MUSIC = 2;
 
     private int reminderType;
     private String soundPlaybackType;

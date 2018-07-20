@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     tools:context="com.example.william.reconnect.activities.MeditationsActivity">
@@ -11,29 +12,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:paddingRight="12dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        >
 
         <android.support.v7.widget.CardView
             android:id="@+id/mantra_reminder_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/green"
             >
 
             <Button
                 android:id="@+id/setup_mantra_prefs_btn"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
                 android:lineSpacingExtra="8dp"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"
-                android:text="Setup Your\nMantra Preferences"
-                android:textColor="@android:color/tab_indicator_text"
+                android:text="Setup Mantra Preferences"
+                android:textColor="@color/white"
                 android:textSize="18sp"
-                android:visibility="visible"
+                tools:visibility="visible"
                 />
 
             <RelativeLayout
@@ -60,6 +68,8 @@
                         android:drawablePadding="16dp"
                         android:drawableRight="@drawable/ic_music_18dp"
                         android:text="Mantra"
+                        android:textColor="@color/meditation_color"
+
                         android:textSize="24sp" />
 
                     <TextView
@@ -69,6 +79,7 @@
                         android:layout_below="@id/mantra_title_tv"
                         android:layout_marginTop="8dp"
                         android:text="12 - 20"
+                        android:textColor="@color/meditation_color"
                         android:textSize="16sp" />
 
                     <TextView
@@ -80,6 +91,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_toLeftOf="@id/mantra_icon_iv"
                         android:textSize="16sp"
+                        android:textColor="@color/meditation_color"
                         tools:text="lorem ipsum dolor iset amet brend ist brend" />
 
 
@@ -91,7 +103,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="16dp"
                         android:paddingLeft="5dp"
-                        android:src="@drawable/ic_mantra_63dp" />
+                        android:src="@drawable/ic_mantra_63dp"
+                        android:tint="@color/white"
+                        />
 
 
                 </RelativeLayout>
@@ -144,20 +158,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/mantra_reminder_card_view"
             android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+android:backgroundTint="@color/blue"
+
             >
 
             <Button
                 android:id="@+id/setup_chakra_prefs_btn"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
                 android:lineSpacingExtra="8dp"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"
-                android:text="Setup Your\nChakra Preferences"
-                android:textColor="@android:color/tab_indicator_text"
+                android:text="Setup Chakra Preferences"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 />
 
@@ -183,7 +203,8 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="16dp"
                         android:drawableRight="@drawable/ic_music_18dp"
-                        android:text="Chakra"
+                        android:text="Chakra"                        android:textColor="@color/meditation_color"
+
                         android:textSize="24sp" />
 
                     <TextView
@@ -193,6 +214,7 @@
                         android:layout_below="@id/chakra_title_tv"
                         android:layout_marginTop="8dp"
                         android:text="12 - 20"
+                        android:textColor="@color/meditation_color"
                         android:textSize="16sp" />
 
                     <TextView
@@ -202,6 +224,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/chakra_time_period_tv"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/meditation_color"
                         android:layout_toLeftOf="@id/chakra_icon_iv"
                         android:textSize="16sp"
                         tools:text="I have intimate connections with others" />
@@ -214,7 +237,9 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="16dp"
-                        android:src="@drawable/ic_chakra_63dp" />
+                        android:src="@drawable/ic_chakra_63dp"
+                        android:tint="@color/white"
+                        />
 
 
                 </RelativeLayout>
@@ -252,6 +277,142 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/divider_chakra"
                         android:layout_toRightOf="@id/chakra_edit_btn"
+                        android:background="@android:color/transparent"
+                        android:elevation="0dp"
+                        android:text="PREVIEW" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/music_reminder_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chakra_reminder_card_view"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/purple"
+            android:visibility="visible"
+            >
+
+            <Button
+                android:id="@+id/setup_sound_prefs_btn"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/transparent"
+                android:lineSpacingExtra="8dp"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="Setup Music Or Notification Preferences"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/sound_card_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:visibility="gone"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/sound_top_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/music_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="16dp"
+                        android:drawableRight="@drawable/ic_music_18dp"
+                        android:text="Chakra"
+                        android:textColor="@color/meditation_color"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/music_time_period_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/music_title_tv"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/meditation_color"
+                        android:text="12 - 20"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/music_text_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/music_time_period_tv"
+                        android:layout_marginTop="8dp"
+                        android:layout_toLeftOf="@id/music_icon_iv"
+                        android:textColor="@color/meditation_color"
+                        android:textSize="16sp"
+                        tools:text="Music Name" />
+
+
+                    <ImageView
+                        android:id="@+id/music_icon_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="16dp"
+                        android:src="@drawable/ic_music_63dp"
+                        android:tint="@color/white"
+
+                        />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/divider_music"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/sound_top_layout"
+                    android:layout_marginTop="16dp"
+                    android:alpha="0.1"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider_music"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <Button
+                        android:id="@+id/music_edit_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider_chakra"
+                        android:background="@android:color/transparent"
+                        android:elevation="0dp"
+
+                        android:text="EDIT" />
+
+                    <Button
+                        android:id="@+id/music_preview_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider_music"
+                        android:layout_toRightOf="@id/music_edit_btn"
                         android:background="@android:color/transparent"
                         android:elevation="0dp"
                         android:text="PREVIEW" />

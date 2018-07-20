@@ -16,5 +16,12 @@
         android:title="Instructions"
         android:icon="@drawable/ic_info"
         />
+    <item
+        android:id="@+id/clear_prefs"
+        android:title="Clear Preferences"
+        android:icon="@drawable/ic_info"
+        />
+
+
 
 </menu>

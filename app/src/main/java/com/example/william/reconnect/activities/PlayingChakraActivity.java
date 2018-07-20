@@ -301,9 +301,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
         TextView chakraTitle = dialog.findViewById(R.id.chakra_title);
         Button okBtn = dialog.findViewById(R.id.ok_btn);
         TextView chakraInfoTv = dialog.findViewById(R.id.chakra_info_tv);
+        TextView chakraInfoPosition = dialog.findViewById(R.id.chakra_info_position);
         ImageView chakraInfoPlaceIv = dialog.findViewById(R.id.chakra_place_iv);
         LinearLayout dialogCenterLayout = dialog.findViewById(R.id.dialog_center_layout);
 
+        chakraInfoPosition.setText(chakra.getChakraPosition());
         chakraTitle.setText(chakra.getChakraName());
         chakraInfoPlaceIv.setImageResource(chakra.getChakraPlaceImg());
         chakraInfoTv.setText(chakra.getChakraInfo());

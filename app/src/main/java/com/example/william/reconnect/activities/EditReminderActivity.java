@@ -45,6 +45,7 @@ import butterknife.OnClick;
 import static android.widget.AdapterView.OnItemSelectedListener;
 import static com.example.william.reconnect.util.Extras.CHAKRA_REMINDER_OBJECT;
 import static com.example.william.reconnect.util.Extras.MANTRA_REMINDER_OBJECT;
+import static com.example.william.reconnect.util.Extras.MUSIC_REMINDER_OBJECT;
 import static com.example.william.reconnect.util.Extras.PREFS_NAME;
 import static com.example.william.reconnect.util.Extras.RANDOM;
 
@@ -228,7 +229,12 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                     setTitle("Setup Mantra");
                 }
                 break;
-
+            case Reminder.TYPE_MUSIC:
+                setTitle("Edit Music");
+                receivedReminder = getFromSharedPrefs(MUSIC_REMINDER_OBJECT);
+                if (receivedReminder == null) {
+                    setTitle("Setup Music");
+                }
         }
     }
 
@@ -411,7 +417,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     private void adjustReminderLayout() {
         switch (meditationType) {
             case Reminder.TYPE_CHAKRA:
-
                 mantraLayout.setVisibility(View.GONE);
                 chakraLayout.setVisibility(View.VISIBLE);
                 mantraLayoutView.setVisibility(View.GONE);
@@ -422,7 +427,11 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                 chakraLayout.setVisibility(View.GONE);
                 chakraLayoutView.setVisibility(View.GONE);
                 break;
-
+            case Reminder.TYPE_MUSIC:
+                chakraLayoutView.setVisibility(View.GONE);
+                chakraLayout.setVisibility(View.GONE);
+                mantraLayout.setVisibility(View.GONE);
+                mantraLayoutView.setVisibility(View.GONE);
         }
     }
 
@@ -551,11 +560,9 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         ArrayList<Long> timeStamps = getAlarmTimestamps();
         ArrayList<Integer> requestCodes = generateRequestCodes(timeStamps);
 
-
         if (isAlarmAlreadySet()) {
             return;
         }
-
 
         if (receivedReminder != null) {
             new AlarmScheduler().cancelAlarms(this, receivedReminder.getRequestCode(), receivedReminder.getReminderType());
@@ -603,6 +610,24 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             );
 
             saveToSharedPrefs(mantraReminder, MANTRA_REMINDER_OBJECT);
+        } else {
+            Reminder musicReminder = new Reminder(
+                    Reminder.TYPE_MUSIC,
+                    selectedSoundType,
+                    "",
+                    "",
+                    startHour,
+                    endHour,
+                    requestCodes,
+                    soundPlaybackRb,
+                    musicListSpinner.getSelectedItemPosition(),
+                    notifSpinner.getSelectedItemPosition(),
+                    mantraPlaybackRadioGroup.getCheckedRadioButtonId(),
+                    mantraFirstSpinner.getSelectedItemPosition(),
+                    mantraSecondSpinner.getSelectedItemPosition(),
+                    chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
+                    chakraListSpinner.getSelectedItemPosition()
+            );
         }
 
         setAlarm(meditationType, requestCodes, timeStamps);
@@ -640,32 +665,30 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     private boolean isAlarmAlreadySet() {
         // check if such an alarm already exists
         ArrayList<Integer> hours = getTimePeriodHours(startHour, endHour);
-
-        Reminder chakraReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
-        Reminder mantraReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
         // if both alarms are set then we can compare the time periods.
-        if (
-                (mantraReminder != null && meditationType == Reminder.TYPE_CHAKRA) ||
-                        (chakraReminder != null && meditationType == Reminder.TYPE_MANTRA)
-                ) {
 
-            if (meditationType == Reminder.TYPE_MANTRA) {
-                ArrayList<Integer> chakraHours = getTimePeriodHours(chakraReminder.getPickedStartHours(), chakraReminder.getPickedEndHours());
-                if (checkSameHour(hours, chakraHours).size() > 0) {
-                    String start_end_hours_chakra = getHourWithZero(chakraReminder.getPickedStartHours()) + " - " + getHourWithZero(chakraReminder.getPickedEndHours());
-                    Toast.makeText(this, "Another reminder with the same time period exists! " + start_end_hours_chakra, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+        Reminder reminder = null;
+        switch (meditationType) {
+            case Reminder.TYPE_CHAKRA:
+                reminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+                break;
+            case Reminder.TYPE_MANTRA:
+                reminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+                break;
+            default:
+                reminder = getFromSharedPrefs(MUSIC_REMINDER_OBJECT);
+                break;
+        }
 
-            } else if (meditationType == Reminder.TYPE_CHAKRA) {
-                ArrayList<Integer> mantraHours = getTimePeriodHours(mantraReminder.getPickedStartHours(), mantraReminder.getPickedEndHours());
-                if (checkSameHour(hours, mantraHours).size() > 0) {
-                    String start_end_hours_mantra = getHourWithZero(mantraReminder.getPickedStartHours()) + " - " + getHourWithZero(mantraReminder.getPickedEndHours());
-                    Toast.makeText(this, "Another reminder with the same time period exists! " + start_end_hours_mantra, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+        if (reminder != null) {
+            int pickedStartHours = reminder.getPickedStartHours();
+            int pickedEndHours = reminder.getPickedEndHours();
 
-
+            ArrayList<Integer> reminderHours = getTimePeriodHours(pickedStartHours, pickedEndHours);
+            if (checkSameHour(hours, reminderHours).size() > 0) {
+                String startEndHours = getHourWithZero(pickedStartHours) + " - " + getHourWithZero(pickedEndHours);
+                Toast.makeText(this, "Another reminder with the same time period exists! " + startEndHours, Toast.LENGTH_SHORT).show();
+                return true;
             }
 
         }

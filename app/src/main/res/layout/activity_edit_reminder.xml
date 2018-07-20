@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gotham_light"
-                    android:text="Time Period"
+                    android:text="Create Time Period"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -109,7 +109,8 @@
             android:id="@+id/music_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -131,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gotham_light"
-                    android:text="Sound Playback"
+                    android:text="Choose Music"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -189,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Notification"
+                    android:text="Notification Only"
                     android:textColor="@color/secondary_text_color" />
 
                 <Spinner
@@ -216,7 +217,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="visible"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -343,7 +345,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="32dp"
-                        android:hint="I own who I am"
                         android:maxLength="140"
                         android:textColor="@color/secondary_text_color"
                         android:textColorHighlight="@color/secondary_text_color"
