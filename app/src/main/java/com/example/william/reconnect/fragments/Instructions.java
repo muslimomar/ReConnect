@@ -16,8 +16,6 @@ import butterknife.Unbinder;
 
 public class Instructions extends Fragment {
 
-    @BindView(R.id.first_tv)
-    TextView firstTv;
     @BindView(R.id.second_tv)
     TextView secondTv;
     Unbinder unbinder;
@@ -29,35 +27,25 @@ public class Instructions extends Fragment {
         View view = inflater.inflate(R.layout.fragment_instructions, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        secondTv.setText(Html.fromHtml("1.\t<b>Music/Notification</b>: automatic music will play every hour - selected or random. When you hear the music, close your eyes and focus within. Or, you can choose a sound to notify you of the start and end of each minute.<br/>\n" +
-                "<br/>2.\t<b>Chakra/Body</b> : focus on the chakra colour and it’s placement within your body. You can imagine it pulsating and can make a sound on breathing out. Note: they are centrally positioned within the body, along the spine.<br/>\n" +
-                "•\t<b>Beginner</b>: imagine the chakra colour within you and surrounding you, or simply bring your attention to this area of your body.<br/>\n" +
-                "•\t<b>Intermediate</b>: see the colour and placement of the chakra and imagine it pulsating, vibrating or gently spinning within you.<br/>\n" +
-                "•\t<b>Advanced</b>: imagine the spinning chakra as part of your whole spine, linking to other chakras; as you breathe out, make a longish sound that resonates with this chakra.<br/>\n" +
-                "<br/>3.\t<b>Mantra/Affirmation</b>: \n" +
-                "Mantras and affirmations are used to re-programme the brain and affect the unconscious. Here are four ways to work with these: <br/>\n" +
-                "•\t<b>Contemplate it</b>: reflect on the meaning and tune in to particular words to absorb them.<br/>\n" +
-                "•\t<b>Recite it</b>: repeatedly say it out loud or inwardly, imagining that each time you say it, it gets embedded in you. It is very potent to whisper it – whispering forces the unconscious to tune-in, creating a different vibration.<br/>\n" +
-                "•\t<b>Visualise it</b>: see it actually happening. Create a movie - add all sorts of detail and embellishment, make it big, over exaggerate.<br/>\n" +
-                "•\t<b>Breath it</b>: inhale the words on every ‘in-breath’, and exhale with</b> happiness on the out-breath releasing any natural sounds.<br/>\n" +
-                "<b>Create Your Own</b>\n" +
-                "You can create your own mantra/affirmation to strengthen or manifest anything in you and your life, make sure your words are in the ‘here and now’ as if already happening; Or you can input one that you already know. <br/>\n" +
-                "<br/>4.\t<b>Silence/Non-talking Day</b>\n" +
-                "Talking burns energy and takes us away from ourselves, whilst being silent collects energy and is a step towards quietening the mind. \n" +
-                "<br/>Choose a less busy day to practice Silence/Non-Talking. You can still do the usual things but without added talking. Let people know in advance: ask them not to start conversations and only communicate if necessary. You can show people your ‘Silence’ sign.\n" +
-                "<br/>Ask people to join you. Doing this can enhance a relationship and in groups, collectively raises the energetic vibration. \n" +
-                "<br/><br/>Benefits of Silence:<br/><br/>\n" +
-                "•\tHeightened awareness <br/>\n" +
-                "•\tMore processing of thoughts & feelings<br/>\n" +
-                "•\tEmotional balance and stability<br/>\n" +
-                "•\tEnhanced stress tolerance<br/>\n" +
-                "•\tGreater focused attention<br/>\n" +
-                "•\tMind over matter: discipline & control<br/>\n" +
-                "•\tReserve of vital energy (Chi/Ki)<br/>\n" +
-                "•\tDeeper relational connections<br/>\n" +
-                "•\tShines a light on one’s inner world\n" +
-                "\n" +
-                "\n"));
+        secondTv.setText(Html.fromHtml("<p><strong>Guidelines</strong></p>\n" +
+                "<p>First create a time span for your hourly meditations. You will then receive a reminder each hour - on the hour. Then select how you would like your &lsquo;1 Minute&rsquo; meditations to be, from the following options:</p>\n" +
+                "<p><strong>Option 1: Music Alone or Notification Alone</strong></p>\n" +
+                "<p>You can opt for music alone to play during each minute - whilst you listen, close your eyes and focus within. Or you can choose a sound to notify you at the start and at the end of each minute, sitting silently without music. These are simple one-minute meditations without focusing on chakras or mantras (below).</p>\n" +
+                "<p><strong>Option 2: Chakra or Body Focus (with music or Notification)</strong></p>\n" +
+                "<p>You can opt to focus on a particular Chakra - chakra focused, or focus on this part of your body - body focused meditation. Again, you can opt for music during this time, or no music &ndash; just a notification sound at the beginning and the end. Note: chakras are centrally aligned within your body.</p>\n" +
+                "<p><strong>Beginners</strong>: imagine the chakra colour within you or surrounding you; or simply bring your attention to this area of your body.</p>\n" +
+                "<p><strong>Intermediate</strong>: visualise this living energy centre within your body; or focus on actual physical bodily sensations in this area.</p>\n" +
+                "<p><strong>Advanced</strong>: see this chakra in line with the other chakras, spinning like a small coloured &lsquo;ceiling fan&rsquo; within the central circumference of your body; or focus on your body and your breathing, making a long sound on your &lsquo;out breath&rsquo; that intuitively corresponds.</p>\n" +
+                "<p><strong>Option 3: Mantra or Affirmation Focus (with music or notification)</strong></p>\n" +
+                "<p>These are used to re-programme the mind by affecting the unconscious. There are many ways to work with these. Discover which method works best for you.</p>\n" +
+                "<ul>\n" +
+                "<li><strong>Contemplate it</strong>: reflect on the meaning of the words, &lsquo;tuning in&rsquo; to particular words that resonate in that moment.</li>\n" +
+                "<li><strong>Recite it</strong>: repeatedly say it out loud or inwardly, imagining that each time you say it, it becomes part of you. It is also very potent to whisper it &ndash; whispering forces the unconscious to &lsquo;listen-in&rsquo;, creating a different vibration.</li>\n" +
+                "<li><strong>Visualise it</strong>: see it actually happening - like creating a movie, add all sorts of details and embellishments! Have fun with this. Make it big. Over exaggerate it.</li>\n" +
+                "<li><strong>Breath it</strong>: inhale the words on every in-breath and use the out breath as you wish &ndash; release or relax.</li>\n" +
+                "</ul>\n" +
+                "<p><strong>Bonus Customisation</strong></p>\n" +
+                "<p>You can also create your own mantra or affirmation according to what you are working on - strengthen something in you or manifest something in your life. Make sure your words are in the &lsquo;Here &amp; Now&rsquo; as if already happening. Make one up or input one that you already know.</p>"));
 
         secondTv.setTextIsSelectable(true);
 

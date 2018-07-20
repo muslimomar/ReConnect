@@ -16,7 +16,7 @@
         <android.support.v7.widget.CardView
             android:id="@+id/compliment_card_view"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
@@ -37,29 +37,17 @@
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
-
                     >
 
                     <TextView
-                        android:id="@+id/cheer_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Good Job"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/second_cheer_tv"
-                        android:layout_width="170dp"
-                        android:layout_height="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Every minute counts! Keep up the good work!"
+                        android:text="Every minute counts!"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="25sp" />
 
 
                 </LinearLayout>
@@ -73,10 +61,10 @@
             android:id="@+id/times_spent_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             app:cardCornerRadius="6dp">
 
             <LinearLayout
@@ -86,76 +74,8 @@
                 android:paddingLeft="@dimen/activity_vertical_margin"
                 android:paddingRight="@dimen/activity_vertical_margin">
 
-                <RelativeLayout
-                    android:id="@+id/chakra_spent_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/clock_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:src="@drawable/clock" />
-
-                    <TextView
-                        android:id="@+id/chakra_time_spent_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/clock_iv"
-                        android:text="Chakra"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/chakra_spent_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:text="00 hour 00 min 00 sec"
-                        android:textColor="#727272" />
-
-                </RelativeLayout>
 
 
-                <RelativeLayout
-                    android:id="@+id/mantra_spent_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/clock_iv_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:src="@drawable/clock" />
-
-                    <TextView
-                        android:id="@+id/mantra_time_spent_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/clock_iv_3"
-                        android:text="Mantra"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/mantra_spent_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="00 hour 00 min 00 sec"
-                        android:textColor="#727272" />
-
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/music_spent_layout"
@@ -172,17 +92,17 @@
                         android:src="@drawable/clock" />
 
                     <TextView
-                        android:id="@+id/music_time_spent_iv"
+                        android:id="@+id/total_meditate_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_4"
-                        android:text="Music"
+                        android:text="Total Meditation Time"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/music_spent_iv"
+                        android:id="@+id/total_time_values"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -213,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_2"
-                        android:text="Silence"
+                        android:text="Total Silence Time"
 
                         android:textColor="#000000"
                         android:textStyle="bold" />
