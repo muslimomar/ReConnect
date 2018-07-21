@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -23,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -37,6 +39,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.StringJoiner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +60,8 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     String selectedSoundType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
+
+    MediaPlayer player;
 
     int startHour = -1;
     int endHour = -1;
@@ -89,7 +94,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
     String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in Light[Good for Chakra]", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
-    String[] notifSongsList = new String[]{"Bell Tree", "Chinese Flute #1", "Chinese Flute #2","Harp Sound","Mermaid Singing"};
+    String[] notifSongsList = new String[]{"Bell Tree", "Chinese Flute #1", "Chinese Flute #2", "Harp Sound", "Mermaid Singing"};
     //
     @BindView(R.id.music_random_rb)
     RadioButton musicRandomRb;
@@ -122,6 +127,11 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     View mantraLayoutView;
     @BindView(R.id.pick_a_time_layout)
     LinearLayout pickaTimeLayout;
+    @BindView(R.id.music_preview_btn)
+    ImageButton musicPreviewBtn;
+    @BindView(R.id.notificiation_preview_btn)
+    ImageButton notificationPreviewBtn;
+
 
     boolean isTimePickerClicked = false;
     SharedPreferences sharedPrefs;
@@ -166,6 +176,93 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         chakraListSpinner.setOnTouchListener(mTouchListener);
         customMantraEt.setOnTouchListener(mTouchListener);
 
+    }
+
+    private void playSelectedMusic() {
+        switch (selectedSoundType) {
+            case "Jason Shaw Acoustuc Meditation":
+                player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
+                player.start();
+                break;
+            case "Kevin MacLeod - Sovereign Quarter":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
+                player.start();
+                break;
+            case "Kevin MacLeod Dream Culture":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
+                player.start();
+                break;
+            case "Kevin Macleod Bathed in Light[Good for Chakra]":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
+                player.start();
+                break;
+            case "Kevin Macleod Windswept":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_windswept);
+                player.start();
+                break;
+            case "Kevin MacLeod Enchanted Journey":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_enchanted_journey);
+                player.start();
+                break;
+            case "Kevin MacLeod Smoother Move":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_smoother_move);
+                player.start();
+                break;
+            case "Kevin MacLeod Meditation Impromptu":
+                player = MediaPlayer.create(this, R.raw.kevin_macleod_meditation_impromptu);
+                player.start();
+                break;
+            case "Lee Rosevere Everywhere":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_everywhere);
+                player.start();
+                break;
+            case "Lee Rosevere Betrayal":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_betrayal);
+                player.start();
+                break;
+            case "Ryan Andersen Day to Night":
+                player = MediaPlayer.create(this, R.raw.ryan_andersen_day_to_night);
+                player.start();
+                break;
+            case "Lee Rosevere We’ll figure it out together":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_well_figure_it_out_together);
+                player.start();
+                break;
+            case "Lee Rosevere Not My Problem":
+                player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
+                player.start();
+                break;
+            case "Bell Tree":
+                player = MediaPlayer.create(this, R.raw.bell_tree);
+                player.start();
+                break;
+            case "Chinese Flute #1":
+                player = MediaPlayer.create(this, R.raw.flute_1);
+                player.start();
+                break;
+            case "Chinese Flute #2":
+                player = MediaPlayer.create(this, R.raw.chinese_flute);
+                player.start();
+                break;
+            case "Harp Sound":
+                player = MediaPlayer.create(this, R.raw.harp_sound_effects);
+                player.start();
+                break;
+            case "Mermaid Singing":
+                player = MediaPlayer.create(this, R.raw.mermaid_singing);
+                player.start();
+                break;
+        }
+
+        if (player != null) {
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    musicPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                    notificationPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                }
+            });
+        }
     }
 
     private void setupViewWithData() {
@@ -251,6 +348,8 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
+                    hideButton(musicPreviewBtn);
+                    showButton(notificationPreviewBtn);
                     soundPlaybackRb = soundNotifRb.getText().toString().trim();
                     notifSpinner.setEnabled(true);
                     musicRandomRb.setEnabled(false);
@@ -259,11 +358,16 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                     musicPlaybackRadioGroup.clearCheck();
                     musicListSpinner.setEnabled(false);
                     soundMusicRb.setChecked(false);
+
                     selectedSoundType = notifSpinner.getItemAtPosition(0).toString();
                     notifSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             selectedSoundType = notifSpinner.getItemAtPosition(i).toString();
+                            if (player != null && player.isPlaying()) {
+                                player.stop();
+                                notificationPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                            }
                         }
 
                         @Override
@@ -280,7 +384,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     soundPlaybackRb = soundMusicRb.getText().toString().trim();
-
+                    hideButton(notificationPreviewBtn);
                     notifSpinner.setEnabled(false);
                     musicRandomRb.setEnabled(true);
                     musicSpecificRb.setEnabled(true);
@@ -297,10 +401,15 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 mReminderHasChanged = true;
                 if (i == musicRandomRb.getId()) {
-                    musicListSpinner.setEnabled(false);
                     selectedSoundType = RANDOM;
+                    musicListSpinner.setEnabled(false);
+                    hideButton(musicPreviewBtn);
+
 
                 } else if (i == musicSpecificRb.getId()) {
+                    if (!soundNotifRb.isChecked()) {
+                        showButton(musicPreviewBtn);
+                    }
                     selectedSoundType = musicListSpinner.getItemAtPosition(0).toString();
                     musicListSpinner.setEnabled(true);
                     selectedSoundType = musicListSpinner.getSelectedItem().toString();
@@ -308,6 +417,10 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             selectedSoundType = musicListSpinner.getItemAtPosition(i).toString();
+                            if (player != null && player.isPlaying()) {
+                                player.stop();
+                                musicPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                            }
                         }
 
                         @Override
@@ -626,6 +739,8 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                     chakraPlaybackRadioGroup.getCheckedRadioButtonId(),
                     chakraListSpinner.getSelectedItemPosition()
             );
+
+            saveToSharedPrefs(musicReminder, MUSIC_REMINDER_OBJECT);
         }
 
         setAlarm(meditationType, requestCodes, timeStamps);
@@ -665,33 +780,62 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         ArrayList<Integer> hours = getTimePeriodHours(startHour, endHour);
         // if both alarms are set then we can compare the time periods.
 
-        Reminder reminder = null;
+        Reminder currentReminder = null;
         switch (meditationType) {
             case Reminder.TYPE_CHAKRA:
-                reminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+                currentReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
                 break;
             case Reminder.TYPE_MANTRA:
-                reminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+                currentReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
                 break;
-            default:
-                reminder = getFromSharedPrefs(MUSIC_REMINDER_OBJECT);
+            case Reminder.TYPE_MUSIC:
+                currentReminder = getFromSharedPrefs(MUSIC_REMINDER_OBJECT);
                 break;
         }
 
-        if (reminder != null) {
+        Reminder chakraReminder = getFromSharedPrefs(CHAKRA_REMINDER_OBJECT);
+        Reminder mantraReminder = getFromSharedPrefs(MANTRA_REMINDER_OBJECT);
+        Reminder musicReminder = getFromSharedPrefs(MUSIC_REMINDER_OBJECT);
+
+        ArrayList<Integer> remindedHours = new ArrayList<>();
+
+        if (chakraReminder != null) {
+            putReminderInReminderHours(chakraReminder, remindedHours, currentReminder);
+        }
+        if (mantraReminder != null) {
+            putReminderInReminderHours(mantraReminder, remindedHours, currentReminder);
+        }
+        if (musicReminder != null) {
+            putReminderInReminderHours(musicReminder, remindedHours, currentReminder);
+        }
+
+        ArrayList<Integer> matchedHoursArray = checkSameHour(hours, remindedHours);
+        if (matchedHoursArray.size() > 0) {
+
+            StringBuilder builder = new StringBuilder("(");
+            for (int aValue : matchedHoursArray) builder.append(aValue).append(",");
+            if (matchedHoursArray.size() > 0) builder.deleteCharAt(builder.length() - 1);
+            builder.append(")");
+            String tmpString = builder.toString();
+
+            Toast.makeText(this, "Another reminder with the same time period exists! " + tmpString, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void putReminderInReminderHours(Reminder reminder, ArrayList<Integer> remindedHours, Reminder currentReminder) {
+        boolean b = currentReminder != null && currentReminder.getReminderType() != reminder.getReminderType();
+
+        if (currentReminder == null || b) {
             int pickedStartHours = reminder.getPickedStartHours();
             int pickedEndHours = reminder.getPickedEndHours();
 
             ArrayList<Integer> reminderHours = getTimePeriodHours(pickedStartHours, pickedEndHours);
-            if (checkSameHour(hours, reminderHours).size() > 0) {
-                String startEndHours = getHourWithZero(pickedStartHours) + " - " + getHourWithZero(pickedEndHours);
-                Toast.makeText(this, "Another reminder with the same time period exists! " + startEndHours, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
+            remindedHours.addAll(reminderHours);
         }
 
-        return false;
     }
 
     private void setAlarm(int reminderType, ArrayList<Integer> requestCodes, ArrayList<Long> timeStamps) {
@@ -953,5 +1097,54 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         return array;
     }
 
-}
+    @OnClick(R.id.music_preview_btn)
+    public void setMusicPreviewBtn(View view) {
+        if (player != null && player.isPlaying()) {
+            player.stop();
+            musicPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        } else {
+            playSelectedMusic();
+            musicPreviewBtn.setImageResource(R.drawable.ic_stop_black_24dp);
+        }
+    }
 
+    @OnClick(R.id.notificiation_preview_btn)
+    public void setNotificationPreviewBtn(View view) {
+        if (player != null && player.isPlaying()) {
+            player.stop();
+            notificationPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        } else {
+            playSelectedMusic();
+            notificationPreviewBtn.setImageResource(R.drawable.ic_stop_black_24dp);
+        }
+
+    }
+
+    public void hideButton(ImageButton imageButton) {
+        imageButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        imageButton.setVisibility(View.INVISIBLE);
+        stopPlayer();
+    }
+
+    public void showButton(ImageButton imageButton) {
+        imageButton.setVisibility(View.VISIBLE);
+        stopPlayer();
+    }
+
+    public void stopPlayer() {
+        if (player != null && player.isPlaying()) {
+            player.stop();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (player != null && player.isPlaying()) {
+            player.stop();
+            player.release();
+        }
+    }
+
+
+}

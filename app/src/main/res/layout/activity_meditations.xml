@@ -300,14 +300,18 @@
                 android:text="Setup Music Or Notification Preferences"
                 android:textColor="@color/white"
                 android:fontFamily="@font/gotham_medium"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:visibility="gone"
+                />
 
             <RelativeLayout
                 android:id="@+id/sound_card_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="16dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible"
+                >
 
                 <RelativeLayout
                     android:id="@+id/sound_top_layout"
@@ -322,7 +326,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="16dp"
                         android:drawableRight="@drawable/ic_music_18dp"
-                        android:text="Chakra"
+                        android:text="Music"
                         android:textColor="@color/meditation_color"
                         android:textSize="24sp" />
 

@@ -15,21 +15,17 @@ import com.example.william.reconnect.R;
 import com.example.william.reconnect.activities.MantraPlayingActivity;
 import com.example.william.reconnect.activities.PlayingChakraActivity;
 import com.example.william.reconnect.activities.PlayingMusicActivity;
-import com.example.william.reconnect.activities.PlayingSilenceActivity;
 import com.example.william.reconnect.model.Reminder;
 import com.google.gson.Gson;
 
-import io.realm.Realm;
-
 import static com.example.william.reconnect.util.Extras.CHAKRA;
 import static com.example.william.reconnect.util.Extras.CHAKRA_REMINDER_OBJECT;
-import static com.example.william.reconnect.util.Extras.EXTRA_ID;
 import static com.example.william.reconnect.util.Extras.MANTRA;
 import static com.example.william.reconnect.util.Extras.MANTRA_REMINDER_OBJECT;
 import static com.example.william.reconnect.util.Extras.MUSIC;
+import static com.example.william.reconnect.util.Extras.MUSIC_REMINDER_OBJECT;
 import static com.example.william.reconnect.util.Extras.PREFS_NAME;
 import static com.example.william.reconnect.util.Extras.REMINDER_TYPE;
-import static com.example.william.reconnect.util.Extras.SILENCE;
 
 
 /**
@@ -61,7 +57,7 @@ public class ReminderAlarmService extends IntentService {
                 .addNextIntentWithParentStack(action)
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            getReminderType(reminder);
+        getReminderType(reminder);
 
 
         String reminderDescription = "You have a " + reminderType + " meditation session";
@@ -104,6 +100,11 @@ public class ReminderAlarmService extends IntentService {
             intent.putExtra("mantra_type", reminder.getMantraPlaybackType());
             intent.putExtra("music_type", reminder.getSoundPlaybackType());
         }
+        if (reminder.getReminderType() == Reminder.TYPE_MUSIC) {
+            intent = new Intent(this, PlayingMusicActivity.class);
+            intent.putExtra("music_type", reminder.getSoundPlaybackType());
+        }
+
 
         return intent;
     }
@@ -120,16 +121,22 @@ public class ReminderAlarmService extends IntentService {
                 reminderType = MANTRA;
                 chakraIcon = R.drawable.ic_mantra_notification;
                 break;
+            case Reminder.TYPE_MUSIC:
+                reminderType = MUSIC;
+                chakraIcon = R.drawable.ic_music_notification;
+                break;
         }
     }
 
     private Reminder getFromSharedPrefs(int objectKey) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String jsonObject = null;
-        if(objectKey == Reminder.TYPE_CHAKRA) {
-             jsonObject = sharedPreferences.getString(CHAKRA_REMINDER_OBJECT, "");
-        }else if (objectKey == Reminder.TYPE_MANTRA) {
-             jsonObject = sharedPreferences.getString(MANTRA_REMINDER_OBJECT, "");
+        if (objectKey == Reminder.TYPE_CHAKRA) {
+            jsonObject = sharedPreferences.getString(CHAKRA_REMINDER_OBJECT, "");
+        } else if (objectKey == Reminder.TYPE_MANTRA) {
+            jsonObject = sharedPreferences.getString(MANTRA_REMINDER_OBJECT, "");
+        } else {
+            jsonObject = sharedPreferences.getString(MUSIC_REMINDER_OBJECT, "");
         }
 
         Gson gson = new Gson();

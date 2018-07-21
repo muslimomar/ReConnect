@@ -134,7 +134,7 @@ public class MeditationsActivity extends AppCompatActivity {
                 musicTitleTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_notif_18dp, 0);
             }
             musicTimePeriodTv.setText(getHourWithZero(musicReminder.getPickedStartHours()) + " - " + getHourWithZero(musicReminder.getPickedEndHours()) + " H");
-            musicTextTv.setText(musicReminder.getChakraPlaybackTYpe());
+            musicTextTv.setText(musicReminder.getSoundPlaybackType());
         }
 
 
@@ -255,11 +255,10 @@ public class MeditationsActivity extends AppCompatActivity {
         }
 
 
-        //TODO
-        if (mantraReminder == null) {
+        if (musicReminder == null) {
             setupSoundPrefsBtn.setVisibility(View.VISIBLE);
             soundCardViewLayout.setVisibility(View.GONE);
-        } else if (mantraReminder != null) {
+        } else if (musicReminder != null) {
             setupSoundPrefsBtn.setVisibility(View.GONE);
             soundCardViewLayout.setVisibility(View.VISIBLE);
         }

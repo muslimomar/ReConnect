@@ -22,6 +22,12 @@ import com.example.william.reconnect.fragments.Balance;
 import com.example.william.reconnect.fragments.Credits;
 import com.example.william.reconnect.fragments.Home;
 import com.example.william.reconnect.fragments.Instructions;
+import com.example.william.reconnect.model.Reminder;
+import com.example.william.reconnect.reminder.AlarmScheduler;
+import com.example.william.reconnect.util.Extras;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import static com.example.william.reconnect.util.Extras.PREFS_NAME;
 
@@ -111,10 +117,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearPreferences() {
-        SharedPreferences.Editor sharedPrefs;
-        sharedPrefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
-        sharedPrefs.clear();
-        sharedPrefs.commit();
+        cancelAllAlarms();
+        clearSharedPreferences();
+    }
+
+    private void cancelAllAlarms() {
+        SharedPreferences sharedPrefs;
+        sharedPrefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        Reminder chakraReminder = getFromSharedPrefs(sharedPrefs, Extras.CHAKRA_REMINDER_OBJECT);
+        Reminder mantraReminder = getFromSharedPrefs(sharedPrefs, Extras.MANTRA_REMINDER_OBJECT);
+        Reminder musicReminder = getFromSharedPrefs(sharedPrefs, Extras.MUSIC_REMINDER_OBJECT);
+        if(chakraReminder!= null) {
+            ArrayList<Integer> chakraReminderRequestCodes = chakraReminder.getRequestCode();
+            new AlarmScheduler().cancelAlarms(this,chakraReminderRequestCodes,chakraReminder.getReminderType());
+        }
+        if(mantraReminder != null) {
+            ArrayList<Integer> mantraReminderRequestCodes = mantraReminder.getRequestCode();
+            new AlarmScheduler().cancelAlarms(this,mantraReminderRequestCodes,mantraReminder.getReminderType());
+        }
+        if(musicReminder != null) {
+            ArrayList<Integer> musicReminderRequestCodes = musicReminder.getRequestCode();
+            new AlarmScheduler().cancelAlarms(this,musicReminderRequestCodes,musicReminder.getReminderType());
+        }
+    }
+
+    private Reminder getFromSharedPrefs(SharedPreferences sharedPrefs,String objectKey) {
+        String jsonObject = sharedPrefs.getString(objectKey, "");
+        Gson gson = new Gson();
+        return gson.fromJson(jsonObject, Reminder.class);
+    }
+
+    private void clearSharedPreferences() {
+        SharedPreferences.Editor sharedPrefsEditor;
+        sharedPrefsEditor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
+        sharedPrefsEditor.clear();
+        sharedPrefsEditor.commit();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
