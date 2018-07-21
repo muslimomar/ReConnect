@@ -94,6 +94,7 @@ public class MeditationsActivity extends AppCompatActivity {
     private Reminder mantraReminder;
     private Reminder chakraReminder;
     private Reminder musicReminder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,10 +149,10 @@ public class MeditationsActivity extends AppCompatActivity {
         String chakraObj = sharedPrefs.getString(Extras.CHAKRA_REMINDER_OBJECT, "");
         String mantraObj = sharedPrefs.getString(Extras.MANTRA_REMINDER_OBJECT, "");
         String musicObj = sharedPrefs.getString(Extras.MUSIC_REMINDER_OBJECT, "");
-            Gson gson = new Gson();
-            chakraReminder = gson.fromJson(chakraObj, Reminder.class);
-            mantraReminder = gson.fromJson(mantraObj, Reminder.class);
-            musicReminder = gson.fromJson(musicObj, Reminder.class);
+        Gson gson = new Gson();
+        chakraReminder = gson.fromJson(chakraObj, Reminder.class);
+        mantraReminder = gson.fromJson(mantraObj, Reminder.class);
+        musicReminder = gson.fromJson(musicObj, Reminder.class);
     }
 
     private void configureActionbar() {
@@ -174,7 +175,8 @@ public class MeditationsActivity extends AppCompatActivity {
         goToAddReminder(Reminder.TYPE_CHAKRA);
     }
 
-    @OnClick(R.id.music_edit_btn) public void setMusicEditBtn(View view) {
+    @OnClick(R.id.music_edit_btn)
+    public void setMusicEditBtn(View view) {
         goToAddReminder(Reminder.TYPE_MUSIC);
     }
 
@@ -188,7 +190,7 @@ public class MeditationsActivity extends AppCompatActivity {
         goToChakraPlaying();
     }
 
-  @OnClick(R.id.music_preview_btn)
+    @OnClick(R.id.music_preview_btn)
     public void setMusicPreviewBtn(View view) {
         goToMusicPlaying();
     }
@@ -273,5 +275,11 @@ public class MeditationsActivity extends AppCompatActivity {
     public void setSetupChakraButton(View view) {
         goToAddReminder(Reminder.TYPE_CHAKRA);
     }
+
+    @OnClick(R.id.setup_sound_prefs_btn)
+    public void setSetupSoundPrefsBtn(View view) {
+        goToAddReminder(Reminder.TYPE_MUSIC);
+    }
+
 
 }

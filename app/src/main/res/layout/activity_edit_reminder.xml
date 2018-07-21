@@ -109,8 +109,7 @@
             android:id="@+id/music_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -175,15 +174,32 @@
 
                 </RadioGroup>
 
-                <Spinner
-                    android:id="@+id/music_list_spinner"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="24dp"
                     android:layout_marginTop="@dimen/space_between_elments"
-                    android:spinnerMode="dropdown" />
+                    android:orientation="horizontal">
 
+                    <Spinner
+                        android:id="@+id/music_list_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageButton
+                        android:id="@+id/music_preview_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_play_arrow_black_24dp"
+                        android:visibility="invisible"
+                        />
+
+                </LinearLayout>
 
                 <RadioButton
                     android:id="@+id/sound_notification_rb"
@@ -193,13 +209,33 @@
                     android:text="Notification Only"
                     android:textColor="@color/secondary_text_color" />
 
-                <Spinner
-                    android:id="@+id/notification_spinner"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="right"
                     android:layout_marginTop="@dimen/space_between_elments"
-                    android:spinnerMode="dropdown" />
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/notification_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/notificiation_preview_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:src="@drawable/ic_play_arrow_black_24dp"
+                        android:visibility="invisible"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -217,8 +253,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="visible"
-            >
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
