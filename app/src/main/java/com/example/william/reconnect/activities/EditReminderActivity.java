@@ -88,8 +88,8 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     RadioGroup mantraPlaybackRadioGroup;
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
-    String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in The Light[Good for Chakra],", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
-    String[] notifSongsList = new String[]{"Bell Tree", "Chinese Flute #1", "Chinese Flute #2","Harp Sounds","Mermaid Singing 2"};
+    String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in Light[Good for Chakra]", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
+    String[] notifSongsList = new String[]{"Bell Tree", "Chinese Flute #1", "Chinese Flute #2","Harp Sound","Mermaid Singing"};
     //
     @BindView(R.id.music_random_rb)
     RadioButton musicRandomRb;

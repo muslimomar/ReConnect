@@ -120,7 +120,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
                 player.start();
                 break;
-            case "Kevin Macleod Bathed in The Light[Good for Chakra]":
+            case "Kevin Macleod Bathed in Light[Good for Chakra]":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
                 player.start();
                 break;
@@ -176,11 +176,11 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.chinese_flute);
                 player.start();
                 break;
-            case "Harp Sound Effects":
+            case "Harp Sound":
                 player = MediaPlayer.create(this, R.raw.harp_sound_effects);
                 player.start();
                 break;
-            case "Mermaid Singing 2":
+            case "Mermaid Singing":
                 player = MediaPlayer.create(this, R.raw.mermaid_singing);
                 player.start();
                 break;
