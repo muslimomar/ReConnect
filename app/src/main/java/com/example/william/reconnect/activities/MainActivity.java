@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -90,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                                 dialogInterface.dismiss();
                             }
                         }).show();
+            case R.id.website:
+                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.nishahdennison.com"));
+                startActivity(intent);
                 break;
         }
 

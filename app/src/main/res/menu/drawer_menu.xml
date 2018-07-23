@@ -20,8 +20,14 @@
         android:title="Sound Credits" />
 
     <item
+        android:id="@+id/website"
+        android:icon="@drawable/web"
+        android:title="Website" />
+
+    <item
         android:id="@+id/clear_prefs"
         android:icon="@drawable/ic_delete_black_vector_24dp"
-        android:title="Clear Preferences"
-        />
+        android:title="Clear Preferences" />
+
+
 </menu>
