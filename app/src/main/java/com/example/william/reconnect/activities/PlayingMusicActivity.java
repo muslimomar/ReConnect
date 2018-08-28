@@ -41,6 +41,7 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 import static com.example.william.reconnect.util.Extras.PREFS_NAME;
+import static com.example.william.reconnect.util.Extras.RANDOM;
 
 public class PlayingMusicActivity extends AppCompatActivity {
 
@@ -79,8 +80,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
         }
 
         Random random = new Random();
-
-
         switch (musicType) {
             case "Jason Shaw Acoustuc Meditation":
                 player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
@@ -94,7 +93,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
                 player.start();
                 break;
-            case "Kevin Macleod Bathed in The Light[Good for Chakra]":
+            case "Kevin Macleod Bathed in Light":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
                 player.start();
                 break;
@@ -134,25 +133,32 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
                 player.start();
                 break;
-           /* case "Random":player = MediaPlayer.create(this,rawRef[random.nextInt(rawRef.length)]);
-            player.start();
-            break;
-*/
-        }
-
-
-//        Reminder reminder = realm.where(Reminder.class).findFirst();
-
-/*
-        if (reminder != null) {
-            // Get the Music Playback Type.
-            String musicType = reminder.getSoundPlaybackType();
-            if (musicType.equals("Random")) {
+            case "Random":
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
-            }
+                break;
+            case "Bell Tree":
+                player = MediaPlayer.create(this, R.raw.bell_tree);
+                player.start();
+                break;
+            case "Chinese Flute #1":
+                player = MediaPlayer.create(this, R.raw.flute_1);
+                player.start();
+                break;
+            case "Chinese Flute #2":
+                player = MediaPlayer.create(this, R.raw.chinese_flute);
+                player.start();
+                break;
+            case "Harp Sound":
+                player = MediaPlayer.create(this, R.raw.harp_sound_effects);
+                player.start();
+                break;
+            case "Mermaid Singing":
+                player = MediaPlayer.create(this, R.raw.mermaid_singing);
+                player.start();
+                break;
         }
-*/
+
         initializeImages();
         rotateChakra();
         handler = new Handler();
@@ -177,8 +183,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
         handler.postDelayed(r, ONE_MIN_MS);
 
     }
-
-
     private void initializeImages() {
         playingIcon.setImageResource(R.drawable.new_logo);
         backgroundGradient(relativeLayout);
@@ -218,7 +222,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
     }
 
-
     @OnClick({R.id.back_arrow_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -226,13 +229,9 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 showExitDialog();
                 break;
         }
-
     }
-
-
     /* Show dialog when finished meditation */
     private void showFinishDialog() {
-
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(PlayingMusicActivity.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -254,7 +253,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
     /* Set Music Time Spent Fully working 27-05-2018 */
     private void writeToDB() {
-
         endTime = System.currentTimeMillis();
         musicTimeSpent = endTime - startTime;
         int seconds = (int) (musicTimeSpent / 1000) % 60;
@@ -278,19 +276,14 @@ public class PlayingMusicActivity extends AppCompatActivity {
         }
 
         realm.commitTransaction();
-
     }
-
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         showExitDialog();
     }
-
     public void showExitDialog() {
-
-
         final AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -302,7 +295,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-
                         handler.removeCallbacks(r);
                         if (player != null) {
                             player.stop();
@@ -323,5 +315,4 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
 }

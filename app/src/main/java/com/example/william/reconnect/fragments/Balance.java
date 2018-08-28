@@ -199,12 +199,12 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                crownUsageTv.setText(format.format(finalRWt) + "%");
+                crownUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 crownUsagePb.setMax(100);
                 crownUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
             } else
-                crownUsageTv.setText("0%");
+                crownUsageTv.setText("0:00:00");
         }
     }
 
@@ -222,12 +222,12 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                thirdEyeUsageTv.setText(format.format(finalRWt) + "%");
+                thirdEyeUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 thirdEyeUsagePb.setMax(100);
                 thirdEyeUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
             } else
-                thirdEyeUsageTv.setText("0%");
+                thirdEyeUsageTv.setText("0:00:00");
         }
     }
 
@@ -245,10 +245,10 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                throatUsageTv.setText(format.format(finalRWt) + "%");
+                throatUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 throatUsagePb.setMax(100);
                 throatUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
-            } else throatUsageTv.setText("0%");
+            } else throatUsageTv.setText("0:00:00");
 
         }
     }
@@ -267,11 +267,10 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                heartUsageTv.setText(format.format(finalRWt) + "%");
+                heartUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 heartUsagePb.setMax(100);
                 heartUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
-
-            } else heartUsageTv.setText("0%");
+            } else heartUsageTv.setText("0:00:00");
         }
     }
 
@@ -289,11 +288,11 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                solarPlexusUsageTv.setText(format.format(finalRWt) + "%");
+                solarPlexusUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 solarPlexusUsagePb.setMax(100);
                 solarPlexusUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
-                solarPlexusUsageTv.setText("0%");
+                solarPlexusUsageTv.setText("0:00:00");
         }
     }
 
@@ -310,11 +309,11 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                sacralUsageTv.setText(format.format(finalRWt) + "%");
+                sacralUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 sacralUsagePb.setMax(100);
                 sacralUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
-                sacralUsageTv.setText("0%");
+                sacralUsageTv.setText("0:00:00");
         }
     }
 
@@ -332,11 +331,11 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                rootUsageTv.setText(format.format(finalRWt) + "%");
+                rootUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
                 rootUsagePb.setMax(100);
                 rootUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
-                rootUsageTv.setText("0%");
+                rootUsageTv.setText("0:00:00");
         }
     }
 

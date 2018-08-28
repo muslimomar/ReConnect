@@ -18,7 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-
 import com.example.william.reconnect.R;
 import com.example.william.reconnect.fragments.Balance;
 import com.example.william.reconnect.fragments.Credits;
@@ -28,13 +27,11 @@ import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
 import com.example.william.reconnect.util.Extras;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 import static com.example.william.reconnect.util.Extras.PREFS_NAME;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private DrawerLayout mDrawerLayout;
@@ -53,22 +50,15 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nv);
         mToggle.syncState();
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         setupDrawerContent(navigationView);
 
-        // start drawer when first starts
-//        mDrawerLayout.openDrawer(Gravity.LEFT);
-
     }
-
-
     public void selectItemDrawer(MenuItem item) {
         Fragment myFragment = null;
         Class fragmentClass = null;
-
         switch (item.getItemId()) {
             case R.id.home:
                 fragmentClass = Home.class;
@@ -98,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
                                 dialogInterface.dismiss();
                             }
                         }).show();
+                break;
             case R.id.website:
                 Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.nishahdennison.com"));
                 startActivity(intent);
                 break;
         }
-
         try {
             myFragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -118,47 +108,41 @@ public class MainActivity extends AppCompatActivity {
             setTitle(item.getTitle());
         }
         mDrawerLayout.closeDrawers();
-
     }
-
     private void clearPreferences() {
         cancelAllAlarms();
         clearSharedPreferences();
     }
-
     private void cancelAllAlarms() {
         SharedPreferences sharedPrefs;
         sharedPrefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Reminder chakraReminder = getFromSharedPrefs(sharedPrefs, Extras.CHAKRA_REMINDER_OBJECT);
         Reminder mantraReminder = getFromSharedPrefs(sharedPrefs, Extras.MANTRA_REMINDER_OBJECT);
         Reminder musicReminder = getFromSharedPrefs(sharedPrefs, Extras.MUSIC_REMINDER_OBJECT);
-        if(chakraReminder!= null) {
+        if (chakraReminder != null) {
             ArrayList<Integer> chakraReminderRequestCodes = chakraReminder.getRequestCode();
-            new AlarmScheduler().cancelAlarms(this,chakraReminderRequestCodes,chakraReminder.getReminderType());
+            new AlarmScheduler().cancelAlarms(this, chakraReminderRequestCodes, chakraReminder.getReminderType());
         }
-        if(mantraReminder != null) {
+        if (mantraReminder != null) {
             ArrayList<Integer> mantraReminderRequestCodes = mantraReminder.getRequestCode();
-            new AlarmScheduler().cancelAlarms(this,mantraReminderRequestCodes,mantraReminder.getReminderType());
+            new AlarmScheduler().cancelAlarms(this, mantraReminderRequestCodes, mantraReminder.getReminderType());
         }
-        if(musicReminder != null) {
+        if (musicReminder != null) {
             ArrayList<Integer> musicReminderRequestCodes = musicReminder.getRequestCode();
-            new AlarmScheduler().cancelAlarms(this,musicReminderRequestCodes,musicReminder.getReminderType());
+            new AlarmScheduler().cancelAlarms(this, musicReminderRequestCodes, musicReminder.getReminderType());
         }
     }
-
-    private Reminder getFromSharedPrefs(SharedPreferences sharedPrefs,String objectKey) {
+    private Reminder getFromSharedPrefs(SharedPreferences sharedPrefs, String objectKey) {
         String jsonObject = sharedPrefs.getString(objectKey, "");
         Gson gson = new Gson();
         return gson.fromJson(jsonObject, Reminder.class);
     }
-
     private void clearSharedPreferences() {
         SharedPreferences.Editor sharedPrefsEditor;
         sharedPrefsEditor = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit();
         sharedPrefsEditor.clear();
         sharedPrefsEditor.commit();
     }
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

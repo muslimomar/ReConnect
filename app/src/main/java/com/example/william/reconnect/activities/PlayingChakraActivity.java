@@ -117,7 +117,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
                 player.start();
                 break;
-            case "Kevin Macleod Bathed in The Light[Good for Chakra]":
+            case "Kevin Macleod Bathed in Light":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
                 player.start();
                 break;
@@ -157,7 +157,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
                 player.start();
                 break;
-            case RANDOM:
+            case "Random":
                 player = MediaPlayer.create(this, rawRef[random.nextInt(rawRef.length)]);
                 player.start();
                 break;
@@ -173,11 +173,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.chinese_flute);
                 player.start();
                 break;
-            case "Harp Sound Effects":
+            case "Harp Sound":
                 player = MediaPlayer.create(this, R.raw.harp_sound_effects);
                 player.start();
                 break;
-            case "Mermaid Singing 2":
+            case "Mermaid Singing":
                 player = MediaPlayer.create(this, R.raw.mermaid_singing);
                 player.start();
                 break;
@@ -268,10 +268,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
 
-        // set Opacity
-        //Drawable background3 = musicIv.getBackground();
-        //background3.setAlpha(40);
-
     }
 
     private void rotateChakra() {
@@ -279,8 +275,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         rotation.setRepeatCount(Animation.INFINITE);
         playingIconIv.startAnimation(rotation);
     }
-
-
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
         showExitDialog();
@@ -311,7 +305,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
         view.setBackgroundDrawable(composite);
 
     }
-
     @OnClick(R.id.info_iv)
     public void infoIvBtn(View view) {
         Chakra chakra = chakras.get(position);
