@@ -120,7 +120,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
                 player.start();
                 break;
-            case "Kevin Macleod Bathed in Light[Good for Chakra]":
+            case "Kevin Macleod Bathed in Light":
                 player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
                 player.start();
                 break;

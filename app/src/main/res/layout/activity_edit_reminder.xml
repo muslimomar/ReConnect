@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_toRightOf="@id/start_title"
-                        android:text="00" />
+                        android:text="00.00" />
 
                 </RelativeLayout>
 
@@ -84,18 +84,29 @@
                         android:text="End:   "
                         android:textSize="19sp" />
 
+
+
                     <Button
                         android:id="@+id/end_time_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_toRightOf="@id/end_title"
-                        android:text="00" />
+                        android:text="00.00"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/end_title" />
 
                 </RelativeLayout>
 
-
+                <TextView
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Meditations on the hour"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
+
 
         </LinearLayout>
 
@@ -190,14 +201,6 @@
                         android:layout_weight="1"
                         android:spinnerMode="dropdown" />
 
-                    <ImageButton
-                        android:id="@+id/music_preview_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:src="@drawable/ic_play_arrow_black_24dp"
-                        android:visibility="invisible"
-                        />
 
                 </LinearLayout>
 
@@ -226,14 +229,7 @@
                         android:layout_gravity="center_vertical"
                         />
 
-                    <ImageButton
-                        android:id="@+id/notificiation_preview_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:src="@drawable/ic_play_arrow_black_24dp"
-                        android:visibility="invisible"
-                        />
+
 
                 </LinearLayout>
 

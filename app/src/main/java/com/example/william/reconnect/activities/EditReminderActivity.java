@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -37,9 +36,10 @@ import com.example.william.reconnect.model.Reminder;
 import com.example.william.reconnect.reminder.AlarmScheduler;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.StringJoiner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,19 +55,13 @@ import static com.example.william.reconnect.util.Extras.RANDOM;
 public class EditReminderActivity extends AppCompatActivity implements OnItemSelectedListener {
     public static String TAG = EditReminderActivity.class.getSimpleName();
     public static int meditationType = 0;
-    long pickedTimeStamp;
-
     String selectedSoundType = "";
     String selectedMantraType = "";
     String selectedChakraType = "";
-
     MediaPlayer player;
-
     int startHour = -1;
     int endHour = -1;
-
     String soundPlaybackRb;
-
     Reminder receivedReminder;
 
     @BindView(R.id.music_playback_radio_group)
@@ -93,7 +87,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     RadioGroup mantraPlaybackRadioGroup;
     @BindView(R.id.mantra_first_spinner)
     Spinner mantraFirstSpinner;
-    String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in Light[Good for Chakra]", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
+    String[] musicSongsList = new String[]{"Jason Shaw Acoustuc Meditation", "Kevin MacLeod - Sovereign Quarter", "Kevin MacLeod Dream Culture", "Kevin Macleod Bathed in Light", "Kevin Macleod Windswept", "Kevin MacLeod Enchanted Journey", "Kevin MacLeod Smoother Moves", "Kevin MacLeod Meditation Impromptu", "Lee Rosevere Everywhere", "Lee Rosevere Betrayal", "Lee Rosevere We’ll figure it out together", "Lee Rosevere Not My Problem", "Ryan Andersen Day to Night",};
     String[] notifSongsList = new String[]{"Bell Tree", "Chinese Flute #1", "Chinese Flute #2", "Harp Sound", "Mermaid Singing"};
     //
     @BindView(R.id.music_random_rb)
@@ -127,13 +121,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     View mantraLayoutView;
     @BindView(R.id.pick_a_time_layout)
     LinearLayout pickaTimeLayout;
-    @BindView(R.id.music_preview_btn)
-    ImageButton musicPreviewBtn;
-    @BindView(R.id.notificiation_preview_btn)
-    ImageButton notificationPreviewBtn;
 
-
-    boolean isTimePickerClicked = false;
     SharedPreferences sharedPrefs;
     SharedPreferences.Editor sharedPrefsEditor;
     private boolean mReminderHasChanged = false;
@@ -178,105 +166,14 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
 
     }
 
-    private void playSelectedMusic() {
-        switch (selectedSoundType) {
-            case "Jason Shaw Acoustuc Meditation":
-                player = MediaPlayer.create(this, R.raw.jason_shaw_acoustuc_meditation);
-                player.start();
-                break;
-            case "Kevin MacLeod - Sovereign Quarter":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_sovereign_quarter);
-                player.start();
-                break;
-            case "Kevin MacLeod Dream Culture":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_dream_culture);
-                player.start();
-                break;
-            case "Kevin Macleod Bathed in Light[Good for Chakra]":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_bathed_in_the_light);
-                player.start();
-                break;
-            case "Kevin Macleod Windswept":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_windswept);
-                player.start();
-                break;
-            case "Kevin MacLeod Enchanted Journey":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_enchanted_journey);
-                player.start();
-                break;
-            case "Kevin MacLeod Smoother Move":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_smoother_move);
-                player.start();
-                break;
-            case "Kevin MacLeod Meditation Impromptu":
-                player = MediaPlayer.create(this, R.raw.kevin_macleod_meditation_impromptu);
-                player.start();
-                break;
-            case "Lee Rosevere Everywhere":
-                player = MediaPlayer.create(this, R.raw.lee_rosevere_everywhere);
-                player.start();
-                break;
-            case "Lee Rosevere Betrayal":
-                player = MediaPlayer.create(this, R.raw.lee_rosevere_betrayal);
-                player.start();
-                break;
-            case "Ryan Andersen Day to Night":
-                player = MediaPlayer.create(this, R.raw.ryan_andersen_day_to_night);
-                player.start();
-                break;
-            case "Lee Rosevere We’ll figure it out together":
-                player = MediaPlayer.create(this, R.raw.lee_rosevere_well_figure_it_out_together);
-                player.start();
-                break;
-            case "Lee Rosevere Not My Problem":
-                player = MediaPlayer.create(this, R.raw.lee_rosevere_not_my_problem);
-                player.start();
-                break;
-            case "Bell Tree":
-                player = MediaPlayer.create(this, R.raw.bell_tree);
-                player.start();
-                break;
-            case "Chinese Flute #1":
-                player = MediaPlayer.create(this, R.raw.flute_1);
-                player.start();
-                break;
-            case "Chinese Flute #2":
-                player = MediaPlayer.create(this, R.raw.chinese_flute);
-                player.start();
-                break;
-            case "Harp Sound":
-                player = MediaPlayer.create(this, R.raw.harp_sound_effects);
-                player.start();
-                break;
-            case "Mermaid Singing":
-                player = MediaPlayer.create(this, R.raw.mermaid_singing);
-                player.start();
-                break;
-        }
-
-        if (player != null) {
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    musicPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                    notificationPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                }
-            });
-        }
-    }
-
     private void setupViewWithData() {
-
         startTimeBtn.setText(getHourWithZero(receivedReminder.getPickedStartHours()));
         endTimeBtn.setText(getHourWithZero(receivedReminder.getPickedEndHours()));
-
         String soundPlaybackRb = receivedReminder.getSoundPlaybackRb();
         int chakraPlaybackRb = receivedReminder.getChakraPlaybackRb();
         int mantraPlaybackRb = receivedReminder.getMantraPlaybackRb();
-
         startHour = receivedReminder.getPickedStartHours();
         endHour = receivedReminder.getPickedEndHours();
-
         chakraPlaybackRadioGroup.check(chakraPlaybackRb);
         mantraPlaybackRadioGroup.check(mantraPlaybackRb);
 
@@ -343,13 +240,10 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         chakraListSpinner.setEnabled(false);
         musicRandomRb.setEnabled(false);
         musicSpecificRb.setEnabled(false);
-
         soundNotifRb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    hideButton(musicPreviewBtn);
-                    showButton(notificationPreviewBtn);
                     soundPlaybackRb = soundNotifRb.getText().toString().trim();
                     notifSpinner.setEnabled(true);
                     musicRandomRb.setEnabled(false);
@@ -366,7 +260,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                             selectedSoundType = notifSpinner.getItemAtPosition(i).toString();
                             if (player != null && player.isPlaying()) {
                                 player.stop();
-                                notificationPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                             }
                         }
 
@@ -384,7 +277,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     soundPlaybackRb = soundMusicRb.getText().toString().trim();
-                    hideButton(notificationPreviewBtn);
                     notifSpinner.setEnabled(false);
                     musicRandomRb.setEnabled(true);
                     musicSpecificRb.setEnabled(true);
@@ -395,7 +287,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             }
         });
 
-
         musicPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -403,12 +294,10 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                 if (i == musicRandomRb.getId()) {
                     selectedSoundType = RANDOM;
                     musicListSpinner.setEnabled(false);
-                    hideButton(musicPreviewBtn);
 
 
                 } else if (i == musicSpecificRb.getId()) {
                     if (!soundNotifRb.isChecked()) {
-                        showButton(musicPreviewBtn);
                     }
                     selectedSoundType = musicListSpinner.getItemAtPosition(0).toString();
                     musicListSpinner.setEnabled(true);
@@ -419,7 +308,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                             selectedSoundType = musicListSpinner.getItemAtPosition(i).toString();
                             if (player != null && player.isPlaying()) {
                                 player.stop();
-                                musicPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
                             }
                         }
 
@@ -431,7 +319,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                 }
             }
         });
-
 
         mantraPlaybackRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -522,7 +409,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             }
         });
 
-
     }
 
     private void adjustReminderLayout() {
@@ -532,7 +418,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                 chakraLayout.setVisibility(View.VISIBLE);
                 mantraLayoutView.setVisibility(View.GONE);
                 break;
-
             case Reminder.TYPE_MANTRA:
                 mantraLayout.setVisibility(View.VISIBLE);
                 chakraLayout.setVisibility(View.GONE);
@@ -601,7 +486,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             showUnsavedChangesDialog(discardButtonClickListener);
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -878,8 +762,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                long arg3) {
-
-
         String sp1 = String.valueOf(mantraFirstSpinner.getSelectedItem());
         selectedChakraType = sp1;
 
@@ -907,19 +789,15 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
                 break;
         }
 
-
         if (receivedReminder != null) {
             mantraSecondSpinner.setSelection(receivedReminder.getMantraSecondSpinner());
         }
 
     }
 
-
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
-
     public void prepareMantrasList(int mantraArray) {
         String[] list = new String[]{};
         list = getResources().getStringArray(mantraArray);
@@ -931,9 +809,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         mantraSecondSpinner.setAdapter(dataAdapter);
 
     }
-
     private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.unsaved_changes_dialog_msg);
         builder.setPositiveButton(R.string.discard, discardButtonClickListener);
@@ -970,8 +846,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     public void startTimeBtn(View view) {
         setupStartHourDialog();
     }
-
-
     private long setupCalendar(int hour) {
         Calendar calNow = Calendar.getInstance();
         Calendar calSet = (Calendar) calNow.clone();
@@ -998,6 +872,15 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
         np.setMaxValue(23);
         np.setMinValue(0);
+        np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        np.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int i) {
+                NumberFormat formatter = new DecimalFormat("#00.00");
+                return String.valueOf(formatter.format(i));
+            }
+        });
+
         np.setWrapSelectorWheel(false);
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -1006,7 +889,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             }
         });
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startHour = np.getValue();
@@ -1015,7 +898,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
 
             }
         });
-        b2.setOnClickListener(new View.OnClickListener() {
+        b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 d.dismiss();
@@ -1035,6 +918,14 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         np.setMaxValue(23);
         np.setMinValue(0);
         np.setWrapSelectorWheel(false);
+        np.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int i) {
+                NumberFormat formatter = new DecimalFormat("#00.00");
+                return String.valueOf(formatter.format(i));
+            }
+        });
+
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
@@ -1042,7 +933,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             }
         });
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 endHour = np.getValue();
@@ -1051,7 +942,7 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
 
             }
         });
-        b2.setOnClickListener(new View.OnClickListener() {
+        b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 d.dismiss();
@@ -1067,9 +958,9 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
     }
 
     private String getHourWithZero(int hour) {
-        return String.format("%02d", hour);
+        NumberFormat formatter = new DecimalFormat("#00.00");
+        return formatter.format(hour);
     }
-
 
     public ArrayList<Integer> checkSameHour(ArrayList<Integer> list1, ArrayList<Integer> list2) {
         int same = 0;
@@ -1097,39 +988,6 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
         return array;
     }
 
-    @OnClick(R.id.music_preview_btn)
-    public void setMusicPreviewBtn(View view) {
-        if (player != null && player.isPlaying()) {
-            player.stop();
-            musicPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-        } else {
-            playSelectedMusic();
-            musicPreviewBtn.setImageResource(R.drawable.ic_stop_black_24dp);
-        }
-    }
-
-    @OnClick(R.id.notificiation_preview_btn)
-    public void setNotificationPreviewBtn(View view) {
-        if (player != null && player.isPlaying()) {
-            player.stop();
-            notificationPreviewBtn.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-        } else {
-            playSelectedMusic();
-            notificationPreviewBtn.setImageResource(R.drawable.ic_stop_black_24dp);
-        }
-
-    }
-
-    public void hideButton(ImageButton imageButton) {
-        imageButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-        imageButton.setVisibility(View.INVISIBLE);
-        stopPlayer();
-    }
-
-    public void showButton(ImageButton imageButton) {
-        imageButton.setVisibility(View.VISIBLE);
-        stopPlayer();
-    }
 
     public void stopPlayer() {
         if (player != null && player.isPlaying()) {
@@ -1145,6 +1003,4 @@ public class EditReminderActivity extends AppCompatActivity implements OnItemSel
             player.release();
         }
     }
-
-
 }
