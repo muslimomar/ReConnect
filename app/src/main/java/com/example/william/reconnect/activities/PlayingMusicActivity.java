@@ -281,7 +281,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         showExitDialog();
     }
 
@@ -306,6 +305,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
                         writeToDB();
                         Intent intent = new Intent(PlayingMusicActivity.this, MeditationsActivity.class);
                         startActivity(intent);
+                        finish();
 
                     }
                 })

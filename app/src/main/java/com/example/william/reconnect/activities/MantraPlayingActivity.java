@@ -298,19 +298,10 @@ public class MantraPlayingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        writeToDB();
-        handler.removeCallbacks(r);
-        if (player != null) {
-            player.stop();
-            player.release();
-            player = null;
-        }
+       showExitDialog();
     }
 
     public void showExitDialog() {
-
-
         final AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -332,7 +323,7 @@ public class MantraPlayingActivity extends AppCompatActivity {
                         writeToDB();
                         Intent intent = new Intent(MantraPlayingActivity.this, MeditationsActivity.class);
                         startActivity(intent);
-
+                        finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

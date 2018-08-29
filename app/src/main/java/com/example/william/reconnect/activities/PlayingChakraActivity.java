@@ -349,6 +349,11 @@ public class PlayingChakraActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
     /* Set Music Time Spent Fully working 27-05-2018 */
     private void writeToDB() {
 
@@ -467,7 +472,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
                         writeToDB();
                         Intent intent = new Intent(PlayingChakraActivity.this, MeditationsActivity.class);
                         startActivity(intent);
-
+                        finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
