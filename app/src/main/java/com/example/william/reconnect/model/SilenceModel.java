@@ -11,9 +11,6 @@ import io.realm.annotations.PrimaryKey;
 
 public class SilenceModel extends RealmObject {
 
-
-
-
     @PrimaryKey
     String id;
     long silenceTimeSpent;

@@ -171,7 +171,6 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 int minutes = (int) ((musicTimeSpent / (1000 * 60)) % 60);
                 int hours = (int) ((musicTimeSpent / (1000 * 60 * 60)) % 24);
                 musicTimeSpent = musicTimeSpent / 1000;
-                showFinishDialog();
                 playingIcon.clearAnimation();
 
                 if (!((Activity) PlayingMusicActivity.this).isFinishing()) {
@@ -183,6 +182,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
         handler.postDelayed(r, ONE_MIN_MS);
 
     }
+
     private void initializeImages() {
         playingIcon.setImageResource(R.drawable.new_logo);
         backgroundGradient(relativeLayout);
@@ -230,6 +230,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
                 break;
         }
     }
+
     /* Show dialog when finished meditation */
     private void showFinishDialog() {
         AlertDialog.Builder builder;
@@ -283,6 +284,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
         super.onBackPressed();
         showExitDialog();
     }
+
     public void showExitDialog() {
         final AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

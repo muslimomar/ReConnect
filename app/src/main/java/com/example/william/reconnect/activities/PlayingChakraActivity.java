@@ -192,8 +192,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
             @Override
             public void run() {
                 playingIconIv.clearAnimation();
-                showFinishDialog();
-
                 if (!((Activity) PlayingChakraActivity.this).isFinishing()) {
                     showFinishDialog();
                 }
@@ -275,6 +273,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         rotation.setRepeatCount(Animation.INFINITE);
         playingIconIv.startAnimation(rotation);
     }
+
     @OnClick(R.id.back_arrow_iv)
     public void backArrowBtn(View view) {
         showExitDialog();
@@ -305,6 +304,7 @@ public class PlayingChakraActivity extends AppCompatActivity {
         view.setBackgroundDrawable(composite);
 
     }
+
     @OnClick(R.id.info_iv)
     public void infoIvBtn(View view) {
         Chakra chakra = chakras.get(position);
