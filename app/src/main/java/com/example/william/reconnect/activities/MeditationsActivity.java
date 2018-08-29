@@ -215,8 +215,8 @@ public class MeditationsActivity extends AppCompatActivity {
 
     private void goToMusicPlaying() {
         Intent intent = new Intent(this, PlayingMusicActivity.class);
-        if (mantraReminder != null) {
-            intent.putExtra("music_type", mantraReminder.getSoundPlaybackType());
+        if (musicReminder != null) {
+            intent.putExtra("music_type", musicReminder.getSoundPlaybackType());
         }
         startActivity(intent);
     }
