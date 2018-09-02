@@ -263,6 +263,8 @@ public class PlayingChakraActivity extends AppCompatActivity {
             }
         }
 
+        chakraType = chakras.get(position).getChakraName();
+
         playingIconIv.setImageResource(chakras.get(position).getChakraIcon());
         backgroundGradient(relativeLayout);
 
