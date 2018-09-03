@@ -142,5 +142,4 @@ public class ReminderAlarmService extends IntentService {
         Gson gson = new Gson();
         return gson.fromJson(jsonObject, Reminder.class);
     }
-
 }

@@ -251,7 +251,6 @@ public class PlayingChakraActivity extends AppCompatActivity {
 
     private void initializeImages() {
 
-
         if (chakraType.equals(RANDOM)) {
             position = new Random().nextInt(chakras.size());
         } else {

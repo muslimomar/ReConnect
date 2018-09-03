@@ -108,7 +108,7 @@ public class Balance extends Fragment {
             long hours = allTimeSpent / 3600;
             long minutes = (allTimeSpent % 3600) / 60;
             long seconds = allTimeSpent % 60;
-            totalTimeValues.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+            totalTimeValues.setText(hours + ":" + minutes + ":" + seconds);
         }
     }
 
@@ -134,7 +134,7 @@ public class Balance extends Fragment {
             long hours = data / 3600;
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
-            silenceSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+            silenceSpentIv.setText(hours + ":" + minutes + ":" + seconds);
         }
     }
 
@@ -148,7 +148,7 @@ public class Balance extends Fragment {
             long minutes = (data % 3600) / 60;
             long seconds = data % 60;
             fullMusicTimeSpent = hours + minutes + seconds;
-            //musicTxt.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+            //musicTxt.setText(hours + ":" + minutes + ":" + seconds);
         }
     }
 
@@ -163,7 +163,7 @@ public class Balance extends Fragment {
             long seconds = data % 60;
 
             mantraFullTimeSpent = hours + minutes + seconds;
-            //mantraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+            //mantraSpentIv.setText(hours + ":" + minutes + ":" + seconds);
         }
     }
 
@@ -181,7 +181,6 @@ public class Balance extends Fragment {
             long hours = fullChakraTimeSpent / 3600;
             long minutes = (fullChakraTimeSpent % 3600) / 60;
             long seconds = fullChakraTimeSpent % 60;
-            //chakraSpentIv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
         }
     }
 
@@ -193,13 +192,12 @@ public class Balance extends Fragment {
                 /* Calculate element percentage */
                 double finalRWt = ((1.0f * data / fullChakraTimeSpent) * 100);
                 DecimalFormat format = new DecimalFormat("0");
-
-                //Toast.makeText(getActivity(), "is : " + format.format(finalRWt), Toast.LENGTH_SHORT).show();
+                
                 // Convert from seconds to time format
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                crownUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                crownUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 crownUsagePb.setMax(100);
                 crownUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
@@ -222,7 +220,7 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                thirdEyeUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                thirdEyeUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 thirdEyeUsagePb.setMax(100);
                 thirdEyeUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
 
@@ -245,7 +243,7 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                throatUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                throatUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 throatUsagePb.setMax(100);
                 throatUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else throatUsageTv.setText("0:00:00");
@@ -267,7 +265,7 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                heartUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                heartUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 heartUsagePb.setMax(100);
                 heartUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else heartUsageTv.setText("0:00:00");
@@ -288,7 +286,7 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                solarPlexusUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                solarPlexusUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 solarPlexusUsagePb.setMax(100);
                 solarPlexusUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
@@ -309,7 +307,7 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                sacralUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                sacralUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 sacralUsagePb.setMax(100);
                 sacralUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else
@@ -331,7 +329,7 @@ public class Balance extends Fragment {
                 long hours = data / 3600;
                 long minutes = (data % 3600) / 60;
                 long seconds = data % 60;
-                rootUsageTv.setText(hours + " Hours " + minutes + " min " + seconds + " sec");
+                rootUsageTv.setText(hours + ":" + minutes + ":" + seconds);
                 rootUsagePb.setMax(100);
                 rootUsagePb.setProgress(Integer.valueOf(format.format(finalRWt)));
             } else

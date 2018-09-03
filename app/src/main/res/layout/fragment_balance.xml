@@ -37,12 +37,12 @@
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
-                    >
+                    android:paddingStart="16dp">
 
                     <TextView
                         android:id="@+id/second_cheer_tv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="Every minute counts!"
@@ -68,7 +68,7 @@
             app:cardCornerRadius="6dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_vertical_margin"
@@ -79,7 +79,7 @@
 
                 <RelativeLayout
                     android:id="@+id/music_spent_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal">
@@ -89,7 +89,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:src="@drawable/clock" />
+                        android:src="@drawable/clock"
+                        android:layout_alignParentStart="true" />
 
                     <TextView
                         android:id="@+id/total_meditate_time_tv"
@@ -98,16 +99,25 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_4"
                         android:text="Total Meditation Time"
+                        android:layout_marginRight="2dp"
                         android:textColor="#000000"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:paddingRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/clock_iv_4"
+                        android:layout_marginEnd="2dp" />
 
                     <TextView
                         android:id="@+id/total_time_values"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:paddingLeft="10dp"
                         android:layout_alignParentRight="true"
-                        android:text="00 hour 00 min 00 sec"
-                        android:textColor="#727272" />
+                        android:text="0:00:00"
+                        android:textColor="#727272"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="2dp" />
 
                 </RelativeLayout>
 
@@ -125,7 +135,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:src="@drawable/clock" />
+                        android:src="@drawable/clock"
+                        android:layout_alignParentStart="true" />
 
                     <TextView
                         android:id="@+id/silence_time_spent_iv"
@@ -134,18 +145,19 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/clock_iv_2"
                         android:text="Total Silence Time"
-
                         android:textColor="#000000"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/clock_iv_2" />
 
                     <TextView
                         android:id="@+id/silence_spent_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="00 hour 00 min 00 sec"
-
-                        android:textColor="#727272" />
+                        android:text="0:00:00"
+                        android:textColor="#727272"
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
 

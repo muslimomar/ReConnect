@@ -35,15 +35,16 @@
                 android:text="Crown"
                 android:textColor="#000000"
                 android:textStyle="bold"
-
-                />
+                android:layout_toEndOf="@+id/crown_usage_icon"
+                android:layout_marginStart="16dp" />
 
             <TextView
                 android:id="@+id/crown_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/crown_usage_pb"
@@ -54,7 +55,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/crown_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/crown_usage_icon" />
 
 
         </RelativeLayout>
@@ -62,7 +65,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/crown_usage_pb"
             android:alpha="0.1"
             android:background="@color/black" />
 
@@ -87,15 +89,16 @@
                 android:text="Third Eye"
                 android:textColor="#000000"
                 android:textStyle="bold"
-
-                />
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/third_eye_usage_icon" />
 
             <TextView
                 android:id="@+id/third_eye_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/third_eye_usage_pb"
@@ -106,14 +109,15 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/third_eye_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/third_eye_usage_icon" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/crown_usage_pb"
             android:alpha="0.1"
             android:background="@color/black" />
 
@@ -138,15 +142,16 @@
                 android:text="Throat"
                 android:textColor="#000000"
                 android:textStyle="bold"
-
-                />
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/throat_usage_icon" />
 
             <TextView
                 android:id="@+id/throat_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/throat_usage_pb"
@@ -157,14 +162,15 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/throat_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/throat_usage_icon" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/crown_usage_pb"
             android:alpha="0.1"
             android:background="@color/black" />
 
@@ -189,15 +195,16 @@
                 android:text="Heart"
                 android:textColor="#000000"
                 android:textStyle="bold"
-
-                />
+                android:layout_toEndOf="@+id/heart_usage_icon"
+                android:layout_marginStart="16dp" />
 
             <TextView
                 android:id="@+id/heart_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/heart_usage_pb"
@@ -208,14 +215,15 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/heart_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/heart_usage_icon" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/crown_usage_pb"
             android:alpha="0.1"
             android:background="@color/black" />
 
@@ -240,15 +248,16 @@
                 android:text="Solar Plexus"
                 android:textColor="#000000"
                 android:textStyle="bold"
-
-                />
+                android:layout_toEndOf="@+id/solar_plexus_usage_icon"
+                android:layout_marginStart="16dp" />
 
             <TextView
                 android:id="@+id/solar_plexus_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/solar_plexus_usage_pb"
@@ -259,14 +268,15 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/solar_plexus_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/solar_plexus_usage_icon" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/crown_usage_pb"
             android:alpha="0.1"
             android:background="@color/black" />
 
@@ -291,15 +301,16 @@
                 android:text="Sacral"
                 android:textColor="#000000"
                 android:textStyle="bold"
-
-                />
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/sacral_usage_icon" />
 
             <TextView
                 android:id="@+id/sacral_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/sacral_usage_pb"
@@ -310,7 +321,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/sacral_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_toEndOf="@id/sacral_usage_icon"
+                android:layout_marginStart="16dp" />
 
         </RelativeLayout>
 
@@ -341,14 +354,16 @@
                 android:layout_toRightOf="@+id/root_usage_icon"
                 android:text="Root"
                 android:textColor="#000000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginStart="16dp" />
 
             <TextView
                 android:id="@+id/root_usage_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                tools:text="00 hr 00 min" />
+                android:text="0:00:00"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/root_usage_pb"
@@ -359,7 +374,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/root_usage_icon"
-                android:progress="0" />
+                android:progress="0"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/root_usage_icon" />
 
         </RelativeLayout>
 
