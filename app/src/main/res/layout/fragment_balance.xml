@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context="com.example.william.reconnect.fragments.Balance">
+        tools:context="com.devcora.android.reconnect.fragments.Balance">
 
         <android.support.v7.widget.CardView
             android:id="@+id/compliment_card_view"
@@ -102,7 +102,6 @@
                         android:layout_marginRight="2dp"
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        android:paddingRight="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@id/clock_iv_4"
                         android:layout_marginEnd="2dp" />
@@ -112,7 +111,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
-                        android:paddingLeft="10dp"
                         android:layout_alignParentRight="true"
                         android:text="0:00:00"
                         android:textColor="#727272"

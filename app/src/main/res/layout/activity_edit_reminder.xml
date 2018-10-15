@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="com.example.william.reconnect.activities.EditReminderActivity">
+    tools:context="com.devcora.android.reconnect.activities.EditReminderActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="8dp"
-                android:src="@drawable/ic_one_hour" />
+                android:src="@drawable/ic_one_hour"
+                android:paddingStart="8dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
                 android:layout_marginBottom="@dimen/space_between_elments"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="@dimen/space_between_elments"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginStart="30dp">
 
 
                 <TextView

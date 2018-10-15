@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="com.devcora.android.reconnect.activities.EditReminderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/pick_a_time_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_one_hour"
+                android:paddingStart="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/space_between_elments"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="@dimen/space_between_elments"
+                android:orientation="vertical"
+                android:layout_marginStart="30dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_light"
+                    android:text="Create Time Period"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/start_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Start: "
+                        android:textSize="19sp" />
+
+                    <Button
+                        android:id="@+id/start_time_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@id/start_title"
+                        android:text="00.00"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/start_title" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/end_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="End:   "
+                        android:textSize="19sp" />
+
+
+
+                    <Button
+                        android:id="@+id/end_time_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@id/end_title"
+                        android:text="00.00"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/end_title" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Meditations on the hour"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.1"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/music_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:src="@drawable/ic_music" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/space_between_elments"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="@dimen/space_between_elments"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_light"
+                    android:text="Choose Music"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Choose music or notification sound to start and end" />
+
+                <RadioButton
+                    android:id="@+id/sound_music_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Music"
+                    android:textColor="@color/secondary_text_color" />
+
+                <RadioGroup
+                    android:id="@+id/music_playback_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="@dimen/space_between_elments"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/music_random_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Random"
+                        android:textColor="@color/secondary_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/music_specific_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="Specific"
+                        android:textColor="@color/secondary_text_color" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/space_between_elments"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/music_list_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginEnd="16dp" />
+
+
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/sound_notification_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Notification Only"
+                    android:textColor="@color/secondary_text_color" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/space_between_elments"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/notification_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/chakra_layout_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.1"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/chakra_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:src="@drawable/ic_chakra_small" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/space_between_elments"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="@dimen/space_between_elments"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_light"
+                    android:text="Chakra"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/chakra_playback_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_between_elments">
+
+                    <RadioButton
+                        android:id="@+id/chakra_random_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Random"
+                        android:textColor="@color/secondary_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/chakra_specific_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Specific"
+                        android:textColor="@color/secondary_text_color" />
+
+                </RadioGroup>
+
+                <Spinner
+                    android:id="@+id/chakra_list_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="@dimen/space_between_elments"
+                    android:layout_marginStart="32dp">
+                </Spinner>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/mantra_layout_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.1"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/mantra_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/ic_mantra_small"
+                android:paddingStart="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/space_between_elments"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="@dimen/space_between_elments"
+                android:orientation="vertical"
+                android:layout_marginStart="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_light"
+                    android:text="Mantra"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+
+                    />
+
+                <RadioGroup
+                    android:id="@+id/mantra_playback_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_between_elments">
+
+                    <RadioButton
+                        android:id="@+id/mantra_random_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Random"
+                        android:textColor="@color/secondary_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/mantra_custom_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Custom"
+                        android:textColor="@color/secondary_text_color" />
+
+                    <EditText
+                        android:id="@+id/custom_mantra_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:maxLength="140"
+                        android:textColor="@color/secondary_text_color"
+                        android:textColorHighlight="@color/secondary_text_color"
+                        android:textColorHint="@color/secondary_text_color"
+                        android:textSize="16sp"
+                        android:layout_marginStart="32dp" />
+
+                    <RadioButton
+                        android:id="@+id/mantra_existing_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Existing Mantra"
+                        android:textColor="@color/secondary_text_color" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/mantra_spinner_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="32dp">
+
+                    <Spinner
+                        android:id="@+id/mantra_first_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
+
+                    <Spinner
+                        android:id="@+id/mantra_second_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

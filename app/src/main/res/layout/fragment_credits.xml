@@ -12,7 +12,7 @@
         android:paddingRight="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        tools:context="com.example.william.reconnect.fragments.Instructions">
+        tools:context="com.devcora.android.reconnect.fragments.Instructions">
 
         <TextView
             android:id="@+id/first_tv"

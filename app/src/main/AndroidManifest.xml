@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.william.reconnect">
+    package="com.devcora.android.reconnect">
 
-        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".activities.MyApplication"
@@ -21,7 +22,7 @@
 
         <activity
             android:name=".activities.PlayingChakraActivity"
-            android:theme="@style/TransparentStatusBar" >
+            android:theme="@style/TransparentStatusBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -39,9 +40,7 @@
             android:theme="@style/SplashTheme">
 
         </activity>
-        <activity
-            android:name=".activities.MeditationsActivity"
-         >
+        <activity android:name=".activities.MeditationsActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -57,12 +56,12 @@
         </activity>
         <activity
             android:name=".activities.SilenceDayFirstActivity"
-            android:theme="@style/SplashTheme"
-            >
+            android:theme="@style/SplashTheme">
 
         </activity>
 
-        <activity android:name=".activities.PlayingMusicActivity"
+        <activity
+            android:name=".activities.PlayingMusicActivity"
             android:theme="@style/BlackStatusBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -73,8 +72,10 @@
         <activity
             android:name=".activities.SilenceChoseSign"
             android:theme="@style/SplashTheme">
+
         </activity>
-        <activity android:name=".activities.MantraPlayingActivity"
+        <activity
+            android:name=".activities.MantraPlayingActivity"
             android:theme="@style/BlackStatusBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -82,7 +83,12 @@
 
         </activity>
 
-        <service android:name=".reminder.ReminderAlarmService" android:exported="false"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="39ab78f8c7d9398762a6364e867079ac26d08f4c" />
+        <service
+            android:name=".reminder.ReminderAlarmService"
+            android:exported="false" />
 
     </application>
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.william.reconnect.fragments.Home">
+    tools:context="com.devcora.android.reconnect.fragments.Home">
 
     <LinearLayout
         android:layout_width="match_parent"

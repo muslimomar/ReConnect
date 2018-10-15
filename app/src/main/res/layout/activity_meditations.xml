@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
-    tools:context="com.example.william.reconnect.activities.MeditationsActivity">
+    tools:context="com.devcora.android.reconnect.activities.MeditationsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,7 +53,6 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-
                     >
 
                     <TextView
@@ -65,7 +64,8 @@
                         android:text="Mantra"
                         android:textColor="@color/meditation_color"
 
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:drawableEnd="@drawable/ic_music_18dp" />
 
                     <TextView
                         android:id="@+id/mantra_time_period_tv"
@@ -87,7 +87,9 @@
                         android:layout_toLeftOf="@id/mantra_icon_iv"
                         android:textColor="@color/meditation_color"
                         android:textSize="16sp"
-                        tools:text="lorem ipsum dolor iset amet brend ist brend" />
+                        tools:text="lorem ipsum dolor iset amet brend ist brend"
+                        android:layout_toStartOf="@id/mantra_icon_iv"
+                        android:layout_alignParentStart="true" />
 
 
                     <ImageView
@@ -99,7 +101,10 @@
                         android:layout_marginRight="16dp"
                         android:paddingLeft="5dp"
                         android:src="@drawable/ic_mantra_63dp"
-                        android:tint="@color/white" />
+                        android:tint="@color/white"
+                        android:layout_marginEnd="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:paddingStart="5dp" />
 
 
                 </RelativeLayout>
@@ -125,7 +130,6 @@
                         android:id="@+id/mantra_edit_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/divider_mantra"
                         android:background="@android:color/transparent"
                         android:elevation="0dp"
                         android:text="EDIT" />
@@ -134,10 +138,9 @@
                         android:id="@+id/mantra_preview_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/divider_mantra"
-                        android:layout_toRightOf="@id/mantra_edit_btn"
                         android:background="@android:color/transparent"
-                        android:text="PREVIEW" />
+                        android:text="PREVIEW"
+                        android:layout_toEndOf="@id/mantra_edit_btn" />
 
                 </LinearLayout>
 
@@ -194,8 +197,8 @@
                         android:drawableRight="@drawable/ic_music_18dp"
                         android:text="Chakra"
                         android:textColor="@color/meditation_color"
-
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:drawableEnd="@drawable/ic_music_18dp" />
 
                     <TextView
                         android:id="@+id/chakra_time_period_tv"
@@ -217,7 +220,8 @@
                         android:layout_toLeftOf="@id/chakra_icon_iv"
                         android:textColor="@color/meditation_color"
                         android:textSize="16sp"
-                        tools:text="I have intimate connections with others" />
+                        tools:text="I have intimate connections with others"
+                        android:layout_alignParentStart="true" />
 
 
                     <ImageView
@@ -228,11 +232,11 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="16dp"
                         android:src="@drawable/ic_chakra_63dp"
-                        android:tint="@color/white" />
-
+                        android:tint="@color/white"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp" />
 
                 </RelativeLayout>
-
                 <View
                     android:id="@+id/divider_chakra"
                     android:layout_width="match_parent"
@@ -247,28 +251,25 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/divider_chakra"
                     android:orientation="horizontal"
-
                     >
 
                     <Button
                         android:id="@+id/chakra_edit_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/divider_chakra"
                         android:background="@android:color/transparent"
                         android:elevation="0dp"
-
                         android:text="EDIT" />
 
                     <Button
                         android:id="@+id/chakra_preview_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/divider_chakra"
                         android:layout_toRightOf="@id/chakra_edit_btn"
                         android:background="@android:color/transparent"
                         android:elevation="0dp"
-                        android:text="PREVIEW" />
+                        android:text="PREVIEW"
+                        android:layout_toEndOf="@id/chakra_edit_btn" />
 
                 </LinearLayout>
 
@@ -328,7 +329,8 @@
                         android:drawableRight="@drawable/ic_music_18dp"
                         android:text="Music"
                         android:textColor="@color/meditation_color"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:drawableEnd="@drawable/ic_music_18dp" />
 
                     <TextView
                         android:id="@+id/music_time_period_tv"
@@ -350,7 +352,9 @@
                         android:layout_toLeftOf="@id/music_icon_iv"
                         android:textColor="@color/meditation_color"
                         android:textSize="16sp"
-                        tools:text="Music Name" />
+                        tools:text="Music Name"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/music_icon_iv" />
 
 
                     <ImageView
@@ -362,8 +366,8 @@
                         android:layout_marginRight="16dp"
                         android:src="@drawable/ic_music_63dp"
                         android:tint="@color/white"
-
-                        />
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp" />
 
 
                 </RelativeLayout>
